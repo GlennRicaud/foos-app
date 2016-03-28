@@ -122,8 +122,8 @@ exports.generatePlayerStats = function (player) {
     player.gen.nbGamesWonSolo = 0;
     player.gen.nbGamesTeam = 0;
     player.gen.nbGamesWonTeam = 0;
-    var nbAllGoalsSolo = 0;
-    var nbAllGoalsTeam = 0;
+    player.gen.nbAllGoalsSolo = 0;
+    player.gen.nbAllGoalsTeam = 0;
 
     games.forEach(function (game) {
         var nbAllGoalsForCurrentGame = 0;
@@ -159,9 +159,9 @@ exports.generatePlayerStats = function (player) {
 
         if (currentGamePlayed) {
             if (playerResults.length == 2) {
-                nbAllGoalsSolo += nbAllGoalsForCurrentGame;
+                player.gen.nbAllGoalsSolo += nbAllGoalsForCurrentGame;
             } else if (playerResults.length == 4) {
-                nbAllGoalsTeam += nbAllGoalsForCurrentGame;
+                player.gen.nbAllGoalsTeam += nbAllGoalsForCurrentGame;
             }
         }
     });
@@ -174,8 +174,8 @@ exports.generatePlayerStats = function (player) {
     player.gen.ratioGamesWonTeam = exports.toPercentageRatio(player.gen.nbGamesWonTeam, player.gen.nbGamesTeam);
     player.gen.ratioGamesSolo = exports.toPercentageRatio(player.gen.nbGamesSolo, player.gen.nbGames);
     player.gen.ratioGoalsAgainst = exports.toPercentageRatio(player.gen.nbGoalsAgainst, player.gen.nbGoalsScored);
-    player.gen.ratioGoalsScoredSolo = exports.toPercentageRatio(player.gen.nbGoalsScoredSolo, nbAllGoalsSolo);
-    player.gen.ratioGoalsScoredTeam = exports.toPercentageRatio(player.gen.nbGoalsScoredTeam, nbAllGoalsTeam);
+    player.gen.ratioGoalsScoredSolo = exports.toPercentageRatio(player.gen.nbGoalsScoredSolo, player.gen.nbAllGoalsSolo);
+    player.gen.ratioGoalsScoredTeam = exports.toPercentageRatio(player.gen.nbGoalsScoredTeam, player.gen.nbAllGoalsTeam);
 }
 
 /*******************************************************
@@ -193,7 +193,7 @@ exports.toArray = function (object) {
 }
 
 exports.toPercentageRatio = function (numerator, denominator) {
-    Math.floor(numerator * 100 / (denominator > 0 ? denominator : 1))
+    return Math.floor(numerator * 100 / (denominator > 0 ? denominator : 1))
 }
 
 
