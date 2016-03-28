@@ -1,0 +1,41 @@
+<content-type>
+  <display-name>Player</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input type="TextLine" name="nickname">
+      <label>Nickname</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input type="ImageSelector" name="picture">
+      <label>Picture</label>
+      <occurrences minimum="1" maximum="1"/>
+      <config/>
+    </input>
+    <input name="devcon" type="ComboBox">
+      <label>Dev/Con</label>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <option value="dev">Dev</option>
+        <option value="con">Con</option>
+        <option value="na">N/A</option>
+      </config>
+    </input>
+    <input type="TextLine" name="positive">
+      <label>Positive</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="TextLine" name="negative">
+      <label>Negative</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>    
+    <input type="TextLine" name="special">
+      <label>Special trick</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="TextArea" name="description">
+      <label>Description</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+      
+  </form>
+</content-type>

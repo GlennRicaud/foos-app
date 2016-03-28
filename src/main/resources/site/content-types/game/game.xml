@@ -1,0 +1,38 @@
+<content-type>
+  <display-name>Game</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input type="Date" name="date">
+      <label>Date</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <item-set name="playerResults">
+      <label>Players</label>
+      <items>
+        <input type="ContentSelector" name="playerId">
+          <label>Player</label>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <relationship-type>system:reference</relationship-type>
+            <allow-content-type>player</allow-content-type>
+            <allowPath>${site}/players/</allowPath>
+          </config>
+        </input>        
+        <input type="CheckBox" name="winner">
+          <label>Winner</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="Long" name="score">
+          <label># Goals</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="Long" name="against">
+          <label># Goals against</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+      </items>
+      <occurrences minimum="2" maximum="4"/>
+    </item-set>
+
+  </form>
+</content-type>

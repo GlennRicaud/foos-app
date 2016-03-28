@@ -1,0 +1,29 @@
+<content-type>
+  <display-name>Player</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input type="TextLine" name="nickname">
+      <label>Nickname</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input type="ImageSelector" name="picture">
+      <label>Picture</label>
+      <occurrences minimum="0" maximum="1"/>
+      <config/>
+    </input>
+    <input type="ContentSelector" name="teams">
+      <label>Teams</label>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <relationship-type>system:reference</relationship-type>
+        <allow-content-type>team</allow-content-type>
+        <allowPath>${site}/teams/</allowPath> 
+      </config>
+    </input>  
+    <input type="TextArea" name="description">
+      <label>Description</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+      
+  </form>
+</content-type>

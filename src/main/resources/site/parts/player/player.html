@@ -1,0 +1,42 @@
+<div id="foos-player-score" class="foos-sub-part">
+  <span>Stats</span>
+  <ul>
+    <li>Games played: {{player.gen.nbGames}}</li>
+    <li>Games won: {{player.gen.nbGamesWon}}</li>
+    <li>Games played in solo: {{player.gen.nbGamesSolo}}</li>
+    {{#player.gen.anySolo}}<li>Games won in solo: {{player.gen.nbGamesWonSolo}}</li>{{/player.gen.anySolo}}
+    <li>Games played in team: {{player.gen.nbGamesTeam}}</li>
+    {{#player.gen.anyTeam}}<li>Games won in team: {{player.gen.nbGamesWonTeam}}</li>{{/player.gen.anyTeam}}
+    <li>Goals scored: {{player.gen.nbGoalsScored}}</li>
+    <li>Goals scored against himself: {{player.gen.nbGoalsAgainst}}</li>
+  </ul>
+</div>
+<div id="foos-player-score" class="foos-sub-part">
+  <span>Ratios</span>
+  <ul>
+    <li>Games won: {{player.gen.ratioGamesWon}} (Good if > 50%. Details: Games won / Games played)</li>
+    {{#player.gen.anySolo}}<li>Games won in solo: {{player.gen.ratioGamesWonSolo}} (Good if > 50%. Details: Games won / Games played)</li>{{/player.gen.anySolo}}
+    {{#player.gen.anyTeam}}<li>Games won in team: {{player.gen.ratioGamesWonTeam}} (Good if > 50%. Details: Games won / Games played)</li>{{/player.gen.anyTeam}}
+    {{#player.gen.anySolo}}<li>Goals scored in solo: {{player.gen.ratioGoalsScoredSolo}} (Good if > 50%. Details: Average (Goals scored / (Goals scored by all player)</li>{{/player.gen.anySolo}}
+    {{#player.gen.anyTeam}}<li>Goals scored in team: {{player.gen.ratioGoalsScoredTeam}} (Good if > 25%. Details: Average (Goals scored / (Goals scored by all player)</li>{{/player.gen.anyTeam}}
+  </ul>
+</div>
+<div id="foos-player-analysis" class="foos-sub-part">
+  <span>Analysis</span>
+  <ul>
+    <li>Positive: {{player.data.positive}}</li>
+    <li>Negative: {{player.data.negative}}</li>
+    <li>Special trick: {{player.data.special}}</li>
+  </ul>
+</div>
+<div class="foos-sub-part">
+  <span>Teams</span>
+  <span>TODO</span>
+</div>
+{{#player.data.description}}
+<div class="foos-sub-part">
+  <span>Description</span>
+  <span>{{player.data.description}}</span>
+</div>
+{{/player.data.description}}
+
