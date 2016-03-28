@@ -97,15 +97,15 @@ exports.generatePageUrl = function (contents) {
     });
 }
 
-exports.generatePictureUrl = function (player) {
-    if (player.data.picture) {
-        return portalLib.imageUrl({
-            id: player.data.picture,
+exports.generatePictureUrl = function (content) {
+    if (content.data.picture) {
+        content.gen = content.gen || {};
+        content.gen.pictureUrl = portalLib.imageUrl({
+            id: content.data.picture,
             scale: 'square(60)',
             filter: 'rounded(30);sharpen()'
         });
     }
-    return undefined;
 };
 
 exports.generatePlayerStats = function (player) {
