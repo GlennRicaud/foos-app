@@ -18,12 +18,12 @@ body * {
 }
 
 /* Flex containers */
-#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, .foos-game, .foos-sub-part, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link {
+#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-sub-part, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link {
     display: flex;
 }
 
 /* Flex columns */
-#foos-nav, #foos-main, #foos-title, #foos-part, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list {
+#foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list {
     flex-direction: column;
 }
 
@@ -113,7 +113,7 @@ body * {
 }
 
 .foos-game-sub-details {
-    flex: 1;
+    flex: 1 0 0;
 }
 
 

@@ -1,35 +1,39 @@
-{{#games}}
-<div class="foos-game foos-sub-part">
-    <span>{{displayName}}</span>
-    <span>Date: {{data.date}}</span>
+<div>
+    {{#games}}
+    <div class="foos-game foos-sub-part">
+        <span>{{displayName}}</span>
+        <span>Date: {{data.date}}</span>
 
-    <div class="foos-game-details">
-        <div class="foos-game-sub-details">
-            <span>Winners: {{score.winners}}</span>
-            <div class="foos-player-list">
-                {{#data.playerResults}}
-                {{#winner}}
-                  <a class="foos-player-link" href="{{gen.pageUrl}}">
-                    <img src="{{gen.pictureUrl}}"/>
+        <div class="foos-game-details">
+            <div class="foos-game-sub-details">
+                <span>Winners: {{score.winners}}</span>
+
+                <div class="foos-player-list">
+                    {{#data.playerResults}}
+                    {{#winner}}
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <img src="{{gen.pictureUrl}}"/>
                     <span>{{gen.name}}: {{score}} goals {{#against}}(+{{against}} against){{/against}}<span>
-                  </a>
-                {{/winner}}
-                {{/data.playerResults}}
+                    </a>
+                    {{/winner}}
+                    {{/data.playerResults}}
+                </div>
             </div>
-        </div>
-        <div class="foos-game-sub-details">
-            <span>Losers: {{score.losers}}</span>
-            <div class="foos-player-list">
-                {{#data.playerResults}}
-                {{^winner}}
-                  <a class="foos-player-link" href="{{gen.pageUrl}}">
-                    <img src="{{gen.pictureUrl}}"/>
+            <div class="foos-game-sub-details">
+                <span>Losers: {{score.losers}}</span>
+
+                <div class="foos-player-list">
+                    {{#data.playerResults}}
+                    {{^winner}}
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <img src="{{gen.pictureUrl}}"/>
                     <span>{{gen.name}}: {{score}} goals {{#against}}(+{{against}} against){{/against}}<span>
-                  </a>
-                {{/winner}}
-                {{/data.playerResults}}
+                    </a>
+                    {{/winner}}
+                    {{/data.playerResults}}
+                </div>
             </div>
         </div>
     </div>
+    {{/games}}
 </div>
-{{/games}}
