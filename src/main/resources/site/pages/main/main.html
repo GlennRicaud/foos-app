@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Title of the document</title>
-  <link rel="stylesheet" type="text/css" href="{{mainCssUrl}}">
+    <meta charset="UTF-8">
+    <title>Title of the document</title>
+    <link rel="stylesheet" type="text/css" href="{{mainCssUrl}}">
 </head>
 <body id="foos-body">
-  <nav id="foos-nav">
-    <a class="foos-text" href="{{siteUrl}}">Foos app</a>
+<nav id="foos-nav">
+    <a class="foos-text" href="{{siteUrl}}">Foos</a>
     <a class="foos-text" href="{{siteUrl}}/players">Players</a>
     <a class="foos-text" href="{{siteUrl}}/teams">Teams</a>
     <a class="foos-text" href="{{siteUrl}}/games">Games</a>
-  </nav>
-  <main id="foos-main">
+</nav>
+<main id="foos-main">
     <div id="foos-title">
-      {{#pictureUrl}}
+        {{#pictureUrl}}
         <img id="foos-title-pic" src="{{pictureUrl}}"/>
-      {{/pictureUrl}}
-      <span id="foos-title-label">{{title}}</span>      
+        {{/pictureUrl}}
+        <span id="foos-title-label">{{title}}</span>
     </div>
     <div id="foos-part" data-portal-region="main">
-    {{#mainRegion.components}}
-      <!--# COMPONENT {{path}} -->
-    {{/mainRegion.components}}
-  </div>
-  </main>
-  
+        {{#mainRegion.components}}
+        <!--# COMPONENT {{path}} -->
+        {{/mainRegion.components}}
+    </div>
+</main>
+
 </body>
 
 </html>

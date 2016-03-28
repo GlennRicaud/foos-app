@@ -1,119 +1,119 @@
 /* Default values removal */
 body {
-  margin: 0;  
+    margin: 0;
 }
 
-a {  
-  text-decoration: none;
+a {
+    text-decoration: none;
 }
 
 /* Document values */
 html, body {
-  height: 100%
+    height: 100%
 }
 
 body * {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }
 
-
-
 /* Flex containers */
-#foos-body, #foos-nav, #foos-main, #foos-title, .foos-game, .foos-sub-part, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link {
-  display: flex;
+#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, .foos-game, .foos-sub-part, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link {
+    display: flex;
 }
 
 /* Flex columns */
-#foos-nav, #foos-main, #foos-title, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list{
-  flex-direction: column;
+#foos-nav, #foos-main, #foos-title, #foos-part, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list {
+    flex-direction: column;
 }
 
 /* Color */
-#foos-nav, #foos-title {  
-  background-color: #43A047; 
-  color: #ffffff;
+#foos-nav, #foos-title {
+    background-color: #43A047;
+    color: #ffffff;
 }
 
 #foos-part {
-  border: 5px solid #43A047;
+    border: 5px solid #43A047;
 }
 
 #foos-part, #foos-nav > *:hover, a {
-  color: #2E7D32;
+    color: #2E7D32;
 }
 
 #foos-nav > a {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 /* Text elements */
 .foos-text, span, a, #foos-title-pic {
-  padding: 0.5em 1em;
+    padding: 0.5em 1em;
 }
 
 /* Margins */
 #foos-nav {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 
 #foos-title {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 /***************************************************
 ** Foos nav
 ****************************************************/
 #foos-nav {
-  font-size: 24px
+    font-size: 24px
 }
 
 /***************************************************
 ** Foos title
 ****************************************************/
 #foos-title {
-  align-items: center;
-  justify-content: center;
+    align-items: center;
+    justify-content: center;
 }
-#foos-title-label{
-  font-size: 32px;
+
+#foos-title-label {
+    font-size: 32px;
 }
 
 /***************************************************
 ** Foos main
 ****************************************************/
 #foos-main {
-  flex : 1;
+    flex: 1;
 }
 
 #foos-part {
-  overflow-y: auto;
+    overflow-y: auto;
 }
 
 /***************************************************
 ** Foos players
 ****************************************************/
 .foos-player-link {
-  align-items: center;
+    align-items: center;
+    flex: 0 0 60px;
 }
 
 /***************************************************
 ** Foos player
 ****************************************************/
 .foos-sub-part {
-  border-bottom: 5px solid #43A047;
+    border-bottom: 5px solid #43A047;
 }
 
 .foos-game {
-  align-items: center;
+    align-items: center;
 }
 
 .foos-game-details {
-  width: 100%;
+    width: 100%;
 }
 
 .foos-game-sub-details {
-  flex: 1;
+    flex: 1;
 }
 
 
