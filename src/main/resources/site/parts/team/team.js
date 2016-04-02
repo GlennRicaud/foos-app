@@ -8,10 +8,12 @@ exports.get = function (req) {
     var team = portalLib.getContent();
 
     //Generates its stats
-    //foosLib.generateTeamStats(team);
+    foosLib.generateTeamStats(team);
+    team.gen.nbGames = team.gen.nbGames.toFixed(0);
+    team.gen.ratioGamesWon = team.gen.ratioGamesWon.toFixed(0) + "%";
 
     //Retrieve the team players
-    var playersIds = foosLib.toArray(team.data.playersIds);
+    var playersIds = foosLib.toArray(team.data.playerIds);
     log.info(playersIds.length);
     var players = playersIds.map(function (playerId) {
         return foosLib.getContentByKey(playerId);

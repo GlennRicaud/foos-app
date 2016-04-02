@@ -83,6 +83,28 @@ exports.getGamesByPlayerId = function (playerId) {
     });
 };
 
+exports.getGamesByTeam = function (team, won) {
+    return exports.getGames().filter(function (game) {
+        var counter = 0;
+        game.data.playerResults.forEach(function (playerResult) {
+            if (won == undefined) {
+                counter++;
+            } else {
+                if (playerResult.playerId == team.data.playerIds[0] || playerResult.playerId == team.data.playerIds[1]) {
+                    if (won && playerResult.winner) {
+                        counter++;
+                        log.info("1!!");
+                    } else if (!won && !playerResult.winner) {
+                        counter++;
+                        log.info("2!!");
+                    }
+                }
+            }
+        });
+        return counter == 2;
+    });
+};
+
 /*******************************************************
  * Generation functions
  *******************************************************/
@@ -176,6 +198,18 @@ exports.generatePlayerStats = function (player) {
     player.gen.ratioGoalsAgainst = exports.toPercentageRatio(player.gen.nbGoalsAgainst, player.gen.nbGoalsScored);
     player.gen.ratioGoalsScoredSolo = exports.toPercentageRatio(player.gen.nbGoalsScoredSolo, player.gen.nbAllGoalsSolo);
     player.gen.ratioGoalsScoredTeam = exports.toPercentageRatio(player.gen.nbGoalsScoredTeam, player.gen.nbAllGoalsTeam);
+}
+
+exports.generateTeamStats = function (team) {
+    var nbGamesWon = exports.getGamesByTeam(team, true).length;
+    var nbGamesLost = exports.getGamesByTeam(team, false).length;
+    var nbGames = nbGamesWon + nbGamesLost;
+    log.info("won" + nbGamesWon);
+    log.info("lost" + nbGamesLost);
+    team.gen = team.gen || {};
+    team.gen.nbGamesWon = nbGamesWon;
+    team.gen.nbGames = nbGames;
+    team.gen.ratioGamesWon = exports.toPercentageRatio(nbGamesWon, nbGames);
 }
 
 /*******************************************************
