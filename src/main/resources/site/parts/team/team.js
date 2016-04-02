@@ -26,8 +26,6 @@ exports.get = function (req) {
     //Retrieves the games played ordered by date
     var games = foosLib.getGamesByTeam(team).
         sort(function (game1, game2) {
-            log.info("game1date" + game1.data.date + (typeof game1.data.date));
-            log.info("game2date" + game2.data.date + (typeof game2.data.date));
             return game2.data.date.localeCompare(game1.data.date);
         });
 

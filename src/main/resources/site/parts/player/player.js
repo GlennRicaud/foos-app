@@ -1,10 +1,19 @@
 var mustacheLib = require('/lib/xp/mustache');
 var portalLib = require('/lib/xp/portal');
 var foosLib = require('/lib/foos');
+var gamesWidgetLib = require('/lib/widgets/games/games');
 
 exports.get = function (req) {
     var player = portalLib.getContent();
     foosLib.generatePlayerStats(player);
+
+    //Retrieves the games played ordered by date
+    log.info(JSON.stringify(player, null, 2));
+    var games = foosLib.getGamesByPlayerId(player._id).
+        sort(function (game1, game2) {
+            return game2.data.date.localeCompare(game1.data.date);
+        });
+
 
     player.gen.nbGames = player.gen.nbGames.toFixed(0);
     player.gen.nbGamesWon = player.gen.nbGamesWon.toFixed(0);
@@ -28,7 +37,8 @@ exports.get = function (req) {
 
     var view = resolve('player.html');
     var body = mustacheLib.render(view, {
-        player: player
+        player: player,
+        wonGamesWidget: gamesWidgetLib.render(games)
     });
     return {
         body: body
