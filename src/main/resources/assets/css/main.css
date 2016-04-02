@@ -108,6 +108,7 @@ body * {
 ****************************************************/
 .foos-sub-part {
     border-bottom: 5px solid #43A047;
+    flex-shrink: 0;
 }
 
 .foos-game {
