@@ -14,7 +14,6 @@ exports.get = function (req) {
 
     //Retrieve the team players
     var playersIds = foosLib.toArray(team.data.playerIds);
-    log.info(playersIds.length);
     var players = playersIds.map(function (playerId) {
         return foosLib.getContentByKey(playerId);
     });

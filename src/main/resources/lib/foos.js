@@ -93,10 +93,8 @@ exports.getGamesByTeam = function (team, won) {
                 if (playerResult.playerId == team.data.playerIds[0] || playerResult.playerId == team.data.playerIds[1]) {
                     if (won && playerResult.winner) {
                         counter++;
-                        log.info("1!!");
                     } else if (!won && !playerResult.winner) {
                         counter++;
-                        log.info("2!!");
                     }
                 }
             }
@@ -204,8 +202,6 @@ exports.generateTeamStats = function (team) {
     var nbGamesWon = exports.getGamesByTeam(team, true).length;
     var nbGamesLost = exports.getGamesByTeam(team, false).length;
     var nbGames = nbGamesWon + nbGamesLost;
-    log.info("won" + nbGamesWon);
-    log.info("lost" + nbGamesLost);
     team.gen = team.gen || {};
     team.gen.nbGamesWon = nbGamesWon;
     team.gen.nbGames = nbGames;
