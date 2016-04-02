@@ -85,21 +85,27 @@ exports.getGamesByPlayerId = function (playerId) {
 
 exports.getGamesByTeam = function (team, won) {
     return exports.getGames().filter(function (game) {
-        var counter = 0;
+        var nbWinnerTeamPlayers = 0;
+        var nbLoserTeamPlayers = 0;
         game.data.playerResults.forEach(function (playerResult) {
-            if (won == undefined) {
-                counter++;
-            } else {
-                if (playerResult.playerId == team.data.playerIds[0] || playerResult.playerId == team.data.playerIds[1]) {
-                    if (won && playerResult.winner) {
-                        counter++;
-                    } else if (!won && !playerResult.winner) {
-                        counter++;
-                    }
+            if (playerResult.playerId == team.data.playerIds[0] || playerResult.playerId == team.data.playerIds[1]) {
+                if (playerResult.winner) {
+                    nbWinnerTeamPlayers++;
+                } else {
+                    nbLoserTeamPlayers++;
                 }
             }
         });
-        return counter == 2;
+
+        if (won == undefined) {
+            return nbWinnerTeamPlayers == 2 || nbLoserTeamPlayers == 2;
+        } else {
+            if (won) {
+                return nbWinnerTeamPlayers == 2;
+            } else {
+                return nbLoserTeamPlayers == 2;
+            }
+        }
     });
 };
 

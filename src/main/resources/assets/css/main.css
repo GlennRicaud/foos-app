@@ -23,7 +23,7 @@ body * {
 }
 
 /* Flex columns */
-#foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list {
+#foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part {
     flex-direction: column;
 }
 
