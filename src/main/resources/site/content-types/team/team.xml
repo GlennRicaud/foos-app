@@ -7,18 +7,18 @@
       <occurrences minimum="1" maximum="1"/>
       <config/>
     </input>
-    <input type="ContentSelector" name="players">
+    <input type="ContentSelector" name="playersIds">
       <label>Player</label>
       <occurrences minimum="2" maximum="2"/>
       <config>
         <relationship-type>system:reference</relationship-type>
         <allow-content-type>player</allow-content-type>
-        <allowPath>${site}/players/</allowPath> 
+        <allowPath>${site}/players/</allowPath>
       </config>
-    </input>  
+    </input>
     <input type="TextArea" name="description">
       <label>Description</label>
       <occurrences minimum="1" maximum="1"/>
-    </input>      
+    </input>
   </form>
 </content-type>

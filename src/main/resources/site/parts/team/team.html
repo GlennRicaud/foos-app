@@ -1,9 +1,14 @@
-<div class="foos-player-list">
-{{#gen.players}}
-  <a class="foos-player-link" href="{{gen.pageUrl}}" >
-    <img src="{{pictureUrl}}"/>
-    <span>{{displayName}}<span>
-  </a>
-{{/gen.players}}
+<div class="foos-sub-part">
+    <span>Players</span>
+
+    <div class="foos-player-list">
+        {{#players}}
+        <a class="foos-player-link" href="{{gen.pageUrl}}">
+            <img src="{{gen.pictureUrl}}"/>
+            <span>{{displayName}}</span>
+        </a>
+        {{/players}}
+    </div>
+
 </div>
 
