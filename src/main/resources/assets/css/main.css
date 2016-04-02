@@ -56,6 +56,7 @@ body * {
 }
 
 #foos-title {
+    flex-shrink: 0;
     margin-bottom: 5px;
 }
 
@@ -70,7 +71,6 @@ body * {
 ** Foos title
 ****************************************************/
 #foos-title {
-    flex: 1 0;
     align-items: center;
     justify-content: center;
 }
@@ -83,11 +83,11 @@ body * {
 ** Foos main
 ****************************************************/
 #foos-main {
-    flex: 1 0;
+    flex-grow: 1;
 }
 
 #foos-part {
-    flex: 1;
+    flex-grow: 1;
     overflow-y: auto;
 }
 
