@@ -70,6 +70,7 @@ body * {
 ** Foos title
 ****************************************************/
 #foos-title {
+    flex: 1 0;
     align-items: center;
     justify-content: center;
 }
@@ -82,7 +83,7 @@ body * {
 ** Foos main
 ****************************************************/
 #foos-main {
-    flex: 1;
+    flex: 1 0;
 }
 
 #foos-part {

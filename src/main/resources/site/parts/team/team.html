@@ -1,22 +1,25 @@
-<div class="foos-sub-part">
-    <span>Players</span>
+<div>
+    <div class="foos-sub-part">
+        <span>Players</span>
 
-    <div class="foos-player-list">
-        {{#players}}
-        <a class="foos-player-link" href="{{gen.pageUrl}}">
-            <img src="{{gen.pictureUrl}}"/>
-            <span>{{displayName}}</span>
-        </a>
-        {{/players}}
+        <div class="foos-player-list">
+            {{#players}}
+            <a class="foos-player-link" href="{{gen.pageUrl}}">
+                <img src="{{gen.pictureUrl}}"/>
+                <span>{{displayName}}</span>
+            </a>
+            {{/players}}
+        </div>
+    </div>
+    <div class="foos-sub-part">
+        <span>Stats</span>
+        <ul>
+            <li>Games won: {{team.gen.ratioGamesWon}} ({{team.gen.nbGamesWon}} / {{team.gen.nbGames}})</li>
+        </ul>
+    </div>
+    <div>
+        {{{wonGamesWidget}}}
     </div>
 </div>
-<div class="foos-sub-part">
-    <span>Stats</span>
-    <ul>
-        <li>Games won: {{team.gen.ratioGamesWon}} ({{team.gen.nbGamesWon}} / {{team.gen.nbGames}})</li>
-    </ul>
-</div>
-<div class="foos-sub-part">
-    {{{wonGamesWidget}}}
-</div>
+
 
