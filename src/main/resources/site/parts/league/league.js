@@ -10,7 +10,7 @@ exports.get = function (req) {
     var teams = [];
     var teamsByPlayerIds = {};
 
-    function getTeamByPlayerIds(playerIds) {
+    function getTeamByPlayerIds(playerIds, teamDefaultName) {
 
         //Gets the cached team
         log.info("Get cached:" + (playerIds[0] + "/" + playerIds[1]));
@@ -25,7 +25,7 @@ exports.get = function (req) {
             //If the team does not exist create a dummy team
             if (!team) {
                 team = {
-                    displayName: "Dummy"
+                    displayName: teamDefaultName
                 }
             } else {
                 foosLib.generatePictureUrl(team);
@@ -55,15 +55,18 @@ exports.get = function (req) {
     }
 
     function getTeamByGame(game, won) {
-        var winnerIds = [];
+        var playerIds = [];
+        var teamDefaultName = "Team";
         game.data.playerResults.forEach(function (playerResult) {
             if (playerResult.winner && won) {
-                winnerIds.push(playerResult.playerId);
+                playerIds.push(playerResult.playerId);
+                teamDefaultName += "-" + playerResult.gen.name;
             } else if (!playerResult.winner && !won) {
-                winnerIds.push(playerResult.playerId);
+                playerIds.push(playerResult.playerId);
+                teamDefaultName += "-" + playerResult.gen.name;
             }
         });
-        return getTeamByPlayerIds(winnerIds);
+        return getTeamByPlayerIds(playerIds, teamDefaultName);
     }
 
     var games = foosLib.getTeamGames();
