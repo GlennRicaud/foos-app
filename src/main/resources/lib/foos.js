@@ -47,6 +47,24 @@ exports.getTeams = function () {
     }).hits;
 };
 
+exports.getTeamByPlayerIds = function (playerIds) {
+    var teams = exports.getTeams().filter(function (team) {
+        return (team.data.playerIds.indexOf(playerIds[0]) != -1) && (team.data.playerIds.indexOf(playerIds[1]) != -1);
+    });
+
+    log.info("Should be 1:" + teams.length);
+    log.info("Parameter1:" + playerIds[0]);
+    log.info("Parameter2:" + playerIds[1]);
+
+
+    teams.forEach(function (team) {
+        log.info("(team.data.playerIds.indexOf(playerIds[0]) != -1):" + (team.data.playerIds.indexOf(playerIds[0]) != -1));
+        log.info("(team.data.playerIds.indexOf(playerIds[1] != -1):" + (team.data.playerIds.indexOf(playerIds[1] != -1)));
+        log.info("Should be 1:" + JSON.stringify(team, null, 2));
+    });
+    return teams[0];
+};
+
 exports.getWeeks = function () {
     return contentLib.getChildren({
         key: foosGamesPath,
@@ -106,6 +124,12 @@ exports.getGamesByTeam = function (team, won) {
                 return nbLoserTeamPlayers == 2;
             }
         }
+    });
+};
+
+exports.getTeamGames = function () {
+    return exports.getGames().filter(function (game) {
+        return game.data.playerResults.length == 4;
     });
 };
 
@@ -212,6 +236,41 @@ exports.generateTeamStats = function (team) {
     team.gen.nbGamesWon = nbGamesWon;
     team.gen.nbGames = nbGames;
     team.gen.ratioGamesWon = exports.toPercentageRatio(nbGamesWon, nbGames);
+}
+
+exports.generateGameStats = function (game) {
+    game.gen = game.gen || {};
+    game.gen.score = {
+        winners: 0,
+        losers: 0
+    };
+
+    var playerResults = exports.toArray(game.data.playerResults);
+    playerResults.forEach(function (playerResult) {
+        var playerContent = contentLib.get({
+            key: playerResult.playerId
+        });
+
+        playerResult.gen = {};
+        playerResult.gen.name = playerContent.displayName;
+        exports.generatePictureUrl(playerContent);
+        exports.generatePageUrl(playerContent);
+        playerResult.gen.pictureUrl = playerContent.gen.pictureUrl;
+        playerResult.gen.pageUrl = playerContent.gen.pageUrl;
+
+        if (playerResult.winner) {
+            game.gen.score.winners += playerResult.score;
+            if (playerResult.against) {
+                game.gen.score.losers += playerResult.against;
+            }
+        } else {
+            game.gen.score.losers += playerResult.score;
+            if (playerResult.against) {
+                game.gen.score.winners += playerResult.against;
+            }
+        }
+    });
+
 }
 
 /*******************************************************
