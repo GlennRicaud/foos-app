@@ -2,7 +2,12 @@
     {{#teams}}
     <a class="foos-player-link" href="{{#gen.pageUrl}}{{gen.pageUrl}}{{/gen.pageUrl}}">
         {{#gen.pictureUrl}}<img src="{{gen.pictureUrl}}"/>{{/gen.pictureUrl}}
-        <span>{{displayName}}</span>
+        <span>{{displayName}}: {{gen.score}}</span>
     </a>
     {{/teams}}
+</div>
+<div class="foos-sub-part">
+    <span>A distinction is made between victories with or without extra time.</span>
+    <span>A victory/defeat without extra time: 3/-3pts</span>
+    <span>A victory/defeat with extra time: 2/-2pts</span>
 </div>

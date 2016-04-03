@@ -1,6 +1,9 @@
 var mustacheLib = require('/lib/xp/mustache');
 var foosLib = require('/lib/foos');
 
+var VICTORY_WITHOUT_EXTRA_FACTOR = 3;
+var VICTORY_WITH_EXTRA_FACTOR = 2;
+
 // Handle the GET request
 exports.get = function (req) {
 
@@ -83,6 +86,18 @@ exports.get = function (req) {
             losingTeam.gen.nbDefeatsWithoutExtra++;
         }
     });
+
+    //Computes the score for each team
+    teams.forEach(function (team) {
+        team.gen.score = (team.gen.nbVictoriesWithoutExtra - team.gen.nbDefeatsWithoutExtra) * VICTORY_WITHOUT_EXTRA_FACTOR +
+                         (team.gen.nbVictoriesWithExtra - team.gen.nbDefeatsWithExtra) * VICTORY_WITH_EXTRA_FACTOR;
+    });
+
+    //Sorts the teams by score
+    teams = teams.sort(function (team1, team2) {
+        return team2.gen.score - team1.gen.score;
+    });
+
 
     var view = resolve('league.html');
     var body = mustacheLib.render(view, {
