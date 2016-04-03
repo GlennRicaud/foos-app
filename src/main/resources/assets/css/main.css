@@ -18,12 +18,12 @@ body * {
 }
 
 /* Flex containers */
-#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-sub-part, #foos-players, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link {
+#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-sub-part, #foos-players, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link, .foos-table, .foos-row {
     display: flex;
 }
 
 /* Flex columns */
-#foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part {
+#foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
     flex-direction: column;
 }
 
@@ -123,6 +123,25 @@ body * {
     flex: 1 0 0;
 }
 
+/***************************************************
+** Foos league table
+****************************************************/
+
+.foos-rank-cell {
+    flex: 0 0 3em;
+}
+
+.foos-text-cell {
+    flex: 1 0 10em;
+}
+
+.foos-3-numbers-cell {
+    flex: 1 0 5em;
+}
+
+.foos-number-cell {
+    flex: 0 0 3em;
+}
 
 
 

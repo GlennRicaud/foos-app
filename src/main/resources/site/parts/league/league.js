@@ -98,6 +98,18 @@ exports.get = function (req) {
         return team2.gen.score - team1.gen.score;
     });
 
+    var rank = 1;
+    teams.forEach(function (team) {
+        team.gen.rank = (rank++).toFixed(0);
+        team.gen.score = team.gen.score.toFixed(0);
+        team.gen.nbVictories = team.gen.nbVictories.toFixed(0);
+        team.gen.nbVictoriesWithoutExtra = team.gen.nbVictoriesWithoutExtra.toFixed(0);
+        team.gen.nbVictoriesWithExtra = team.gen.nbVictoriesWithExtra.toFixed(0);
+        team.gen.nbDefeats = team.gen.nbDefeats.toFixed(0);
+        team.gen.nbDefeatsWithoutExtra = team.gen.nbDefeatsWithoutExtra.toFixed(0);
+        team.gen.nbDefeatsWithExtra = team.gen.nbDefeatsWithExtra.toFixed(0);
+    });
+
 
     var view = resolve('league.html');
     var body = mustacheLib.render(view, {
