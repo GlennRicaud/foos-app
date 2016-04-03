@@ -100,6 +100,7 @@ exports.get = function (req) {
 
     var rank = 1;
     teams.forEach(function (team) {
+        team.gen.evenRow = (rank % 2) == 0;
         team.gen.rank = (rank++).toFixed(0);
         team.gen.score = team.gen.score.toFixed(0);
         team.gen.nbVictories = team.gen.nbVictories.toFixed(0);

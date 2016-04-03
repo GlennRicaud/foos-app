@@ -28,7 +28,7 @@ body * {
 }
 
 /* Color */
-#foos-nav, #foos-title {
+#foos-nav, #foos-title, .foos-header {
     background-color: #43A047;
     color: #ffffff;
 }
@@ -126,6 +126,10 @@ body * {
 /***************************************************
 ** Foos league table
 ****************************************************/
+
+.foos-row-even {
+    background-color: #C8E6C9;
+}
 
 .foos-rank-cell {
     flex: 0 0 3em;
