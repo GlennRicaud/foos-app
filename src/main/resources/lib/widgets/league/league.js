@@ -90,11 +90,23 @@ exports.render = function (games, nbGamesThreshold) {
         team.gen.score = 50 + team.gen.score / (team.gen.nbVictories + team.gen.nbDefeats) * 50 / 3;
     });
 
+
+    //Keep the filtered teams
+    var filteredTeams = teams.filter(function (team) {
+        return (team.gen.nbVictories + team.gen.nbDefeats) < nbGamesThreshold;
+    });
+    filteredTeams.forEach(function (team) {
+        team.gen.nbGames = (team.gen.nbVictories + team.gen.nbDefeats);
+    });
+    filteredTeams = filteredTeams.sort(function (team1, team2) {
+        return team2.gen.nbGames - team1.gen.nbGames;
+    });
+
+
     //Filters the games having not played enough games
     teams = teams.filter(function (team) {
         return (team.gen.nbVictories + team.gen.nbDefeats) >= nbGamesThreshold;
     });
-
     //Sorts the teams by score
     teams = teams.sort(function (team1, team2) {
         return team2.gen.score - team1.gen.score;
@@ -113,8 +125,15 @@ exports.render = function (games, nbGamesThreshold) {
         team.gen.nbDefeatsWithExtra = team.gen.nbDefeatsWithExtra.toFixed(0);
     });
 
+    filteredTeams.forEach(function (team) {
+        team.gen.score = team.gen.score.toFixed(0);
+        team.gen.nbGames = team.gen.nbGames.toFixed(0);
+    });
+
     var view = resolve('league.html');
     return mustacheLib.render(view, {
-        teams: teams
+        teams: teams,
+        filteredTeams: filteredTeams,
+        nbGamesThreshold: nbGamesThreshold
     });
 };
