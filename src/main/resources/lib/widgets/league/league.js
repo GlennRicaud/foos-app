@@ -5,7 +5,7 @@ var VICTORY_WITHOUT_EXTRA_FACTOR = 3;
 var VICTORY_WITH_EXTRA_FACTOR = 2;
 
 // Handle the GET request
-exports.render = function (games) {
+exports.render = function (games, nbGamesThreshold) {
     var teams = [];
     var teamsByPlayerIds = {};
 
@@ -98,7 +98,7 @@ exports.render = function (games) {
 
     //Filters the games having not played enough games
     teams = teams.filter(function (team) {
-        return (team.gen.nbVictories + team.gen.nbDefeats) > 6;
+        return (team.gen.nbVictories + team.gen.nbDefeats) >= nbGamesThreshold;
     });
 
     //Sorts the teams by score

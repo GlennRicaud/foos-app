@@ -7,7 +7,7 @@ var leagueWidgetLib = require('/lib/widgets/league/league');
 exports.get = function (req) {
 
     var allTimeGames = foosLib.getTeamGames();
-    var allTimeLeagueWidget = leagueWidgetLib.render(allTimeGames);
+    var allTimeLeagueWidget = leagueWidgetLib.render(allTimeGames, 7);
 
 
     var view = resolve('league.html');
