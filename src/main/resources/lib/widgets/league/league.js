@@ -12,12 +12,10 @@ exports.render = function (games, nbGamesThreshold) {
     function getTeamByPlayerIds(playerIds, teamDefaultName) {
 
         //Gets the cached team
-        log.info("Get cached:" + (playerIds[0] + "/" + playerIds[1]));
         var team = teamsByPlayerIds[playerIds[0] + "/" + playerIds[1]];
 
         //If the team is not cached
         if (!team) {
-            log.info("Not found");
             //Retrieves the team
             team = foosLib.getTeamByPlayerIds(playerIds);
 
@@ -44,10 +42,6 @@ exports.render = function (games, nbGamesThreshold) {
             teams.push(team);
             teamsByPlayerIds[playerIds[0] + "/" + playerIds[1]] = team;
             teamsByPlayerIds[playerIds[1] + "/" + playerIds[0]] = team;
-            log.info("Createdteam:" + team.displayName);
-        } else {
-            log.info("Found!");
-            log.info("FoundTEam:" + team.displayName);
         }
 
         return team;

@@ -51,17 +51,6 @@ exports.getTeamByPlayerIds = function (playerIds) {
     var teams = exports.getTeams().filter(function (team) {
         return (team.data.playerIds.indexOf(playerIds[0]) != -1) && (team.data.playerIds.indexOf(playerIds[1]) != -1);
     });
-
-    log.info("Should be 1:" + teams.length);
-    log.info("Parameter1:" + playerIds[0]);
-    log.info("Parameter2:" + playerIds[1]);
-
-
-    teams.forEach(function (team) {
-        log.info("(team.data.playerIds.indexOf(playerIds[0]) != -1):" + (team.data.playerIds.indexOf(playerIds[0]) != -1));
-        log.info("(team.data.playerIds.indexOf(playerIds[1] != -1):" + (team.data.playerIds.indexOf(playerIds[1] != -1)));
-        log.info("Should be 1:" + JSON.stringify(team, null, 2));
-    });
     return teams[0];
 };
 
@@ -130,6 +119,18 @@ exports.getGamesByTeam = function (team, won) {
 exports.getTeamGames = function () {
     return exports.getGames().filter(function (game) {
         return game.data.playerResults.length == 4;
+    });
+};
+
+exports.getTeamGamesBetween = function (start, end) {
+    return exports.getTeamGames().filter(function (game) {
+        log.info(" game.data.date:" + game.data.date);
+        log.info(" start:" + start);
+        log.info(" end:" + end);
+        log.info(" game.data.date.localeCompare(start) >= 0:" + game.data.date.localeCompare(start) >= 0);
+        log.info(" game.data.date.localeCompare(end):" + game.data.date.localeCompare(end));
+
+        return game.data.date.localeCompare(start) >= 0 && game.data.date.localeCompare(end) < 0;
     });
 };
 
