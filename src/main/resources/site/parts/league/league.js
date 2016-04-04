@@ -94,6 +94,13 @@ exports.get = function (req) {
     teams.forEach(function (team) {
         team.gen.score = (team.gen.nbVictoriesWithoutExtra - team.gen.nbDefeatsWithoutExtra) * VICTORY_WITHOUT_EXTRA_FACTOR +
                          (team.gen.nbVictoriesWithExtra - team.gen.nbDefeatsWithExtra) * VICTORY_WITH_EXTRA_FACTOR;
+
+        team.gen.score = 50 + team.gen.score / (team.gen.nbVictories + team.gen.nbDefeats) * 50 / 3;
+    });
+
+    //Filters the games having not played enough games
+    teams = teams.filter(function (team) {
+        return (team.gen.nbVictories + team.gen.nbDefeats) > 6;
     });
 
     //Sorts the teams by score
