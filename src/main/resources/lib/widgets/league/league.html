@@ -1,0 +1,19 @@
+<div class="foos-table">
+    <div class="foos-row foos-header">
+        <span class="foos-rank-cell">Rank</span>
+        <span class="foos-text-cell">Name</span>
+        <span class="foos-3-numbers-cell">Victories (without + with extra time)</span>
+        <span class="foos-3-numbers-cell">Defeats (without + with extra time)</span>
+        <span class="foos-number-cell">Score</span>
+    </div>
+    {{#teams}}
+    <div class="foos-row {{#gen.evenRow}}foos-row-even{{/gen.evenRow}}">
+        <span class="foos-rank-cell">#{{gen.rank}}</span>
+        <span class="foos-text-cell">{{displayName}}</span>
+        <span class="foos-3-numbers-cell">{{gen.nbVictories}} ({{gen.nbVictoriesWithoutExtra}}+{{gen.nbVictoriesWithExtra}})</span>
+        <span class="foos-3-numbers-cell">{{gen.nbDefeats}} ({{gen.nbDefeatsWithoutExtra}}+{{gen.nbDefeatsWithExtra}})</span>
+        <span class="foos-number-cell">{{gen.score}}</span>
+
+    </div>
+    {{/teams}}
+</div>
