@@ -1,3 +1,7 @@
+/***************************************************
+** Generic settings
+****************************************************/
+
 /* Default values removal */
 body {
     margin: 0;
@@ -12,29 +16,52 @@ html, body {
     height: 100%
 }
 
-body * {
+* {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
 
+/***************************************************
+** Flex generic settings
+****************************************************/
+
 /* Flex containers */
-#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-sub-part, #foos-players, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link, .foos-table, .foos-row {
+#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-sub-part, #foos-players, #foos-teams, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link, .foos-team-link, .foos-table, .foos-row {
     display: flex;
 }
 
 /* Flex columns */
-#foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
+#foos-nav, #foos-main, #foos-title, #foos-part, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
     flex-direction: column;
 }
 
-/* Color */
+/* Flex centered items on cross axis */
+#foos-title, .foos-game, .foos-player-link, .foos-team-link {
+    align-items: center;
+}
+
+/* Flex unshrinkable */
+#foos-title, .foos-sub-part {
+    flex-shrink: 0;
+}
+
+/* Flex growing */
+#foos-main, #foos-part {
+    flex-grow: 1;
+}
+
+/* Flex wrapped */
+#foos-players, #foos-teams, #foos-weeks {
+    flex-wrap: wrap;
+}
+
+/***************************************************
+** Color settings
+****************************************************/
+
 #foos-nav, #foos-title, .foos-header {
     background-color: #43A047;
     color: #ffffff;
-}
-
-#foos-part {
-    border: 5px solid #43A047;
 }
 
 #foos-part, #foos-nav > *:hover, a {
@@ -45,10 +72,30 @@ body * {
     color: #ffffff;
 }
 
+/***************************************************
+** Padding
+****************************************************/
+
 /* Text elements */
 .foos-text, span, a, #foos-title-pic {
     padding: 0.5em 1em;
 }
+
+/***************************************************
+** Text
+****************************************************/
+
+#foos-title-label {
+    font-size: 32px;
+}
+
+#foos-nav {
+    font-size: 24px
+}
+
+/***************************************************
+** Static part
+****************************************************/
 
 /* Margins */
 #foos-nav {
@@ -56,63 +103,20 @@ body * {
 }
 
 #foos-title {
-    flex-shrink: 0;
     margin-bottom: 5px;
 }
 
-/***************************************************
-** Foos nav
-****************************************************/
-#foos-nav {
-    font-size: 24px
-}
-
-/***************************************************
-** Foos title
-****************************************************/
-#foos-title {
-    align-items: center;
-    justify-content: center;
-}
-
-#foos-title-label {
-    font-size: 32px;
-}
-
-/***************************************************
-** Foos main
-****************************************************/
-#foos-main {
-    flex-grow: 1;
-}
-
 #foos-part {
-    flex-grow: 1;
     overflow-y: auto;
+    border: 5px solid #43A047;
 }
 
 /***************************************************
-** Foos players
+** Dynamic part
 ****************************************************/
-#foos-players {
-    flex-wrap: wrap;
-}
 
-.foos-player-link {
-    align-items: center;
-    flex: 0 0 60px;
-}
-
-/***************************************************
-** Foos player
-****************************************************/
 .foos-sub-part {
     border-bottom: 5px solid #43A047;
-    flex-shrink: 0;
-}
-
-.foos-game {
-    align-items: center;
 }
 
 .foos-game-details {
@@ -120,7 +124,11 @@ body * {
 }
 
 .foos-game-sub-details {
-    flex: 1 0 0;
+    flex: 0 0 50%;
+}
+
+.foos-team-link {
+    flex: 0 0 140px;
 }
 
 /***************************************************
