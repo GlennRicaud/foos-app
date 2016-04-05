@@ -90,7 +90,11 @@ html, body {
 }
 
 #foos-nav {
-    font-size: 24px
+    font-size: 24px;
+}
+
+.foos-week {
+    font-size: 20px;
 }
 
 /***************************************************
