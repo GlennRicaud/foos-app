@@ -127,8 +127,12 @@ html, body {
     flex: 0 0 50%;
 }
 
-.foos-team-link {
-    flex: 0 0 140px;
+#foos-teams > .foos-team-link {
+    flex: 0 0 12em;
+}
+
+#foos-players > .foos-player-link {
+    flex: 0 0 8em;
 }
 
 /***************************************************
