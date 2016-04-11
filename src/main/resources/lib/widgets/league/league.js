@@ -25,7 +25,7 @@ exports.render = function (games, nbGamesThreshold) {
                     displayName: teamDefaultName
                 }
             } else {
-                foosLib.generatePictureUrl(team);
+                foosLib.generatePictureUrl(team, 18);
                 foosLib.generatePageUrl(team);
             }
 

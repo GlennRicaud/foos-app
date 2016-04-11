@@ -148,13 +148,14 @@ exports.generatePageUrl = function (contents) {
     });
 }
 
-exports.generatePictureUrl = function (content) {
+exports.generatePictureUrl = function (content, size) {
+    size = size || 60;
     if (content.data.picture) {
         content.gen = content.gen || {};
         content.gen.pictureUrl = portalLib.imageUrl({
             id: content.data.picture,
-            scale: 'square(60)',
-            filter: 'rounded(30);sharpen()'
+            scale: 'square(' + size + ')',
+            filter: 'rounded(' + (size / 2).toFixed(0) + ');sharpen()'
         });
     }
 };
