@@ -7,8 +7,8 @@ var foosLib = require('/lib/foos');
 // Handle the GET request
 exports.render = function (games) {
     games.forEach(function (game) {
-        log.info("before:" + JSON.stringify(game, null, 2));
         foosLib.generateGameStats(game);
+        foosLib.generateGameComments(game);
 
         game.gen.score.winners = game.gen.score.winners.toFixed();
         game.gen.score.losers = game.gen.score.losers.toFixed();

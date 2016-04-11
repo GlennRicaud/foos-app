@@ -27,10 +27,11 @@ exports.getContentByKey = function (id) {
     });
 };
 
-exports.getContentByKey = function (id) {
-    return contentLib.get({
-        key: id
-    });
+exports.getChildrenByParentKey = function (key) {
+    return contentLib.getChildren({
+        key: key,
+        count: -1
+    }).hits;
 };
 
 exports.getPlayers = function () {
@@ -124,12 +125,6 @@ exports.getTeamGames = function () {
 
 exports.getTeamGamesBetween = function (start, end) {
     return exports.getTeamGames().filter(function (game) {
-        log.info(" game.data.date:" + game.data.date);
-        log.info(" start:" + start);
-        log.info(" end:" + end);
-        log.info(" game.data.date.localeCompare(start) >= 0:" + game.data.date.localeCompare(start) >= 0);
-        log.info(" game.data.date.localeCompare(end):" + game.data.date.localeCompare(end));
-
         return game.data.date.localeCompare(start) >= 0 && game.data.date.localeCompare(end) < 0;
     });
 };
@@ -272,7 +267,20 @@ exports.generateGameStats = function (game) {
             }
         }
     });
+}
 
+
+exports.generateGameComments = function (game) {
+    game.gen = game.gen || {};
+
+    game.gen.comments = exports.getChildrenByParentKey(game._id);
+    game.gen.comments.forEach(function (comment) {
+        var player = exports.getContentByKey(comment.data.authorId);
+        comment.gen = {
+            authorName: player.displayName
+        };
+        log.info("comment:" + JSON.stringify(comment, null, 2));
+    });
 }
 
 /*******************************************************
