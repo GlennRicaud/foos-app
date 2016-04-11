@@ -1,0 +1,24 @@
+<content-type>
+  <display-name>Comment</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input type="ContentSelector" name="authorId">
+      <label>Author</label>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <relationship-type>system:reference</relationship-type>
+        <allow-content-type>player</allow-content-type>
+        <allowPath>${site}/players/</allowPath>
+      </config>
+    </input>
+    <input name="comment" type="TextArea">
+      <label>Comment</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="Tag" name="tags">
+      <label>Tags</label>
+      <indexed>true</indexed>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+  </form>
+</content-type>
