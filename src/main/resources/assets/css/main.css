@@ -101,6 +101,10 @@ html, body {
     font-size: 12px;
 }
 
+.foos-game-comment {
+    font-size: 14px;
+}
+
 /***************************************************
 ** Static part
 ****************************************************/
@@ -141,6 +145,12 @@ html, body {
 
 #foos-players > .foos-player-link {
     flex: 0 0 8em;
+}
+
+.foos-game-comment {
+    margin: 0.5em 1em;
+    background-color: #C8E6C9;
+    border-radius: 0.5em;
 }
 
 /***************************************************

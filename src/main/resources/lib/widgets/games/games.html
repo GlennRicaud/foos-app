@@ -34,9 +34,7 @@
         </div>
     </div>
     {{#gen.comments}}
-    <div class="foos-game-comment">
-        <span>{{gen.authorName}}: {{data.comment}}{{#data.tag}} #{{.}}{{/data.tag}}</span>
-    </div>
+    <span class="foos-game-comment">{{gen.authorName}}: {{data.comment}}{{#data.tag}} #{{.}}{{/data.tag}}</span>
     {{/gen.comments}}
 </div>
 {{/games}}
