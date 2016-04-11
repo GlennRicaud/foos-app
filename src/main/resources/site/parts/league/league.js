@@ -7,11 +7,11 @@ var leagueWidgetLib = require('/lib/widgets/league/league');
 exports.get = function (req) {
 
 
-    var weekGames = foosLib.getTeamGamesBetween("2016-04-04", "2016-04-11");
+    var weekGames = foosLib.getTeamGamesBetween("2016-04-11", "2016-04-18");
     var weekLeagueWidget = leagueWidgetLib.render(weekGames, 3);
 
     var aprilGames = foosLib.getTeamGamesBetween("2016-04-01", "2016-05-01");
-    var aprilLeagueWidget = leagueWidgetLib.render(aprilGames, 3);
+    var aprilLeagueWidget = leagueWidgetLib.render(aprilGames, 4);
 
     var yearGames = foosLib.getTeamGames();
     var yearLeagueWidget = leagueWidgetLib.render(yearGames, 7);
