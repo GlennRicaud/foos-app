@@ -10,10 +10,10 @@
     <div class="foos-row {{#gen.evenRow}}foos-row-even{{/gen.evenRow}}">
         <span class="foos-rank-cell">#{{gen.rank}}</span>
 
-        <div class="foos-text-cell foos-team-name-cell">
+        <a class="foos-text-cell foos-team-name-cell" href="{{#gen.pageUrl}}{{gen.pageUrl}}{{/gen.pageUrl}}">
             {{#gen.pictureUrl}}<img src="{{gen.pictureUrl}}"/>{{/gen.pictureUrl}}
             <span>{{displayName}}</span>
-        </div>
+        </a>
         <span class="foos-3-numbers-cell">{{gen.nbVictories}} ({{gen.nbVictoriesWithoutExtra}}+{{gen.nbVictoriesWithExtra}})</span>
         <span class="foos-3-numbers-cell">{{gen.nbDefeats}} ({{gen.nbDefeatsWithoutExtra}}+{{gen.nbDefeatsWithExtra}})</span>
         <span class="foos-number-cell">{{gen.score}}</span>

@@ -77,7 +77,7 @@ html, body {
 ****************************************************/
 
 /* Text elements */
-.foos-text, span, a, #foos-title-pic {
+.foos-text, span, .foos-team-link, .foos-player-link, .foos-week, #foos-title-pic {
     padding: 0.5em 1em;
 }
 
