@@ -33,12 +33,9 @@ body {
 .foos-part,
 .foos-part-title,
 .foos-part-body,
-#foos-weeks,
-.foos-game,
 .foos-sub-part,
 #foos-players,
 #foos-teams,
-.foos-game,
 .foos-game-details,
 .foos-game-sub-details,
 .foos-player-list,
@@ -56,9 +53,7 @@ div.foos-text-cell {
 #foos-main-container,
 .foos-part,
 .foos-part-body,
-.foos-game,
 .foos-game-sub-details,
-.foos-game,
 .foos-player-list,
 .foos-sub-part,
 .foos-table {
@@ -71,7 +66,10 @@ div.foos-text-cell {
 }
 
 /* Flex centered items on cross axis */
-#foos-body, .foos-game, .foos-player-link, .foos-team-link, .foos-team-name-cell {
+#foos-body,
+.foos-player-link,
+.foos-team-link,
+.foos-team-name-cell {
     align-items: center;
 }
 
@@ -88,7 +86,7 @@ div.foos-text-cell {
 }
 
 /* Flex wrapped */
-#foos-players, #foos-teams, #foos-weeks {
+#foos-players, #foos-teams {
     flex-wrap: wrap;
 }
 
