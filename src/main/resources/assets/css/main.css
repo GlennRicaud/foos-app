@@ -26,22 +26,46 @@ html, body {
 ****************************************************/
 
 /* Flex containers */
-#foos-body, #foos-nav, #foos-main, #foos-title, #foos-part, #foos-weeks, .foos-game, .foos-sub-part, #foos-players, #foos-teams, .foos-game, .foos-game-details, .foos-game-sub-details, .foos-player-list, .foos-player-link, .foos-team-link, .foos-table, .foos-row, .foos-team-name-cell {
+#foos-body,
+#foos-nav,
+#foos-main,
+#foos-main-container,
+#foos-title,
+#foos-part,
+#foos-weeks,
+.foos-game,
+.foos-sub-part,
+#foos-players,
+#foos-teams,
+.foos-game,
+.foos-game-details,
+.foos-game-sub-details,
+.foos-player-list,
+.foos-player-link,
+.foos-team-link,
+.foos-table,
+.foos-row,
+.foos-team-name-cell {
     display: flex;
 }
 
 /* Flex columns */
-#foos-nav, #foos-main, #foos-title, #foos-part, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
+#foos-body, #foos-main-container, #foos-title, #foos-part, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
     flex-direction: column;
 }
 
+/* Flex centered items on main axis */
+#foos-main {
+    justify-content: center;
+}
+
 /* Flex centered items on cross axis */
-#foos-title, .foos-game, .foos-player-link, .foos-team-link, .foos-team-name-cell {
+#foos-body, #foos-title, .foos-game, .foos-player-link, .foos-team-link, .foos-team-name-cell {
     align-items: center;
 }
 
 /* Flex unshrinkable */
-#foos-title, .foos-sub-part {
+#foos-nav, #foos-title, .foos-sub-part {
     flex-shrink: 0;
 }
 
@@ -109,6 +133,19 @@ html, body {
 ** Static part
 ****************************************************/
 
+#foos-nav {
+    width: 100%;
+}
+
+#foos-main {
+    width: 100%;
+    overflow-y: auto;
+}
+
+#foos-main-container {
+    max-width: 1024px;
+}
+
 /* Margins */
 #foos-nav {
     margin-right: 5px;
@@ -116,11 +153,6 @@ html, body {
 
 #foos-title {
     margin-bottom: 5px;
-}
-
-#foos-part {
-    overflow-y: auto;
-    border: 5px solid #43A047;
 }
 
 /***************************************************

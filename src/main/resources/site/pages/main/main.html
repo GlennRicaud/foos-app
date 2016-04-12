@@ -14,14 +14,8 @@
     <a class="foos-text" href="{{siteUrl}}/teams">Teams</a>
     <a class="foos-text" href="{{siteUrl}}/games">Games</a>
 </nav>
-<main id="foos-main">
-    <div id="foos-title">
-        {{#pictureUrl}}
-        <img id="foos-title-pic" src="{{pictureUrl}}"/>
-        {{/pictureUrl}}
-        <span id="foos-title-label">{{title}}</span>
-    </div>
-    <div id="foos-part" data-portal-region="main">
+<main id="foos-main" data-portal-region="main">
+    <div id="foos-main-container">
         {{#mainRegion.components}}
         <!--# COMPONENT {{path}} -->
         {{/mainRegion.components}}
