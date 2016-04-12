@@ -3,7 +3,7 @@
 ****************************************************/
 
 /* Default values removal */
-body {
+body, ul {
     margin: 0;
 }
 
@@ -33,6 +33,9 @@ body {
 .foos-part,
 .foos-part-title,
 .foos-part-body,
+.foos-release,
+.foos-release-date,
+.foos-release-body,
 .foos-game-details,
 .foos-game-sub-details,
 .foos-game-sub-details-players,
@@ -51,6 +54,7 @@ div.foos-cell-text {
 #foos-main-container,
 .foos-part,
 .foos-part-body,
+.foos-release-body,
 .foos-game-sub-details,
 .foos-game-sub-details-players,
 .foos-table {
@@ -133,7 +137,8 @@ body, #foos-nav > *:hover, a {
 /* Text elements */
 .foos-text,
 span,
-img {
+img,
+ul {
     padding: 0.5em 1em;
 }
 
@@ -145,7 +150,8 @@ img {
     font-size: 24px;
 }
 
-.foos-week {
+.foos-week,
+.foos-part-title {
     font-size: 20px;
 }
 
@@ -153,7 +159,8 @@ img {
     font-size: 12px;
 }
 
-.foos-game-comment {
+.foos-game-comment,
+#foos-league-details .foos-part-body {
     font-size: 14px;
 }
 
