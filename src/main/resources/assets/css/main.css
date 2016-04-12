@@ -66,7 +66,7 @@ div.foos-cell-text {
 /* Flex centered items on main axis */
 #foos-main,
 .foos-part-title,
-.foos-player-link,
+#foos-players .foos-player-link,
 .foos-week {
     justify-content: center;
 }
