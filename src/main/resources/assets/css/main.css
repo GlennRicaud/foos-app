@@ -130,8 +130,7 @@ body, #foos-nav > *:hover, a {
 /* Text elements */
 .foos-text,
 span,
-img,
-.foos-week {
+img {
     padding: 0.5em 1em;
 }
 
@@ -185,6 +184,18 @@ img,
 
 .foos-part-body {
     padding: 5px;
+}
+
+#foos-teams .foos-team-link {
+    flex: 0 0 50%;
+}
+
+#foos-players .foos-player-link {
+    flex: 0 0 25%;
+}
+
+#foos-weeks .foos-week {
+    flex: 0 0 20%;
 }
 
 .foos-part-body-table {
