@@ -10,7 +10,7 @@
             <div class="foos-game-sub-details">
                 <span>Winners: {{gen.score.winners}}</span>
 
-                <div class="foos-player-list">
+                <div class="foos-game-sub-details-players">
                     {{#data.playerResults}}
                     {{#winner}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
@@ -24,7 +24,7 @@
             <div class="foos-game-sub-details">
                 <span>Losers: {{gen.score.losers}}</span>
 
-                <div class="foos-player-list">
+                <div class="foos-game-sub-details-players">
                     {{#data.playerResults}}
                     {{^winner}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">

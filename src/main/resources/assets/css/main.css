@@ -33,18 +33,15 @@ body {
 .foos-part,
 .foos-part-title,
 .foos-part-body,
-.foos-sub-part,
-#foos-players,
-#foos-teams,
 .foos-game-details,
 .foos-game-sub-details,
-.foos-player-list,
+.foos-game-sub-details-players,
 .foos-player-link,
 .foos-team-link,
 .foos-table,
 .foos-row,
-.foos-team-name-cell,
-div.foos-text-cell {
+.foos-cell-team-name,
+div.foos-cell-text {
     display: flex;
 }
 
@@ -54,14 +51,20 @@ div.foos-text-cell {
 .foos-part,
 .foos-part-body,
 .foos-game-sub-details,
-.foos-player-list,
-.foos-sub-part,
+.foos-game-sub-details-players,
 .foos-table {
     flex-direction: column;
 }
 
+#foos-players .foos-part-body,
+#foos-teams .foos-part-body,
+#foos-weeks .foos-part-body {
+    flex-direction: row;
+}
+
 /* Flex centered items on main axis */
-#foos-main, .foos-part-title {
+#foos-main,
+.foos-part-title {
     justify-content: center;
 }
 
@@ -69,7 +72,7 @@ div.foos-text-cell {
 #foos-body,
 .foos-player-link,
 .foos-team-link,
-.foos-team-name-cell {
+.foos-cell-team-name {
     align-items: center;
 }
 
@@ -81,12 +84,14 @@ div.foos-text-cell {
 }
 
 /* Flex growing */
-#foos-main, #foos-part {
+#foos-main,
+.foos-part {
     flex-grow: 1;
 }
 
-/* Flex wrapped */
-#foos-players, #foos-teams {
+#foos-players .foos-part-body,
+#foos-teams .foos-part-body,
+#foos-weeks .foos-part-body {
     flex-wrap: wrap;
 }
 
@@ -126,8 +131,6 @@ body, #foos-nav > *:hover, a {
 .foos-text,
 span,
 img,
-.foos-team-link,
-.foos-player-link,
 .foos-week {
     padding: 0.5em 1em;
 }
@@ -158,7 +161,6 @@ img,
 
 #foos-nav {
     width: 100%;
-
 }
 
 #foos-main {
@@ -167,7 +169,7 @@ img,
 }
 
 #foos-main-container {
-    max-width: 1024px;
+    max-width: 800px;
 }
 
 /***************************************************
@@ -199,14 +201,6 @@ img,
     flex: 0 0 50%;
 }
 
-#foos-teams > .foos-team-link {
-    flex: 0 0 12em;
-}
-
-#foos-players > .foos-player-link {
-    flex: 0 0 8em;
-}
-
 .foos-game-comment {
     margin: 0.5em 1em;
     border-radius: 0.5em;
@@ -216,19 +210,19 @@ img,
 ** Foos league table
 ****************************************************/
 
-.foos-rank-cell {
+.foos-cell-rank {
     flex: 0 0 3em;
 }
 
-.foos-text-cell {
+.foos-cell-text {
     flex: 1 0 10em;
 }
 
-.foos-3-numbers-cell {
+.foos-cell-3-numbers {
     flex: 1 0 5em;
 }
 
-.foos-number-cell {
+.foos-cell-number {
     flex: 0 0 3em;
 }
 

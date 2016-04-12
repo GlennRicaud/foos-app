@@ -1,25 +1,25 @@
 <div class="foos-table">
     <div class="foos-row foos-header">
-        <span class="foos-rank-cell">Rank</span>
+        <span class="foos-cell-rank">Rank</span>
 
-        <div class="foos-text-cell">
+        <div class="foos-cell-text">
             <span>Name</span>
         </div>
-        <span class="foos-3-numbers-cell">Victories (without + with extra time)</span>
-        <span class="foos-3-numbers-cell">Defeats (without + with extra time)</span>
-        <span class="foos-number-cell">Score</span>
+        <span class="foos-cell-3-numbers">Victories (without + with extra time)</span>
+        <span class="foos-cell-3-numbers">Defeats (without + with extra time)</span>
+        <span class="foos-cell-number">Score</span>
     </div>
     {{#teams}}
     <div class="foos-row {{#gen.evenRow}}foos-row-even{{/gen.evenRow}}">
-        <span class="foos-rank-cell">#{{gen.rank}}</span>
+        <span class="foos-cell-rank">#{{gen.rank}}</span>
 
-        <a class="foos-text-cell foos-team-name-cell" href="{{#gen.pageUrl}}{{gen.pageUrl}}{{/gen.pageUrl}}">
+        <a class="foos-cell-text foos-cell-team-name" href="{{#gen.pageUrl}}{{gen.pageUrl}}{{/gen.pageUrl}}">
             {{#gen.pictureUrl}}<img src="{{gen.pictureUrl}}"/>{{/gen.pictureUrl}}
             <span>{{displayName}}</span>
         </a>
-        <span class="foos-3-numbers-cell">{{gen.nbVictories}} ({{gen.nbVictoriesWithoutExtra}}+{{gen.nbVictoriesWithExtra}})</span>
-        <span class="foos-3-numbers-cell">{{gen.nbDefeats}} ({{gen.nbDefeatsWithoutExtra}}+{{gen.nbDefeatsWithExtra}})</span>
-        <span class="foos-number-cell">{{gen.score}}</span>
+        <span class="foos-cell-3-numbers">{{gen.nbVictories}} ({{gen.nbVictoriesWithoutExtra}}+{{gen.nbVictoriesWithExtra}})</span>
+        <span class="foos-cell-3-numbers">{{gen.nbDefeats}} ({{gen.nbDefeatsWithoutExtra}}+{{gen.nbDefeatsWithExtra}})</span>
+        <span class="foos-cell-number">{{gen.score}}</span>
 
     </div>
     {{/teams}}

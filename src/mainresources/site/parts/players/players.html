@@ -1,0 +1,16 @@
+<div id="foos-main-container">
+    <div id="foos-players" class="foos-part">
+        <div class="foos-part-title">
+            <span>Players</span>
+        </div>
+        <div class="foos-part-body">
+            {{#players}}
+            <a class="foos-player-link" href="{{gen.pageUrl}}">
+                <img src="{{gen.pictureUrl}}"/>
+                <span>{{displayName}}</span>
+            </a>
+            {{/players}}
+        </div>
+    </div>
+</div>
+
