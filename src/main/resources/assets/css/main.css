@@ -38,6 +38,7 @@ body {
 .foos-game-sub-details-players,
 .foos-player-link,
 .foos-team-link,
+.foos-week,
 .foos-table,
 .foos-row,
 .foos-cell-team-name,
@@ -64,7 +65,9 @@ div.foos-cell-text {
 
 /* Flex centered items on main axis */
 #foos-main,
-.foos-part-title {
+.foos-part-title,
+.foos-player-link,
+.foos-week {
     justify-content: center;
 }
 
