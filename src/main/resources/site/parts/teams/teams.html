@@ -1,9 +1,16 @@
-<div id="foos-teams">
-    {{#teams}}
-    <a class="foos-team-link" href="{{gen.pageUrl}}">
-        {{#gen.pictureUrl}}<img src="{{gen.pictureUrl}}"/>{{/gen.pictureUrl}}
-        <span>{{displayName}}</span>
-    </a>
-    {{/teams}}
+<div id="foos-main-container">
+    <div class="foos-part">
+        <div class="foos-part-title">
+            <span>Teams</span>
+        </div>
+        <div class="foos-part-body">
+            {{#teams}}
+            <a class="foos-team-link" href="{{gen.pageUrl}}">
+                {{#gen.pictureUrl}}<img src="{{gen.pictureUrl}}"/>{{/gen.pictureUrl}}
+                <span>{{displayName}}</span>
+            </a>
+            {{/teams}}
+        </div>
+    </div>
 </div>
 

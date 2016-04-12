@@ -1,44 +1,52 @@
-<div id="foos-player-score" class="foos-sub-part">
-    <span>Stats</span>
-    <ul>
-        <li>Games won: {{player.gen.ratioGamesWon}} ({{player.gen.nbGamesWon}} / {{player.gen.nbGames}})</li>
-        {{#player.gen.anySolo}}
-        <li>Games won in solo: {{player.gen.ratioGamesWonSolo}} ({{player.gen.nbGamesWonSolo}} / {{player.gen.nbGamesSolo}})</li>
-        {{/player.gen.anySolo}}
-        {{#player.gen.anyTeam}}
-        <li>Games won in team: {{player.gen.ratioGamesWonTeam}} ({{player.gen.nbGamesWonTeam}} / {{player.gen.nbGamesTeam}})</li>
-        {{/player.gen.anyTeam}}
-        <li>Goals scored: {{player.gen.nbGoalsScored}}</li>
-        {{#player.gen.anySolo}}
-        <li>Goals scored in solo: {{player.gen.ratioGoalsScoredSolo}} ({{player.gen.nbGoalsScoredSolo}} / {{player.gen.nbAllGoalsSolo}})
-            (Good if > 50%)
-        </li>
-        {{/player.gen.anySolo}}
-        {{#player.gen.anyTeam}}
-        <li>Goals scored in team: {{player.gen.ratioGoalsScoredTeam}} ({{player.gen.nbGoalsScoredTeam}} / {{player.gen.nbAllGoalsTeam}})
-            (Good if > 25%)
-        </li>
-        {{/player.gen.anyTeam}}
-        <li>Goals scored against himself: {{player.gen.nbGoalsAgainst}}</li>
-    </ul>
+<div id="foos-main-container">
+    <div class="foos-part">
+        <div class="foos-part-title">
+            <span>{{player.displayName}} statistics</span>
+        </div>
+        <div class="foos-part-body">
+            <ul>
+                <li>Games won: {{player.gen.ratioGamesWon}} ({{player.gen.nbGamesWon}} / {{player.gen.nbGames}})</li>
+                {{#player.gen.anySolo}}
+                <li>Games won in solo: {{player.gen.ratioGamesWonSolo}} ({{player.gen.nbGamesWonSolo}} / {{player.gen.nbGamesSolo}})</li>
+                {{/player.gen.anySolo}}
+                {{#player.gen.anyTeam}}
+                <li>Games won in team: {{player.gen.ratioGamesWonTeam}} ({{player.gen.nbGamesWonTeam}} / {{player.gen.nbGamesTeam}})</li>
+                {{/player.gen.anyTeam}}
+                <li>Goals scored: {{player.gen.nbGoalsScored}}</li>
+                {{#player.gen.anySolo}}
+                <li>Goals scored in solo: {{player.gen.ratioGoalsScoredSolo}} ({{player.gen.nbGoalsScoredSolo}} /
+                    {{player.gen.nbAllGoalsSolo}})
+                    (Good if > 50%)
+                </li>
+                {{/player.gen.anySolo}}
+                {{#player.gen.anyTeam}}
+                <li>Goals scored in team: {{player.gen.ratioGoalsScoredTeam}} ({{player.gen.nbGoalsScoredTeam}} /
+                    {{player.gen.nbAllGoalsTeam}})
+                    (Good if > 25%)
+                </li>
+                {{/player.gen.anyTeam}}
+                <li>Goals scored against himself: {{player.gen.nbGoalsAgainst}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="foos-part">
+        <div class="foos-part-title">
+            <span>{{player.displayName}} analysis</span>
+        </div>
+        <div class="foos-part-body">
+            <ul>
+                <li>Positive: {{player.data.positive}}</li>
+                <li>Negative: {{player.data.negative}}</li>
+                <li>Special trick: {{player.data.special}}</li>
+                {{#player.data.description}}
+                <li>Description: {{player.data.description}}</li>
+                {{/player.data.description}}
+            </ul>
+        </div>
+    </div>
+    {{{wonGamesWidget}}}
 </div>
-<div id="foos-player-analysis" class="foos-sub-part">
-    <span>Analysis</span>
-    <ul>
-        <li>Positive: {{player.data.positive}}</li>
-        <li>Negative: {{player.data.negative}}</li>
-        <li>Special trick: {{player.data.special}}</li>
-    </ul>
-</div>
-<div class="foos-sub-part">
-    <span>Teams</span>
-    <span>TODO</span>
-</div>
-{{#player.data.description}}
-<div class="foos-sub-part">
-    <span>Description</span>
-    <span>{{player.data.description}}</span>
-</div>
-{{/player.data.description}}
-{{{wonGamesWidget}}}
+
+
 

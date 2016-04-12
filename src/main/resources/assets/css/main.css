@@ -31,7 +31,9 @@ body {
 #foos-main,
 #foos-main-container,
 #foos-title,
-#foos-part,
+.foos-part,
+.foos-part-title,
+.foos-part-body,
 #foos-weeks,
 .foos-game,
 .foos-sub-part,
@@ -50,22 +52,27 @@ body {
 }
 
 /* Flex columns */
-#foos-body, #foos-main-container, #foos-title, #foos-part, .foos-game, .foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
+#foos-body,
+#foos-main-container,
+.foos-part,
+.foos-part-body,
+.foos-game,
+.foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
     flex-direction: column;
 }
 
 /* Flex centered items on main axis */
-#foos-main {
+#foos-main, .foos-part-title {
     justify-content: center;
 }
 
 /* Flex centered items on cross axis */
-#foos-body, #foos-title, .foos-game, .foos-player-link, .foos-team-link, .foos-team-name-cell {
+#foos-body, .foos-game, .foos-player-link, .foos-team-link, .foos-team-name-cell {
     align-items: center;
 }
 
 /* Flex unshrinkable */
-#foos-nav, #foos-title, .foos-sub-part {
+#foos-nav, #foos-title, .foos-part, .foos-part-title {
     flex-shrink: 0;
 }
 
@@ -83,17 +90,26 @@ body {
 ** Color settings
 ****************************************************/
 
-#foos-nav, #foos-title, .foos-header {
+#foos-nav, #foos-title, .foos-header, .foos-part-title {
     background-color: #43A047;
     color: #ffffff;
 }
 
-#foos-part, #foos-nav > *:hover, a {
+body, #foos-nav > *:hover, a {
     color: #2E7D32;
 }
 
 #foos-nav > a {
     color: #ffffff;
+}
+
+.foos-row-even, .foos-game-comment {
+    background-color: #C8E6C9;
+}
+
+.foos-part {
+    border: 5px solid #43A047;
+    border-radius: 5px;
 }
 
 /***************************************************
@@ -135,6 +151,7 @@ body {
 
 #foos-nav {
     width: 100%;
+
 }
 
 #foos-main {
@@ -159,8 +176,15 @@ body {
 ** Dynamic part
 ****************************************************/
 
-.foos-sub-part {
-    border-bottom: 5px solid #43A047;
+.foos-part {
+    margin-top: 10px;
+}
+
+.foos-part-title {
+}
+
+.foos-part-body {
+    padding: 5px;
 }
 
 .foos-game-details {
@@ -181,17 +205,12 @@ body {
 
 .foos-game-comment {
     margin: 0.5em 1em;
-    background-color: #C8E6C9;
     border-radius: 0.5em;
 }
 
 /***************************************************
 ** Foos league table
 ****************************************************/
-
-.foos-row-even {
-    background-color: #C8E6C9;
-}
 
 .foos-rank-cell {
     flex: 0 0 3em;
