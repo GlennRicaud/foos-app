@@ -57,7 +57,11 @@ body {
 .foos-part,
 .foos-part-body,
 .foos-game,
-.foos-game-sub-details, .foos-game, .foos-player-list, .foos-sub-part, .foos-table {
+.foos-game-sub-details,
+.foos-game,
+.foos-player-list,
+.foos-sub-part,
+.foos-table {
     flex-direction: column;
 }
 
@@ -185,6 +189,12 @@ body, #foos-nav > *:hover, a {
 
 .foos-part-body {
     padding: 5px;
+}
+
+.foos-part-body-table {
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .foos-game-details {
