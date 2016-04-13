@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>New Game</title>
+    <link rel="stylesheet" id="style-css" data-th-href="${portal.assetUrl({'_path=css/livegame.css'})}" href="../../../assets/css/livegame.css"
+          type="text/css" media="all"/>
+</head>
+
+<body>
+<div style="height:10px"></div>
+<div id="mainRegion" data-portal-region="main">
+
+    <div id="field">
+        <ul id="corners">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+
+        <div class="middle"></div>
+        <div class="circle"></div>
+        <div class="ball"></div>
+        <div id="title" style="display: none;">
+            <span class="start-blink">Play</span>
+        </div>
+
+        <ul id="goal-left">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+
+        <ul id="goal-right">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+
+        <div id="player1" class="player player-left1" style="display: none;">
+            <span class="player-name">ARO</span>
+            <img src="#"/>
+            <span class="player-score">3</span>
+        </div>
+        <div id="player2" class="player player-left2" style="display: none;">
+            <span class="player-name">GRI</span>
+            <img src="#"/>
+            <span class="player-score">0</span>
+        </div>
+        <div id="player3" class="player player-right1" style="display: none;">
+            <span class="player-name">BWE</span>
+            <img src="#"/>
+            <span class="player-score">4</span>
+        </div>
+        <div id="player4" class="player player-right2" style="display: none;">
+            <span class="player-name">RMY</span>
+            <img src="#"/>
+            <span class="player-score">0</span>
+        </div>
+
+        <div id="scoreleft" class="score score-left">8</div>
+        <div id="scoreright" class="score score-right">10</div>
+
+    </div>
+
+    <div data-th-if="${mainRegion}" data-th-remove="tag">
+        <div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
+            <div data-portal-component="${component.path}" data-th-remove="tag"></div>
+        </div>
+    </div>
+</div>
+
+<script data-th-src="${dataUrl}" type="text/javascript"></script>
+<script data-th-src="${portal.assetUrl({'_path=js/jquery-2.1.4.min.js'})}" type="text/javascript"></script>
+<script data-th-src="${portal.assetUrl({'_path=js/livegame.js'})}" type="text/javascript"></script>
+</body>
+</html>
