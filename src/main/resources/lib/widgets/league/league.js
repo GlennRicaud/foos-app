@@ -9,7 +9,7 @@ exports.render = function (games, nbGamesThreshold) {
     var teams = [];
     var teamsByPlayerIds = {};
 
-    function getTeamByPlayerIds(playerIds, teamDefaultName) {
+    function getTeamByPlayerIds(playerIds) {
 
         //Gets the cached team
         var team = teamsByPlayerIds[playerIds[0] + "/" + playerIds[1]];
@@ -22,7 +22,8 @@ exports.render = function (games, nbGamesThreshold) {
             //If the team does not exist create a dummy team
             if (!team) {
                 team = {
-                    displayName: teamDefaultName
+                    displayName: "Team " + foosLib.getContentByKey(playerIds[0]).displayName +
+                                 foosLib.getContentByKey(playerIds[1]).displayName
                 }
             } else {
                 foosLib.generatePictureUrl(team, 18);
@@ -49,21 +50,18 @@ exports.render = function (games, nbGamesThreshold) {
 
     function getTeamByGame(game, won) {
         var playerIds = [];
-        var teamDefaultName = "Team";
         game.data.playerResults.forEach(function (playerResult) {
             if (playerResult.winner && won) {
                 playerIds.push(playerResult.playerId);
-                teamDefaultName += "-" + playerResult.gen.name;
             } else if (!playerResult.winner && !won) {
                 playerIds.push(playerResult.playerId);
-                teamDefaultName += "-" + playerResult.gen.name;
             }
         });
-        return getTeamByPlayerIds(playerIds, teamDefaultName);
+        return getTeamByPlayerIds(playerIds);
     }
 
     games.forEach(function (game) {
-        foosLib.generateGameStats(game);
+        foosLib.generateGameBasicStats(game);
 
         var winningTeam = getTeamByGame(game, true);
         winningTeam.gen.nbVictories++;

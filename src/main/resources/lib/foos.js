@@ -235,12 +235,31 @@ exports.generateTeamStats = function (team) {
     team.gen.ratioGamesWon = exports.toPercentageRatio(nbGamesWon, nbGames);
 }
 
-exports.generateGameStats = function (game) {
+exports.generateGameBasicStats = function (game) {
     game.gen = game.gen || {};
     game.gen.score = {
         winners: 0,
         losers: 0
     };
+
+    var playerResults = exports.toArray(game.data.playerResults);
+    playerResults.forEach(function (playerResult) {
+        if (playerResult.winner) {
+            game.gen.score.winners += playerResult.score;
+            if (playerResult.against) {
+                game.gen.score.losers += playerResult.against;
+            }
+        } else {
+            game.gen.score.losers += playerResult.score;
+            if (playerResult.against) {
+                game.gen.score.winners += playerResult.against;
+            }
+        }
+    });
+}
+
+exports.generateGameStats = function (game) {
+    exports.generateGameBasicStats(game);
 
     var playerResults = exports.toArray(game.data.playerResults);
     playerResults.forEach(function (playerResult) {
@@ -254,18 +273,6 @@ exports.generateGameStats = function (game) {
         exports.generatePageUrl(playerContent);
         playerResult.gen.pictureUrl = playerContent.gen.pictureUrl;
         playerResult.gen.pageUrl = playerContent.gen.pageUrl;
-
-        if (playerResult.winner) {
-            game.gen.score.winners += playerResult.score;
-            if (playerResult.against) {
-                game.gen.score.losers += playerResult.against;
-            }
-        } else {
-            game.gen.score.losers += playerResult.score;
-            if (playerResult.against) {
-                game.gen.score.winners += playerResult.against;
-            }
-        }
     });
 }
 
@@ -301,4 +308,16 @@ exports.toPercentageRatio = function (numerator, denominator) {
     return Math.floor(numerator * 100 / (denominator > 0 ? denominator : 1))
 }
 
+/*******************************************************
+ * Perf functions
+ *******************************************************/
+var chrono = {};
+
+exports.startChrono = function (topic) {
+    chrono[topic] = new Date().getTime();
+}
+exports.stopChrono = function (topic) {
+    var time = new Date().getTime() - chrono[topic];
+    log.info(topic + ": " + time + "ms");
+}
 

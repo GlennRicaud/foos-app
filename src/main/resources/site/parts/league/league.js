@@ -5,6 +5,7 @@ var leagueWidgetLib = require('/lib/widgets/league/league');
 
 // Handle the GET request
 exports.get = function (req) {
+    foosLib.startChrono("league");
     var weekGames = foosLib.getTeamGamesBetween("2016-04-11", "2016-04-18");
     var weekLeagueWidget = leagueWidgetLib.render(weekGames, 3);
 
@@ -13,6 +14,8 @@ exports.get = function (req) {
 
     var yearGames = foosLib.getTeamGames();
     var yearLeagueWidget = leagueWidgetLib.render(yearGames, 7);
+
+    foosLib.stopChrono("league");
 
     var view = resolve('league.html');
     var body = mustacheLib.render(view, {
