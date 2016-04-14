@@ -286,7 +286,6 @@ exports.generateGameComments = function (game) {
         comment.gen = {
             authorName: player.displayName
         };
-        log.info("comment:" + JSON.stringify(comment, null, 2));
     });
 }
 
