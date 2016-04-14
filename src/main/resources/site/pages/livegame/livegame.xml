@@ -1,0 +1,7 @@
+<page>
+  <display-name>Game page</display-name>
+  <config/>
+  <regions>
+    <region name="main"/>
+  </regions>
+</page>

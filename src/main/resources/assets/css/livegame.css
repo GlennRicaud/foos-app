@@ -1,0 +1,316 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    /*overflow: hidden;*/
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Tagesschrift';
+    src: url('../font/ds-digi.ttf');
+}
+
+#field {
+    position: absolute;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    border: 5px solid #fff;
+    background: #7db96a;
+    overflow: hidden;
+    background-image: -webkit-gradient(linear, left top, left bottom,
+    color-stop(0%, #669f54),
+    color-stop(20%, #7db96a),
+    color-stop(50%, #7db96a),
+    color-stop(80%, #7db96a),
+    color-stop(100%, #669f54));
+}
+
+#field ul {
+    list-style: none !important;
+}
+
+#field ul#corners li {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #fff;
+    position: absolute;
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+}
+
+#field ul#corners li:nth-child(1) {
+    top: -30px;
+    left: -30px;
+}
+
+#field ul#corners li:nth-child(2) {
+    top: -30px;
+    right: -30px;
+}
+
+#field ul#corners li:nth-child(3) {
+    bottom: -30px;
+    left: -30px;
+}
+
+#field ul#corners li:nth-child(4) {
+    bottom: -30px;
+    right: -30px;
+}
+
+#field .middle {
+    width: 5px;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin: 0 0 0 -3px;
+}
+
+#field .circle {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    /*top:50%;*/
+    top: calc(50% - 8px);
+    left: 50%;
+    margin: -40px 0 0 -46px;
+    border: 5px solid #fff;
+    border-radius: 80px;
+    -moz-border-radius: 80px;
+    -webkit-border-radius: 80px;
+}
+
+#field .ball {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: calc(50% - 8px);
+    left: 50%;
+    margin: -2px 0 0 -8px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    background: #fff;
+}
+
+#field ul#goal-left, #field ul#goal-right {
+    width: 35px;
+    height: 125px;
+    display: block;
+    position: absolute;
+}
+
+#field ul#goal-left {
+    /*top:90px;*/
+    top: calc(50% - 76px);
+    left: 0;
+}
+
+#field ul#goal-right {
+    top: calc(50% - 76px);
+    right: 0;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
+
+#field ul#goal-left li:nth-child(1), #field ul#goal-right li:nth-child(1) {
+    width: 7px;
+    height: 60px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    top: 35px;
+    z-index: 30;
+}
+
+#field ul#goal-left li:nth-child(2), #field ul#goal-right li:nth-child(2) {
+    width: 40px;
+    height: 70px;
+    border: 5px solid #fff;
+    position: absolute;
+    left: -5px;
+    top: 25px;
+    z-index: 20;
+}
+
+#field ul#goal-left li:nth-child(3), #field ul#goal-right li:nth-child(3) {
+    width: 70px;
+    height: 120px;
+    background: #7DB96A;
+    border: 5px solid #fff;
+    position: absolute;
+    left: -5px;
+    z-index: 10;
+}
+
+#field ul#goal-left li:nth-child(4), #field ul#goal-right li:nth-child(4) {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #fff;
+    position: absolute;
+    right: -25px;
+    top: 35px;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    z-index: 5;
+}
+
+#field .player {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: calc(10%);
+}
+
+.player#child {
+    margin: 0 auto;
+}
+
+#field .player .player-name {
+    /*color: #ffffff;*/
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+#field .player-left1 {
+    left: calc(15% + 10px);
+    color: darkred;
+}
+
+#field .player-left2 {
+    left: calc(15% + 110px);
+    color: darkred;
+}
+
+#field .player-right1 {
+    right: calc(15% + 10px);
+    color: darkblue;
+}
+
+#field .player-right2 {
+    right: calc(15% + 110px);
+    color: darkblue;
+}
+
+#field .score {
+    position: absolute;
+    bottom: calc(10%);
+    color: #ffffff;
+
+    font-family: 'Tagesschrift', 'Georgia', serif;
+    font-size: 10em;
+}
+
+#field .score-left {
+    left: calc(15% + 40px);
+    color: darkred;
+}
+
+#field .score-right {
+    right: calc(15% + 40px);
+    color: darkblue;
+}
+
+#field .player-score {
+    font-family: 'Tagesschrift', 'Georgia', serif;
+    font-size: 28px;
+}
+
+#goal-left.selected > li {
+    border-color: darkred !important;
+}
+
+#goal-right.selected > li {
+    border-color: darkblue !important;
+}
+
+#title {
+    position: absolute;
+    top: calc(50% - 20px);
+    left: calc(50% - 126px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#title span {
+    font-family: 'Tagesschrift', 'Georgia', serif;
+    font-size: 8em;
+}
+
+.blink {
+    animation: blink-animation 1.5s steps(3, start) infinite;
+    -webkit-animation: blink-animation 1.5s steps(3, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+.start-blink {
+    animation: start-blink-animation 1.5s steps(3, start) infinite;
+    -webkit-animation: start-blink-animation 1.5s steps(3, start) infinite;
+}
+
+@keyframes start-blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+@-webkit-keyframes start-blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+.start-blink {
+    animation-name: titleAnimation;
+    animation-duration: 4s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name: titleAnimation;
+    -webkit-animation-duration: 4s;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes titleAnimation {
+    0% {
+        color: darkblue;
+    }
+    33% {
+        color: #000;
+    }
+    66% {
+        color: darkred;
+    }
+}
+
+@-webkit-keyframes titleAnimation {
+    0% {
+        color: darkblue;
+    }
+    33% {
+        color: #000;
+    }
+    66% {
+        color: darkred;
+    }
+}
