@@ -14,6 +14,11 @@ exports.render = function (games) {
         game.gen.score.losers = game.gen.score.losers.toFixed();
     });
 
+    games = games.
+        sort(function (game1, game2) {
+            return game2.data.date.localeCompare(game1.data.date);
+        });
+
     var view = resolve('games.html');
     return mustacheLib.render(view, {
         games: games
