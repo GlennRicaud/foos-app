@@ -1,6 +1,7 @@
 var thymeleaf = require('/lib/xp/thymeleaf');
 var portalLib = require('/lib/xp/portal');
 var contentLib = require('/lib/xp/content');
+var contextLib = require('/lib/xp/context');
 var foosLib = require('/lib/foos');
 
 exports.get = function (req) {
@@ -24,6 +25,27 @@ exports.get = function (req) {
 };
 
 exports.post = function (req) {
+    var weekContent = contextLib.run({
+        branch: 'draft',
+        user: {
+            login: 'su',
+            userStore: 'system'
+        }
+    }, function () {
+        return saveGame(req);
+    });
+
+    return {
+        body: {
+            weekUrl: portalLib.pageUrl({
+                path: weekContent._path
+            })
+        },
+        contentType: 'application/json'
+    }
+};
+
+var saveGame = function (req) {
     var playerResults = JSON.parse(req.body);
 
     var weekContent = ensureWeekContent();
@@ -49,14 +71,7 @@ exports.post = function (req) {
         includeDependencies: true
     });
 
-    return {
-        body: {
-            weekUrl: portalLib.pageUrl({
-                path: weekContent._path
-            })
-        },
-        contentType: 'application/json'
-    }
+    return weekContent;
 };
 
 var getData = function (req) {
