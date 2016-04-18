@@ -74,9 +74,10 @@ var saveGame = function (req) {
     return weekContent;
 };
 
-var getData = function (req) {
+var getData = function () {
     var plist = foosLib.getPlayers();
     var players = [];
+    var audioUrl = getAudioUrl();
 
     plist.forEach(function (p) {
         var player = {};
@@ -89,13 +90,25 @@ var getData = function (req) {
     });
     var json = {
         players: players,
-        postUrl: portalLib.componentUrl({})
+        postUrl: portalLib.componentUrl({}),
+        audioUrl: audioUrl
     };
 
     return {
         body: 'var data = ' + JSON.stringify(json, null, 4),
         contentType: 'application/javascript'
     }
+};
+
+var getAudioUrl = function () {
+    var content = portalLib.getContent();
+    if (!content || !content.page || !content.page.config || !content.page.config.victoryAudio) {
+        return '';
+    }
+    var id = content.page.config.victoryAudio;
+    return portalLib.attachmentUrl({
+        id: id
+    });
 };
 
 var generatePictureUrl = function (content) {

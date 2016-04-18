@@ -17,6 +17,7 @@ var GAME = (function () {
     ];
 
     var postUrl;
+    var audioUrl;
     var players = [];
     var gamePlayers = [0, 0, 0, 0];
     var gamePlayersDivs = ['player1', 'player2', 'player3', 'player4'];
@@ -178,7 +179,23 @@ var GAME = (function () {
             }
             gameStarted = false;
             gameEnded = true;
+            playVictoryAudio();
+            //toggleScores(false);
+            //$('#title').css('left', 'calc(50% - 260px)');
+            //$('#title span').text('Game Over');
+            //toggleStart(true);
             sendGameData();
+        }
+    };
+
+    playVictoryAudio = function () {
+        try {
+            if (audioUrl) {
+                var audio = new Audio(audioUrl);
+                audio.play();
+            }
+        } catch (e) {
+            console && console.log(e);
         }
     };
 
@@ -221,6 +238,7 @@ var GAME = (function () {
             players[i].against = 0;
         }
         postUrl = data.postUrl;
+        audioUrl = data.audioUrl;
         initPlayerSelection();
     };
 
