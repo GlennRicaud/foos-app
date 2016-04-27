@@ -1,0 +1,14 @@
+<content-type>
+  <display-name>Week</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input type="Date" name="start">
+      <label>Start</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="Date" name="end">
+      <label>End</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+  </form>
+</content-type>
