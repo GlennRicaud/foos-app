@@ -132,6 +132,6 @@ exports.render = function (games, nbGamesThreshold) {
     return mustacheLib.render(view, {
         teams: teams,
         filteredTeams: filteredTeams,
-        nbGamesThreshold: nbGamesThreshold
+        nbGamesThreshold: nbGamesThreshold.toFixed(0)
     });
 };

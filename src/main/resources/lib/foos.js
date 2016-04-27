@@ -71,6 +71,14 @@ exports.getWeeks = function () {
     }).hits;
 };
 
+exports.getWeekCount = function () {
+    return contentLib.query({
+        start: 0,
+        count: 0,
+        contentTypes: [app.name + ":week"]
+    }).total;
+};
+
 exports.getGames = function () {
     return contentLib.query({
         start: 0,

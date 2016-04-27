@@ -16,11 +16,12 @@ exports.get = function (req) {
     var monthName = MONTH_NAMES[month];
     var monthIsoNumber = ++month < 10 ? "0" + month.toFixed(0) : month.toFixed(0);
 
+    var day = new Date().getDate();
     var monthGames = foosLib.getTeamGamesBetween("2016-" + monthIsoNumber + "-01", "2016-" + monthIsoNumber + "-31");
-    var monthLeagueWidget = leagueWidgetLib.render(monthGames, 6);
+    var monthLeagueWidget = leagueWidgetLib.render(monthGames, 2 + Math.min(6, Math.ceil(day / 7)));
 
     var yearGames = foosLib.getTeamGames();
-    var yearLeagueWidget = leagueWidgetLib.render(yearGames, 10);
+    var yearLeagueWidget = leagueWidgetLib.render(yearGames, 2 + foosLib.getWeekCount());
 
     var view = resolve('league.html');
     var body = mustacheLib.render(view, {
