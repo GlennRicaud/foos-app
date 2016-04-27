@@ -55,6 +55,15 @@ exports.getTeamByPlayerIds = function (playerIds) {
     return teams[0];
 };
 
+exports.getLatestWeek = function () {
+    return contentLib.query({
+        start: 0,
+        count: 1,
+        contentTypes: [app.name + ":week"],
+        sort: "data.start DESC"
+    }).hits[0];
+};
+
 exports.getWeeks = function () {
     return contentLib.getChildren({
         key: foosGamesPath,
@@ -125,7 +134,7 @@ exports.getTeamGames = function () {
 
 exports.getTeamGamesBetween = function (start, end) {
     return exports.getTeamGames().filter(function (game) {
-        return game.data.date.localeCompare(start) >= 0 && game.data.date.localeCompare(end) < 0;
+        return game.data.date.localeCompare(start) >= 0 && game.data.date.localeCompare(end) <= 0;
     });
 };
 
@@ -318,5 +327,9 @@ exports.startChrono = function (topic) {
 exports.stopChrono = function (topic) {
     var time = new Date().getTime() - chrono[topic];
     log.info(topic + ": " + time + "ms");
+}
+
+exports.log = function (message, object) {
+    log.info(message + ": " + JSON.stringify(object, null, 2));
 }
 
