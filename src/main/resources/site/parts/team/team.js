@@ -23,11 +23,8 @@ exports.get = function (req) {
         foosLib.generatePageUrl(player);
     });
 
-    //Retrieves the games played ordered by date
-    var games = foosLib.getGamesByTeam(team).
-        sort(function (game1, game2) {
-            return game2.data.date.localeCompare(game1.data.date);
-        });
+    //Retrieves the games played
+    var games = foosLib.getGamesByTeam(team);
 
     var view = resolve('team.html');
     var body = mustacheLib.render(view, {

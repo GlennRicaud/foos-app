@@ -7,12 +7,8 @@ exports.get = function (req) {
     var player = portalLib.getContent();
     foosLib.generatePlayerStats(player);
 
-    //Retrieves the games played ordered by date
-    var games = foosLib.getGamesByPlayerId(player._id).
-        sort(function (game1, game2) {
-            return game2.data.date.localeCompare(game1.data.date);
-        });
-
+    //Retrieves the games played
+    var games = foosLib.getGamesByPlayerId(player._id);
 
     player.gen.nbGames = player.gen.nbGames.toFixed(0);
     player.gen.nbGamesWon = player.gen.nbGamesWon.toFixed(0);

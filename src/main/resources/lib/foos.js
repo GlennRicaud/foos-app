@@ -92,7 +92,7 @@ exports.getGames = function () {
         start: 0,
         count: -1,
         contentTypes: [app.name + ":game"],
-        sort: "displayName DESC"
+        sort: "data.date DESC, displayName DESC"
     }).hits;
 };
 
