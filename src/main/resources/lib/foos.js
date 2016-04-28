@@ -2,24 +2,19 @@ var contentLib = require('/lib/xp/content');
 var portalLib = require('/lib/xp/portal');
 
 /*******************************************************
- * Global variables
+ * URL functions
  *******************************************************/
 
-var foosSitePath = '/foos';
-var foosPlayersPath = foosSitePath + '/players';
-var foosTeamsPath = foosSitePath + '/teams';
-var foosGamesPath = foosSitePath + '/games';
+exports.getFoosSiteUrl = function () {
+    return portalLib.pageUrl({
+        path: portalLib.getSite()._path
+    });
+};
 
 
 /*******************************************************
  * Retrieval functions
  *******************************************************/
-
-exports.getFoosSiteUrl = function () {
-    return portalLib.pageUrl({
-        path: foosSitePath
-    });
-};
 
 exports.getContentByKey = function (id) {
     return contentLib.get({
@@ -35,16 +30,18 @@ exports.getChildrenByParentKey = function (key) {
 };
 
 exports.getPlayers = function () {
-    return contentLib.getChildren({
-        key: foosPlayersPath,
-        count: -1
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        contentTypes: [app.name + ":player"]
     }).hits;
 };
 
 exports.getTeams = function () {
-    return contentLib.getChildren({
-        key: foosTeamsPath,
-        count: -1
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        contentTypes: [app.name + ":team"]
     }).hits;
 };
 
@@ -73,9 +70,10 @@ exports.getLatestWeek = function () {
 };
 
 exports.getWeeks = function () {
-    return contentLib.getChildren({
-        key: foosGamesPath,
-        count: -1
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        contentTypes: [app.name + ":week"]
     }).hits;
 };
 
