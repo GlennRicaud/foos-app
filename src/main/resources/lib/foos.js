@@ -75,7 +75,8 @@ exports.getWeeks = function () {
     return contentLib.query({
         start: 0,
         count: -1,
-        contentTypes: [app.name + ":week"]
+        contentTypes: [app.name + ":week"],
+        sort: "data.start DESC"
     }).hits;
 };
 
