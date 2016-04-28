@@ -33,7 +33,8 @@ exports.getPlayers = function () {
     return contentLib.query({
         start: 0,
         count: -1,
-        contentTypes: [app.name + ":player"]
+        contentTypes: [app.name + ":player"],
+        sort: "displayName ASC"
     }).hits;
 };
 
@@ -41,7 +42,8 @@ exports.getTeams = function () {
     return contentLib.query({
         start: 0,
         count: -1,
-        contentTypes: [app.name + ":team"]
+        contentTypes: [app.name + ":team"],
+        sort: "displayName ASC"
     }).hits;
 };
 
