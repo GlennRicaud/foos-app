@@ -180,7 +180,7 @@ exports.generatePictureUrl = function (content, size) {
 };
 
 exports.generatePlayerStats = function (player) {
-    var games = exports.getGames();
+    var games = exports.getGamesByPlayerId(player._id);
 
     player.gen = player.gen || {};
     player.gen.nbGames = 0;
