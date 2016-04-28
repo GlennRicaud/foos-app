@@ -7,7 +7,7 @@ var leagueWidgetLib = require('/lib/widgets/league/league');
 var MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
 
-var leagueCache = cacheLib.newCache({});
+var leagueCache = cacheLib.newCache({size: 1});
 
 
 // Handle the GET request
