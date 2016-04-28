@@ -105,15 +105,13 @@ exports.getGamesByWeekPath = function (weekPath) {
 };
 
 exports.getGamesByPlayerId = function (playerId) {
-    return exports.getGames().filter(function (game) {
-        var gamePlayer = false;
-        game.data.playerResults.forEach(function (playerResult) {
-            if (playerResult.playerId == playerId) {
-                gamePlayer = true;
-            }
-        });
-        return gamePlayer;
-    });
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        query: "data.playerResults.playerID = '" + playerId + "'",
+        contentTypes: [app.name + ":game"],
+        sort: "data.date DESC, displayName DESC"
+    }).hits;
 };
 
 exports.getGamesByTeam = function (team, won) {
