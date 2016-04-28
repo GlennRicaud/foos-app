@@ -48,10 +48,13 @@ exports.getTeams = function () {
 };
 
 exports.getTeamByPlayerIds = function (playerIds) {
-    var teams = exports.getTeams().filter(function (team) {
-        return (team.data.playerIds.indexOf(playerIds[0]) != -1) && (team.data.playerIds.indexOf(playerIds[1]) != -1);
-    });
-    return teams[0];
+    return contentLib.query({
+        start: 0,
+        count: 1,
+        query: "data.playerIds = '" + playerIds[0] + "' AND data.playerIds = '" + playerIds[1] + "'",
+        contentTypes: [app.name + ":team"],
+        sort: "displayName ASC"
+    }).hits[0];
 };
 
 exports.getLatestModificationTime = function () {
@@ -101,7 +104,7 @@ exports.getGamesByWeekPath = function (weekPath) {
     return contentLib.getChildren({
         key: weekPath,
         count: -1,
-        sort: "displayName DESC"
+        sort: "data.date DESC, displayName DESC"
     }).hits;
 };
 
