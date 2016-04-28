@@ -314,3 +314,46 @@ body {
         color: darkred;
     }
 }
+
+
+.game-over {
+    animation-name: gameOverAnimation;
+    animation-duration: 4s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name: gameOverAnimation;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes gameOverAnimation {
+    0% {
+        border-color: darkblue;
+    }
+    25% {
+        border-color: darkred;
+    }
+    50% {
+        border-color: darkblue;
+    }
+    75% {
+        border-color: darkred;
+    }
+}
+
+@-webkit-keyframes gameOverAnimation {
+    0% {
+        border-color: darkblue;
+    }
+    25% {
+        border-color: darkred;
+    }
+    50% {
+        border-color: darkblue;
+    }
+    75% {
+        border-color: darkred;
+    }
+}

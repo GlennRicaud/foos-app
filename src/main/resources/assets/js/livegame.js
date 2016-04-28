@@ -24,6 +24,7 @@ var GAME = (function () {
     var gameStarted = false;
     var gameEnded = false;
     var playerSelected = -1;
+    var gameSavedUrl;
 
     toggleRight = function (show) {
         $('#player3, #player4, #goal-right').toggle(show);
@@ -54,6 +55,8 @@ var GAME = (function () {
         gamePlayers[PLAYER2] = (i + 1) % l;
         gamePlayers[PLAYER3] = (i + 2) % l;
         gamePlayers[PLAYER4] = (i + 3) % l;
+        loadSelectedPlayers();
+
         $('#player1').on('click', {pid: PLAYER1}, onSelectPlayer);
         $('#player2').on('click', {pid: PLAYER2}, onSelectPlayer);
         $('#player3').on('click', {pid: PLAYER3}, onSelectPlayer);
@@ -61,12 +64,19 @@ var GAME = (function () {
         $('#title').on('click', onStart);
         $('#goal-left').on('click', onSelectGoal);
         $('#goal-right').on('click', onSelectGoal);
+        $('#mainRegion').on('click', onFieldClick);
 
         showPlayers();
 
         toggleMiddle(false);
         $('#title span').text('Play');
         toggleStart(true);
+    };
+
+    onFieldClick = function () {
+        if (gameSavedUrl) {
+            window.location.href = gameSavedUrl;
+        }
     };
 
     showPlayers = function () {
@@ -164,6 +174,8 @@ var GAME = (function () {
         showScore();
 
         gameStarted = true;
+
+        saveSelectedPlayers();
     };
 
     checkEndGame = function () {
@@ -180,10 +192,6 @@ var GAME = (function () {
             gameStarted = false;
             gameEnded = true;
             playVictoryAudio();
-            //toggleScores(false);
-            //$('#title').css('left', 'calc(50% - 260px)');
-            //$('#title span').text('Game Over');
-            //toggleStart(true);
             sendGameData();
         }
     };
@@ -191,13 +199,20 @@ var GAME = (function () {
     playVictoryAudio = function () {
         try {
             if (audioUrl) {
-                var audio = new Audio(audioUrl);
-                audio.play();
+                var audioElement = $('#gameAudio');
+                audioElement.attr("src", audioUrl);
+                startElementAudio(audioElement, 200);
             }
         } catch (e) {
             console && console.log(e);
         }
     };
+
+    function startElementAudio(audioElement, fadeTime) {
+        audioElement[0].volume = 0;
+        audioElement.animate({volume: 1}, fadeTime);
+        audioElement.trigger("play");
+    }
 
     sendGameData = function () {
         var data = [];
@@ -223,9 +238,11 @@ var GAME = (function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
+                gameSavedUrl = data.weekUrl;
+                $('#field').addClass('game-over');
                 setTimeout(function () {
-                    window.location.href = data.weekUrl;
-                }, 5000);
+                    window.location.href = gameSavedUrl;
+                }, 30000);
             },
             data: JSON.stringify(data)
         });
@@ -240,6 +257,48 @@ var GAME = (function () {
         postUrl = data.postUrl;
         audioUrl = data.audioUrl;
         initPlayerSelection();
+    };
+
+    saveSelectedPlayers = function () {
+        if (!localStorage) {
+            return;
+        }
+        var p1 = players[gamePlayers[PLAYER1]];
+        var p2 = players[gamePlayers[PLAYER2]];
+        var p3 = players[gamePlayers[PLAYER3]];
+        var p4 = players[gamePlayers[PLAYER4]];
+        var selectedPlayers = [p1.name, p2.name, p3.name, p4.name];
+        localStorage.setItem('players', selectedPlayers.join('/'));
+    };
+
+    loadSelectedPlayers = function () {
+        if (!localStorage) {
+            return;
+        }
+        var playersStored = localStorage.getItem('players');
+        if (!playersStored) {
+            return;
+        }
+        var playerNames = playersStored.split('/');
+        if (playerNames.length != 4) {
+            return;
+        }
+
+        var i, l = players.length;
+        for (i = 0; i < l; i++) {
+            if (playerNames[PLAYER1] === players[i].name) {
+                gamePlayers[PLAYER1] = i;
+            }
+            if (playerNames[PLAYER2] === players[i].name) {
+                gamePlayers[PLAYER2] = i;
+            }
+            if (playerNames[PLAYER3] === players[i].name) {
+                gamePlayers[PLAYER3] = i;
+            }
+            if (playerNames[PLAYER4] === players[i].name) {
+                gamePlayers[PLAYER4] = i;
+            }
+        }
     };
 
     return {
