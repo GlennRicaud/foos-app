@@ -55,6 +55,14 @@ exports.getTeamByPlayerIds = function (playerIds) {
     return teams[0];
 };
 
+exports.getLatestModificationTime = function () {
+    return contentLib.query({
+        start: 0,
+        count: 1,
+        sort: "modifiedTime DESC"
+    }).hits[0].modifiedTime;
+}
+
 exports.getLatestWeek = function () {
     return contentLib.query({
         start: 0,
