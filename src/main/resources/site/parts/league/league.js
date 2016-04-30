@@ -12,6 +12,7 @@ var leagueCache = cacheLib.newCache({size: 1});
 
 // Handle the GET request
 exports.get = function (req) {
+
     function doGet(req) {
         var currentWeek = foosLib.getLatestWeek();
         var weekGames = foosLib.getTeamGamesBetween(currentWeek.data.start, currentWeek.data.end);
@@ -41,5 +42,5 @@ exports.get = function (req) {
         }
     }
 
-    return leagueCache.get(foosLib.getLatestModificationTime(), doGet);
+    return leagueCache.get(req.mode + req.branch + foosLib.getLatestModificationTime(), doGet);
 };
