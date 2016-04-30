@@ -42,5 +42,6 @@ exports.get = function (req) {
         }
     }
 
-    return leagueCache.get(req.mode + req.branch + foosLib.getLatestModificationTime(), doGet);
+    var key = req.mode + req.branch + foosLib.getLatestModificationTime();
+    return leagueCache.get(key, doGet);
 };

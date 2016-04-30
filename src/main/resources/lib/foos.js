@@ -348,6 +348,6 @@ exports.stopChrono = function (topic) {
 }
 
 exports.log = function (message, object) {
-    log.info(message + ": " + JSON.stringify(object, null, 2));
+    log.info(message + (object ? ": " + JSON.stringify(object, null, 2) : ""));
 }
 
