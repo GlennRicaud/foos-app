@@ -58,7 +58,7 @@ var saveGame = function (req) {
         contentType: app.name + ':game',
         branch: 'draft',
         data: {
-            date: new Date().toISOString().slice(0, 10), // "2016-04-07"
+            date: formatIsoDate(new Date()),
             winners: playerResults.winners,
             losers: playerResults.losers
         }
@@ -138,13 +138,18 @@ var ensureWeekContent = function () {
     if (weekContent) {
         return weekContent;
     }
+    var startDate = getFirstDayOfWeek(week, new Date().getFullYear());
+    var endDate = addDays(startDate, 4);
 
     var createResult = contentLib.create({
         name: 'week-' + week,
         parentPath: site._path + '/games',
         displayName: 'Week ' + week,
         contentType: app.name + ':week',
-        data: {}
+        data: {
+            start: formatIsoDate(startDate),
+            end: formatIsoDate(endDate)
+        }
     });
 
     var result = contentLib.publish({
@@ -156,6 +161,29 @@ var ensureWeekContent = function () {
     });
 
     return createResult;
+};
+
+var getFirstDayOfWeek = function (w, y) {
+    var simple = new Date(y, 0, 1 + (w - 1) * 7);
+    var dow = simple.getDay();
+    var weekStart = simple;
+    if (dow <= 4) {
+        weekStart.setDate(simple.getDate() - dow + 1);
+    } else {
+        weekStart.setDate(simple.getDate() + 8 - dow);
+    }
+    return weekStart;
+};
+
+var addDays = function (date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+};
+
+var formatIsoDate = function (date) {
+    var tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
+    return new Date(date.getTime() - tzoffset).toISOString().slice(0, 10); // "2016-04-07"
 };
 
 var getNextGame = function (weekContent) {
