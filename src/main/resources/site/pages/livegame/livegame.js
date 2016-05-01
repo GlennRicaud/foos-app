@@ -48,6 +48,26 @@ exports.post = function (req) {
 var saveGame = function (req) {
     var playerResults = JSON.parse(req.body);
 
+    //TODO ARO Sorry just a quick fix to make it work just the new structure.
+    var winners = playerResults.filter(function (playerResult) {
+        return playerResult.winner;
+    }).map(function (playerResult) {
+        return {
+            playerId: playerResult.playerId,
+            score: playerResult.score,
+            against: playerResult.against
+        };
+    });
+    var losers = playerResults.filter(function (playerResult) {
+        return !playerResult.winner;
+    }).map(function (playerResult) {
+        return {
+            playerId: playerResult.playerId,
+            score: playerResult.score,
+            against: playerResult.against
+        };
+    });
+
     var weekContent = ensureWeekContent();
     var gameNumber = getNextGame(weekContent);
 
@@ -59,7 +79,8 @@ var saveGame = function (req) {
         branch: 'draft',
         data: {
             date: new Date().toISOString().slice(0, 10), // "2016-04-07"
-            playerResults: playerResults
+            winners: winners,
+            losers: losers
         }
     });
 
@@ -102,7 +123,7 @@ var getData = function () {
 
 var getAudioUrl = function () {
     var content = portalLib.getContent();
-    if (!content || !content.page || !content.page.config || !content.page.config.victoryAudio) {
+    if (!content || !content.page || !content.page.config || !content.page.config.victoryAudio) {
         return '';
     }
     var id = content.page.config.victoryAudio;
@@ -142,7 +163,7 @@ var ensureWeekContent = function () {
         name: 'week-' + week,
         parentPath: site._path + '/games',
         displayName: 'Week ' + week,
-        contentType: 'base:folder',
+        contentType: app.name + ':week',
         data: {}
     });
 
