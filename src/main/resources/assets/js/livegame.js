@@ -25,6 +25,7 @@ var GAME = (function () {
     var gameEnded = false;
     var playerSelected = -1;
     var gameSavedUrl;
+    var singlesGame = false;
 
     toggleRight = function (show) {
         $('#player3, #player4, #goal-right').toggle(show);
@@ -116,7 +117,7 @@ var GAME = (function () {
             if (playerSelected === pid) {
                 playerSelected = -1;
                 $('#goal-right,#goal-left').removeClass('selected');
-                $('.player').show();
+                showActivePlayers();
             } else {
                 playerSelected = pid;
                 $('.player').hide();
@@ -128,6 +129,8 @@ var GAME = (function () {
 
     onSelectGoal = function (e) {
         if (!gameStarted || (playerSelected == -1)) {
+            singlesGame = !singlesGame;
+            $('#player2,#player4').toggle(!singlesGame);
             return;
         }
         var tid = playerSelected < 2 ? TEAM1 : TEAM2;
@@ -155,7 +158,7 @@ var GAME = (function () {
 
         showPlayer(playerSelected);
         showScore();
-        $('.player').show();
+        showActivePlayers();
         $('#goal-right,#goal-left').removeClass('selected');
 
         playerSelected = -1;
@@ -163,11 +166,18 @@ var GAME = (function () {
         checkEndGame();
     };
 
+    showActivePlayers = function () {
+        $('.player').show();
+        if (singlesGame) {
+            $('#player2,#player4').hide();
+        }
+    };
+
     onStart = function (e) {
         toggleStart(false);
         toggleScores(true);
         toggleMiddle(true);
-        $('.player').show();
+        showActivePlayers();
 
         teams[TEAM1].score = 0;
         teams[TEAM2].score = 0;
@@ -215,22 +225,30 @@ var GAME = (function () {
     }
 
     sendGameData = function () {
-        var data = [];
+        var data = {}, winners = [], losers = [];
         var score1 = teams[TEAM1].score;
         var score2 = teams[TEAM2].score;
         var winner = score1 > score2 ? TEAM1 : TEAM2;
 
         var pid, player, playerResult;
         for (pid = 0; pid < gamePlayers.length; pid++) {
+            if (singlesGame && (pid === PLAYER2 || pid === PLAYER4)) {
+                continue;
+            }
             player = players[gamePlayers[pid]];
             playerResult = {};
             playerResult.playerId = player.id;
-            var playerTeam = (pid / 2) >> 0;
-            playerResult.winner = playerTeam == winner;
             playerResult.score = player.goals;
             playerResult.against = player.against;
-            data.push(playerResult);
+            var playerTeam = (pid / 2) >> 0;
+            if (playerTeam === winner) {
+                winners.push(playerResult);
+            } else {
+                losers.push(playerResult);
+            }
         }
+        data.winners = winners;
+        data.losers = losers;
 
         $.ajax({
             url: postUrl,
