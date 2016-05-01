@@ -13,7 +13,7 @@ var leagueCache = cacheLib.newCache({size: 1});
 // Handle the GET request
 exports.get = function (req) {
 
-    function doGet(req) {
+    function doGet() {
         var currentWeek = foosLib.getLatestWeek();
         var weekGames = foosLib.getTeamGamesBetween(currentWeek.data.start, currentWeek.data.end);
         var weekLeagueWidget = leagueWidgetLib.render(weekGames, 3);

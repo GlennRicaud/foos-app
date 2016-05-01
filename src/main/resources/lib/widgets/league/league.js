@@ -49,13 +49,10 @@ exports.render = function (games, nbGamesThreshold) {
     }
 
     function getTeamByGame(game, won) {
-        var playerIds = [];
-        game.data.playerResults.forEach(function (playerResult) {
-            if (playerResult.winner && won) {
-                playerIds.push(playerResult.playerId);
-            } else if (!playerResult.winner && !won) {
-                playerIds.push(playerResult.playerId);
-            }
+        var playerIds = won ? game.data.winners.map(function (playerResult) {
+            return playerResult.playerId;
+        }) : game.data.losers.map(function (playerResult) {
+            return playerResult.playerId;
         });
         return getTeamByPlayerIds(playerIds);
     }

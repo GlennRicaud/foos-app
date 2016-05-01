@@ -11,28 +11,24 @@
                 <span>Winners: {{gen.score.winners}}</span>
 
                 <div class="foos-game-sub-details-players">
-                    {{#data.playerResults}}
-                    {{#winner}}
+                    {{#data.winners}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
                         <img src="{{gen.pictureUrl}}"/>
                         <span>{{gen.name}}: {{score}} goals {{#against}}(+{{against}} against){{/against}}</span>
                     </a>
-                    {{/winner}}
-                    {{/data.playerResults}}
+                    {{/data.winners}}
                 </div>
             </div>
             <div class="foos-game-sub-details">
                 <span>Losers: {{gen.score.losers}}</span>
 
                 <div class="foos-game-sub-details-players">
-                    {{#data.playerResults}}
-                    {{^winner}}
+                    {{#data.losers}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
                         <img src="{{gen.pictureUrl}}"/>
                         <span>{{gen.name}}: {{score}} goals {{#against}}(+{{against}} against){{/against}}</span>
                     </a>
-                    {{/winner}}
-                    {{/data.playerResults}}
+                    {{/data.losers}}
                 </div>
             </div>
         </div>

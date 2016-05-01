@@ -112,41 +112,40 @@ exports.getGamesByPlayerId = function (playerId) {
     return contentLib.query({
         start: 0,
         count: -1,
-        query: "data.playerResults.playerID = '" + playerId + "'",
+        query: "data.winners.playerId = '" + playerId + "' OR data.losers.playerId = '" + playerId + "'",
         contentTypes: [app.name + ":game"],
         sort: "data.date DESC, displayName DESC"
     }).hits;
 };
 
 exports.getGamesByTeam = function (team, won) {
-    return exports.getGames().filter(function (game) {
-        var nbWinnerTeamPlayers = 0;
-        var nbLoserTeamPlayers = 0;
-        game.data.playerResults.forEach(function (playerResult) {
-            if (playerResult.playerId == team.data.playerIds[0] || playerResult.playerId == team.data.playerIds[1]) {
-                if (playerResult.winner) {
-                    nbWinnerTeamPlayers++;
-                } else {
-                    nbLoserTeamPlayers++;
-                }
-            }
-        });
+    var winnersQuery = "data.winners.playerId = '" + team.data.playerIds[0] + "' AND data.winners.playerId = '" + team.data.playerIds[1] +
+                       "'";
+    var losersQuery = "data.losers.playerId = '" + team.data.playerIds[0] + "' AND data.losers.playerId = '" + team.data.playerIds[1] + "'";
 
-        if (won == undefined) {
-            return nbWinnerTeamPlayers == 2 || nbLoserTeamPlayers == 2;
+    var query;
+    if (won == undefined) {
+        query = "(" + winnersQuery + ") OR (" + losersQuery + ")";
+    } else {
+        if (won) {
+            query = winnersQuery;
         } else {
-            if (won) {
-                return nbWinnerTeamPlayers == 2;
-            } else {
-                return nbLoserTeamPlayers == 2;
-            }
+            query = losersQuery;
         }
-    });
+    }
+
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        query: query,
+        contentTypes: [app.name + ":game"],
+        sort: "data.date DESC, displayName DESC"
+    }).hits;
 };
 
 exports.getTeamGames = function () {
     return exports.getGames().filter(function (game) {
-        return game.data.playerResults.length == 4;
+        return game.data.winners.length > 1;
     });
 };
 
@@ -201,40 +200,54 @@ exports.generatePlayerStats = function (player) {
 
     games.forEach(function (game) {
         var nbAllGoalsForCurrentGame = 0;
-        var currentGamePlayed = false
-        var playerResults = exports.toArray(game.data.playerResults);
-        playerResults.forEach(function (playerResult) {
+        var currentGamePlayed = false;
+        var winnersResults = exports.toArray(game.data.winners);
+        winnersResults.forEach(function (playerResult) {
+            if (playerResult.playerId == player._id) {
+                player.gen.nbGames++;
+                player.gen.nbGamesWon++;
+                currentGamePlayed = true;
+                player.gen.nbGoalsScored += playerResult.score;
+
+                player.gen.nbGoalsAgainst += playerResult.against || 0;
+
+                if (winnersResults.length == 1) {
+                    player.gen.nbGamesSolo++;
+                    player.gen.nbGoalsScoredSolo += playerResult.score;
+                    player.gen.nbGamesWonSolo++;
+                } else if (winnersResults.length == 2) {
+                    player.gen.nbGamesTeam++;
+                    player.gen.nbGoalsScoredTeam += playerResult.score;
+                    player.gen.nbGamesWonTeam++;
+                }
+            }
+            nbAllGoalsForCurrentGame += playerResult.score;
+        });
+
+        var losersResults = exports.toArray(game.data.losers);
+        losersResults.forEach(function (playerResult) {
             if (playerResult.playerId == player._id) {
                 player.gen.nbGames++;
                 currentGamePlayed = true;
                 player.gen.nbGoalsScored += playerResult.score;
+
                 player.gen.nbGoalsAgainst += playerResult.against || 0;
 
-                if (playerResult.winner) {
-                    player.gen.nbGamesWon++;
-                }
-
-                if (playerResults.length == 2) {
+                if (losersResults.length == 1) {
                     player.gen.nbGamesSolo++;
                     player.gen.nbGoalsScoredSolo += playerResult.score;
-                    if (playerResult.winner) {
-                        player.gen.nbGamesWonSolo++;
-                    }
-                } else if (playerResults.length == 4) {
+                } else if (losersResults.length == 2) {
                     player.gen.nbGamesTeam++;
                     player.gen.nbGoalsScoredTeam += playerResult.score;
-                    if (playerResult.winner) {
-                        player.gen.nbGamesWonTeam++;
-                    }
                 }
             }
             nbAllGoalsForCurrentGame += playerResult.score;
         });
 
         if (currentGamePlayed) {
-            if (playerResults.length == 2) {
+            if (winnersResults.length == 1) {
                 player.gen.nbAllGoalsSolo += nbAllGoalsForCurrentGame;
-            } else if (playerResults.length == 4) {
+            } else {
                 player.gen.nbAllGoalsTeam += nbAllGoalsForCurrentGame;
             }
         }
@@ -269,18 +282,19 @@ exports.generateGameBasicStats = function (game) {
         losers: 0
     };
 
-    var playerResults = exports.toArray(game.data.playerResults);
-    playerResults.forEach(function (playerResult) {
-        if (playerResult.winner) {
-            game.gen.score.winners += playerResult.score;
-            if (playerResult.against) {
-                game.gen.score.losers += playerResult.against;
-            }
-        } else {
-            game.gen.score.losers += playerResult.score;
-            if (playerResult.against) {
-                game.gen.score.winners += playerResult.against;
-            }
+    var winnerResults = exports.toArray(game.data.winners);
+    winnerResults.forEach(function (playerResult) {
+        game.gen.score.winners += playerResult.score;
+        if (playerResult.against) {
+            game.gen.score.losers += playerResult.against;
+        }
+    });
+
+    var loserResults = exports.toArray(game.data.losers);
+    loserResults.forEach(function (playerResult) {
+        game.gen.score.losers += playerResult.score;
+        if (playerResult.against) {
+            game.gen.score.winners += playerResult.against;
         }
     });
 }
@@ -288,8 +302,7 @@ exports.generateGameBasicStats = function (game) {
 exports.generateGameStats = function (game) {
     exports.generateGameBasicStats(game);
 
-    var playerResults = exports.toArray(game.data.playerResults);
-    playerResults.forEach(function (playerResult) {
+    function doGenerateGameStats(playerResult) {
         var playerContent = contentLib.get({
             key: playerResult.playerId
         });
@@ -300,7 +313,10 @@ exports.generateGameStats = function (game) {
         exports.generatePageUrl(playerContent);
         playerResult.gen.pictureUrl = playerContent.gen.pictureUrl;
         playerResult.gen.pageUrl = playerContent.gen.pageUrl;
-    });
+    }
+
+    exports.toArray(game.data.winners).forEach(doGenerateGameStats);
+    exports.toArray(game.data.losers).forEach(doGenerateGameStats);
 }
 
 
