@@ -129,8 +129,10 @@ var GAME = (function () {
 
     onSelectGoal = function (e) {
         if (!gameStarted || (playerSelected == -1)) {
-            singlesGame = !singlesGame;
-            $('#player2,#player4').toggle(!singlesGame);
+            if (!gameStarted) {
+                singlesGame = !singlesGame;
+                $('#player2,#player4').toggle(!singlesGame);
+            }
             return;
         }
         var tid = playerSelected < 2 ? TEAM1 : TEAM2;
