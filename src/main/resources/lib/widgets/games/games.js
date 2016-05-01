@@ -1,6 +1,4 @@
-var contentLib = require('/lib/xp/content');
 var mustacheLib = require('/lib/xp/mustache');
-var portalLib = require('/lib/xp/portal');
 var foosLib = require('/lib/foos');
 
 
@@ -12,6 +10,11 @@ exports.render = function (games) {
 
         game.gen.score.winners = game.gen.score.winners.toFixed();
         game.gen.score.losers = game.gen.score.losers.toFixed();
+        foosLib.toArray(game.data.winners).
+            concat(foosLib.toArray(game.data.losers)).
+            forEach(function (playerResult) {
+                playerResult.against = playerResult.against > 0 ? playerResult.against : undefined;
+            });
     });
 
     games = games.
