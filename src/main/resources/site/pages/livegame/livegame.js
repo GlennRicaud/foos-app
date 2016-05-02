@@ -60,7 +60,9 @@ var saveGame = function (req) {
         data: {
             date: formatIsoDate(new Date()),
             winners: playerResults.winners,
-            losers: playerResults.losers
+            losers: playerResults.losers,
+            goals: playerResults.goals,
+            goalsAgainst: playerResults.goalsAgainst
         }
     });
 

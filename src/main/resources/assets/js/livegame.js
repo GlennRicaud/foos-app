@@ -23,9 +23,12 @@ var GAME = (function () {
     var gamePlayersDivs = ['player1', 'player2', 'player3', 'player4'];
     var gameStarted = false;
     var gameEnded = false;
+    var initTime;
     var playerSelected = -1;
     var gameSavedUrl;
     var singlesGame = false;
+    var goals = [];
+    var goalsAgainst = [];
 
     toggleRight = function (show) {
         $('#player3, #player4, #goal-right').toggle(show);
@@ -77,6 +80,16 @@ var GAME = (function () {
     onFieldClick = function () {
         if (gameSavedUrl) {
             window.location.href = gameSavedUrl;
+        }
+    };
+
+    addGoal = function (player, against) {
+        var offsetSeconds = Math.abs((new Date().getTime() - initTime.getTime()) / 1000);
+        var goalInfo = {playerId: player.id, time: offsetSeconds};
+        if (against) {
+            goalsAgainst.push(goalInfo);
+        } else {
+            goals.push(goalInfo);
         }
     };
 
@@ -139,11 +152,13 @@ var GAME = (function () {
         var scorerTeam = teams[tid];
         var receiverTeam = teams[(tid + 1) % 2];
         var player = players[gamePlayers[playerSelected]];
+        var against = false;
 
         if ($(this).get(0).id === 'goal-left') {
             if (tid === TEAM1) {
                 receiverTeam.score += 1;
                 player.against += 1;
+                against = true;
             } else {
                 scorerTeam.score += 1;
                 player.goals += 1;
@@ -155,8 +170,10 @@ var GAME = (function () {
             } else {
                 receiverTeam.score += 1;
                 player.against += 1;
+                against = true;
             }
         }
+        addGoal(player, against);
 
         showPlayer(playerSelected);
         showScore();
@@ -186,6 +203,7 @@ var GAME = (function () {
         showScore();
 
         gameStarted = true;
+        initTime = new Date();
 
         saveSelectedPlayers();
     };
@@ -251,6 +269,8 @@ var GAME = (function () {
         }
         data.winners = winners;
         data.losers = losers;
+        data.goals = goals;
+        data.goalsAgainst = goalsAgainst;
 
         $.ajax({
             url: postUrl,
