@@ -69,25 +69,9 @@
           <description>Time offset since the beginning of the game, in seconds</description>
           <occurrences minimum="1" maximum="1"/>
         </input>
-      </items>
-      <occurrences minimum="0" maximum="0"/>
-    </item-set>
-    <item-set name="goalsAgainst">
-      <label>Goals Against</label>
-      <items>
-        <input type="ContentSelector" name="playerId">
-          <label>Player</label>
-          <occurrences minimum="1" maximum="1"/>
-          <config>
-            <relationship-type>system:reference</relationship-type>
-            <allow-content-type>player</allow-content-type>
-            <allowPath>${site}/players/</allowPath>
-          </config>
-        </input>
-        <input type="Long" name="time">
-          <label>Time (sec)</label>
-          <description>Time offset since the beginning of the game, in seconds</description>
-          <occurrences minimum="1" maximum="1"/>
+        <input type="CheckBox" name="against">
+          <label>Against</label>
+          <occurrences minimum="0" maximum="1"/>
         </input>
       </items>
       <occurrences minimum="0" maximum="0"/>
