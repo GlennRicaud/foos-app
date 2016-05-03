@@ -346,6 +346,10 @@ exports.toArray = function (object) {
     return [object];
 }
 
+exports.concat = function (object1, object2) {
+    return exports.toArray(object1).concat(exports.toArray(object2));
+}
+
 exports.toPercentageRatio = function (numerator, denominator) {
     return Math.floor(numerator * 100 / (denominator > 0 ? denominator : 1))
 }
