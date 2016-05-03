@@ -85,12 +85,8 @@ var GAME = (function () {
 
     addGoal = function (player, against) {
         var offsetSeconds = Math.abs((new Date().getTime() - initTime.getTime()) / 1000);
-        var goalInfo = {playerId: player.id, time: offsetSeconds};
-        if (against) {
-            goalsAgainst.push(goalInfo);
-        } else {
-            goals.push(goalInfo);
-        }
+        var goalInfo = {playerId: player.id, time: offsetSeconds, against: against};
+        goals.push(goalInfo);
     };
 
     showPlayers = function () {
@@ -270,7 +266,6 @@ var GAME = (function () {
         data.winners = winners;
         data.losers = losers;
         data.goals = goals;
-        data.goalsAgainst = goalsAgainst;
 
         $.ajax({
             url: postUrl,
