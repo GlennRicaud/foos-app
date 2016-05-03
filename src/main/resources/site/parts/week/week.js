@@ -10,7 +10,7 @@ exports.get = function (req) {
     var games = foosLib.getGamesByWeekPath(portalLib.getContent()._path);
     var view = resolve('week.html');
     var body = mustacheLib.render(view, {
-        gamesWidget: gamesWidgetLib.render(games)
+        gamesWidget: gamesWidgetLib.render(games, true)
     });
     return {
         body: body

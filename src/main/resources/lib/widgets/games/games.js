@@ -3,7 +3,7 @@ var foosLib = require('/lib/foos');
 
 
 // Handle the GET request
-exports.render = function (games) {
+exports.render = function (games, detailsButton) {
     games.forEach(function (game) {
         foosLib.generateGameStats(game);
         foosLib.generateGameComments(game);
@@ -15,6 +15,9 @@ exports.render = function (games) {
             forEach(function (playerResult) {
                 playerResult.against = playerResult.against > 0 ? playerResult.against : undefined;
             });
+        if (detailsButton && game.data.goals) {
+            foosLib.generatePageUrl(game);
+        }
     });
 
     games = games.

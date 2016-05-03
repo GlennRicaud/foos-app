@@ -35,6 +35,11 @@
         {{#gen.comments}}
         <span class="foos-game-comment">{{gen.authorName}}: {{data.comment}}{{#data.tags}} #{{.}}{{/data.tags}}</span>
         {{/gen.comments}}
+        {{#gen.pageUrl}}
+        <a class="foos-game-details-link" href="{{gen.pageUrl}}">
+            <span>Details...</span>
+        </a>
+        {{/gen.pageUrl}}
     </div>
 </div>
 {{/games}}

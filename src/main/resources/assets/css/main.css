@@ -39,6 +39,7 @@ body {
 .foos-game-details,
 .foos-game-sub-details,
 .foos-game-sub-details-players,
+.foos-game-details-link,
 .foos-player-link,
 .foos-team-link,
 .foos-week,
@@ -71,7 +72,8 @@ div.foos-cell-text {
 #foos-main,
 .foos-part-title,
 #foos-players .foos-player-link,
-.foos-week {
+.foos-week,
+.foos-game-details-link {
     justify-content: center;
 }
 
@@ -108,7 +110,8 @@ div.foos-cell-text {
 
 #foos-nav,
 .foos-header,
-.foos-part-title {
+.foos-part-title,
+.foos-game-details-link {
     background-color: #43A047;
     color: #ffffff;
 }
@@ -125,7 +128,7 @@ body, #foos-nav > *:hover, a {
     background-color: #C8E6C9;
 }
 
-.foos-part {
+.foos-part, .foos-game-details-link {
     border: 5px solid #43A047;
     border-radius: 5px;
 }
