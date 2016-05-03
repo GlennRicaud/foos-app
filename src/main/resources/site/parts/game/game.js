@@ -10,6 +10,32 @@ exports.get = function (req) {
 
     function generateDetails(game) {
 
+        function generateComment() {
+            var playerDisplayName = playersById[goal.playerId].displayName;
+            if (goal.against) {
+                return playerDisplayName + " seems disoriented and scores against himself! ";
+            }
+
+            if (i == 0) {
+                return "First blood! " + playerDisplayName + " scores the first goal.";
+            }
+
+            if (i == (goals.length - 1)) {
+                return "The End! " + playerDisplayName + " scores and ends the game.";
+            }
+
+            var delta = goal.time - previousGoal.time;
+            if (delta < 10) {
+                return "Quick shot! " + playerDisplayName + " scores in only " + delta + " seconds!";
+            }
+
+            if (goal.playerId === previousGoal.playerId) {
+                return "Again? " + playerDisplayName + " scores again!";
+            }
+
+            return playerDisplayName + " scores.";
+        }
+
         if (!game.data.goals) {
             return undefined;
         }
@@ -28,38 +54,9 @@ exports.get = function (req) {
         var comments = [];
         for (var i = 0; i < goals.length; i++) {
             var goal = goals[i];
-            var commentTime = Math.floor(goal.time / 60) + "′" + (goal.time % 60) + "′′: ";
-            var playerDisplayName = playersById[goal.playerId].displayName;
-
-            if (goal.against) {
-                comments.push(commentTime + playerDisplayName + " seems disoriented and scores against himself! ");
-                continue;
-            }
-
-            if (i == 0) {
-                comments.push(commentTime + "First blood! " + playerDisplayName + " scores the first goal.");
-                continue;
-            }
-
-            if (i == (goals.length - 1)) {
-                comments.push(commentTime + "The End! " + playerDisplayName + " scores and ends the game.");
-                continue;
-            }
-
-            var delta = goal.time - goals[i - 1].time;
-            if (delta < 10) {
-                comments.push(commentTime + "Quick shot! " + playerDisplayName + " scores in only " + delta + " seconds!");
-                continue;
-            }
-
-            if (goal.playerId === goals[i - 1].playerId) {
-                comments.push(commentTime + "Again? " + playerDisplayName + " scores again!");
-                continue;
-            }
-
-
-            comments.push(commentTime + playerDisplayName + " scores.");
-
+            var commentTime = Math.floor(goal.time / 60) + "′" + (goal.time % 60) + "′′";
+            comments.push({time: commentTime, text: generateComment()});
+            var previousGoal = goal;
         }
 
         return {
