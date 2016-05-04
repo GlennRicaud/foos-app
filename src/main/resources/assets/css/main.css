@@ -251,8 +251,31 @@ ul {
 }
 
 
+/** test on formatting the replay, just revert or change it */
 
+.foos-game-replay {
+    display: flex;
+}
 
+.foos-game-goal {
+    display: flex;
+    justify-content: flex-start;
+}
 
+.foos-game-replay.winner {
+    color: #43A047;
+    background-color: #ffffff;
+}
 
+.foos-game-replay.loser {
+    color: #43A047;
+    background-color: #fcfcfc;
+}
 
+.foos-game-goal .foos-time {
+    padding: 0.5em 1em;
+}
+
+.foos-game-goal .scoreImagePlaceholder {
+    width: 20px;
+}

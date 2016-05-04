@@ -9,7 +9,23 @@
         </div>
         <div class="foos-part-body">
             {{#comments}}
-            <span>{{time}}: {{text}}</span>
+            <div class="foos-game-replay {{team}}">
+                <div class="foos-time">{{time}}</div>
+                <div class="foos-game-goal">
+                    {{#winnerImg}}
+                    <img src="{{winnerImg}}"/>
+                    {{/winnerImg}}
+                    {{^winnerImg}}
+                    <span class="scoreImagePlaceholder"></span>
+                    {{/winnerImg}}
+
+                    <div class="foos-text">{{text}}</div>
+
+                    {{#loserImg}}
+                    <img src="{{loserImg}}"/>
+                    {{/loserImg}}
+                </div>
+            </div>
             {{/comments}}
         </div>
     </div>
