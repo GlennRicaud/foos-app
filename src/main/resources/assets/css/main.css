@@ -257,9 +257,9 @@ ul {
     display: flex;
 }
 
-.foos-game-goal {
+.foos-replay-comment {
     display: flex;
-    justify-content: flex-start;
+    flex: 1;
 }
 
 .foos-game-replay.winner {
@@ -272,10 +272,15 @@ ul {
     background-color: #fcfcfc;
 }
 
-.foos-game-goal .foos-time {
-    padding: 0.5em 1em;
+.foos-game-replay .foos-time {
+    align-self: center;
 }
 
-.foos-game-goal .scoreImagePlaceholder {
+.foos-replay-comment .foos-replay-comment-text {
+    padding: 0.5em 1em;
+    flex: 1;
+}
+
+.foos-replay-comment .foos-replay-image-placeholder {
     width: 20px;
 }

@@ -11,18 +11,21 @@
             {{#comments}}
             <div class="foos-game-replay {{team}}">
                 <div class="foos-time">{{time}}</div>
-                <div class="foos-game-goal">
+                <div class="foos-replay-comment">
                     {{#winnerImg}}
                     <img src="{{winnerImg}}"/>
                     {{/winnerImg}}
                     {{^winnerImg}}
-                    <span class="scoreImagePlaceholder"></span>
+                    <span class="foos-replay-image-placeholder"></span>
                     {{/winnerImg}}
 
-                    <div class="foos-text">{{text}}</div>
+                    <div class="foos-replay-comment-text">{{text}}</div>
 
                     {{#loserImg}}
                     <img src="{{loserImg}}"/>
+                    {{/loserImg}}
+                    {{^loserImg}}
+                    <span class="foos-replay-image-placeholder"></span>
                     {{/loserImg}}
                 </div>
             </div>
