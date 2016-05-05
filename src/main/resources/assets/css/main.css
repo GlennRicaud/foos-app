@@ -272,8 +272,27 @@ ul {
     background-color: #fcfcfc;
 }
 
-.foos-game-replay .foos-time {
+.foos-game-replay .foos-replay-time {
     align-self: center;
+}
+
+.foos-game-replay .foos-replay-score {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 14px;
+    align-self: center;
+    color: #060;
+}
+
+.foos-game-replay .foos-replay-score span {
+    padding: 0;
+}
+
+.foos-game-replay span.foos-replay-loser {
+    color: darkred;
+}
+
+.foos-game-replay span.foos-replay-winner {
+    color: darkred;
 }
 
 .foos-replay-comment .foos-replay-comment-text {

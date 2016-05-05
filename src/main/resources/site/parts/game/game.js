@@ -57,7 +57,7 @@ exports.get = function (req) {
             return goal1.time - goal2.time;
         });
 
-        var comments = [];
+        var comments = [], winnerScore = 0, loserScore = 0;
         for (var i = 0; i < goals.length; i++) {
             var goal = goals[i];
             var commentTime = formatTime(goal.time);
@@ -66,7 +66,30 @@ exports.get = function (req) {
             var winnerImg = player.gen.winner ? playerImg : undefined;
             var loserImg = player.gen.winner ? undefined : playerImg;
             var team = player.gen.winner ? 'winner' : 'loser';
-            comments.push({time: commentTime, text: generateComment(), winnerImg: winnerImg, loserImg: loserImg, team: team});
+            if (player.gen.winner) {
+                if (!goal.against) {
+                    winnerScore++;
+                } else {
+                    loserScore++;
+                }
+            } else if (!player.gen.winner) {
+                if (goal.against) {
+                    winnerScore++;
+                } else {
+                    loserScore++;
+                }
+            }
+            comments.push({
+                time: commentTime,
+                text: generateComment(),
+                winnerImg: winnerImg,
+                loserImg: loserImg,
+                team: team,
+                winnerScore: formatScore(winnerScore),
+                loserScore: formatScore(loserScore),
+                winnerTeamOnTop: winnerScore > loserScore ? 'foos-replay-winner' : '',
+                loserTeamOnTop: winnerScore < loserScore ? 'foos-replay-loser' : ''
+            });
             var previousGoal = goal;
         }
 
@@ -91,6 +114,10 @@ var formatTime = function (time) {
     var min = Math.floor(time / 60);
     var sec = time % 60;
     return (min < 10 ? "0" : "") + min + "′" + (sec < 10 ? "0" : "") + sec + "′′";
+};
+
+var formatScore = function (score) {
+    return (score < 10 ? "&nbsp;" : "") + score;
 };
 
 var getMiniPlayerImage = function (player, size) {
