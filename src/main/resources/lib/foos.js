@@ -220,85 +220,44 @@ exports.generatePictureUrl = function (content, size) {
 exports.generatePlayerStats = function (player) {
     var games = exports.getGamesByPlayerId(player._id);
 
-    player.gen = player.gen || {};
-    player.gen.nbGames = 0;
-    player.gen.nbGamesWon = 0;
-    player.gen.nbGoalsScored = 0;
-    player.gen.nbGoalsScoredSolo = 0;
-    player.gen.nbGoalsScoredTeam = 0;
-    player.gen.nbGoalsAgainst = 0;
-    player.gen.nbGamesSolo = 0;
-    player.gen.nbGamesWonSolo = 0;
-    player.gen.nbGamesTeam = 0;
-    player.gen.nbGamesWonTeam = 0;
-    player.gen.nbAllGoalsSolo = 0;
-    player.gen.nbAllGoalsTeam = 0;
+    player.stats = {
+        nbGames: {
+            solo: 0,
+            team: 0
+        },
+        nbWonGames: {
+            solo: 0,
+            team: 0
+        },
+        nbGoals: {
+            solo: 0,
+            team: 0
+        }
+    };
+
 
     games.forEach(function (game) {
-        var nbAllGoalsForCurrentGame = 0;
-        var currentGamePlayed = false;
-        var winnersResults = exports.toArray(game.data.winners);
-        winnersResults.forEach(function (playerResult) {
-            if (playerResult.playerId == player._id) {
-                player.gen.nbGames++;
-                player.gen.nbGamesWon++;
-                currentGamePlayed = true;
-                player.gen.nbGoalsScored += playerResult.score;
-
-                player.gen.nbGoalsAgainst += playerResult.against || 0;
-
-                if (winnersResults.length == 1) {
-                    player.gen.nbGamesSolo++;
-                    player.gen.nbGoalsScoredSolo += playerResult.score;
-                    player.gen.nbGamesWonSolo++;
-                } else if (winnersResults.length == 2) {
-                    player.gen.nbGamesTeam++;
-                    player.gen.nbGoalsScoredTeam += playerResult.score;
-                    player.gen.nbGamesWonTeam++;
-                }
+        if (exports.isTeamGame(game)) {
+            player.stats.nbGames.team++;
+            if (exports.isWinner(game, player._id)) {
+                player.stats.nbWonGames.team++;
             }
-            nbAllGoalsForCurrentGame += playerResult.score;
-        });
-
-        var losersResults = exports.toArray(game.data.losers);
-        losersResults.forEach(function (playerResult) {
-            if (playerResult.playerId == player._id) {
-                player.gen.nbGames++;
-                currentGamePlayed = true;
-                player.gen.nbGoalsScored += playerResult.score;
-
-                player.gen.nbGoalsAgainst += playerResult.against || 0;
-
-                if (losersResults.length == 1) {
-                    player.gen.nbGamesSolo++;
-                    player.gen.nbGoalsScoredSolo += playerResult.score;
-                } else if (losersResults.length == 2) {
-                    player.gen.nbGamesTeam++;
-                    player.gen.nbGoalsScoredTeam += playerResult.score;
-                }
-            }
-            nbAllGoalsForCurrentGame += playerResult.score;
-        });
-
-        if (currentGamePlayed) {
-            if (winnersResults.length == 1) {
-                player.gen.nbAllGoalsSolo += nbAllGoalsForCurrentGame;
-            } else {
-                player.gen.nbAllGoalsTeam += nbAllGoalsForCurrentGame;
+        } else {
+            player.stats.nbGames.solo++;
+            if (exports.isWinner(game, player._id)) {
+                player.stats.nbWonGames.solo++;
             }
         }
     });
 
-    player.gen.anySolo = player.gen.nbGamesSolo > 0;
-    player.gen.anyTeam = player.gen.nbGamesTeam > 0;
-
-    player.gen.ratioGamesWon = exports.toPercentageRatio(player.gen.nbGamesWon, player.gen.nbGames);
-    player.gen.ratioGamesWonSolo = exports.toPercentageRatio(player.gen.nbGamesWonSolo, player.gen.nbGamesSolo);
-    player.gen.ratioGamesWonTeam = exports.toPercentageRatio(player.gen.nbGamesWonTeam, player.gen.nbGamesTeam);
-    player.gen.ratioGamesSolo = exports.toPercentageRatio(player.gen.nbGamesSolo, player.gen.nbGames);
-    player.gen.ratioGoalsAgainst = exports.toPercentageRatio(player.gen.nbGoalsAgainst, player.gen.nbGoalsScored);
-    player.gen.ratioGoalsScoredSolo = exports.toPercentageRatio(player.gen.nbGoalsScoredSolo, player.gen.nbAllGoalsSolo);
-    player.gen.ratioGoalsScoredTeam = exports.toPercentageRatio(player.gen.nbGoalsScoredTeam, player.gen.nbAllGoalsTeam);
+    for (var statName in player.stats) {
+        var stat = player.stats[statName];
+        stat.total = stat.solo + stat.team;
+        for (var subStatName in stat) {
+            var subStat = stat[subStatName];
+            subStat = subStat.toFixed(0);
+        }
+    }
 }
 
 exports.generateTeamStats = function (team) {
@@ -374,6 +333,15 @@ exports.generateGameComments = function (game) {
 
 exports.isTeamGame = function (game) {
     return game.data.winners.length == 2;
+}
+
+exports.isWinner = function (game, playerId) {
+    if (exports.isTeamGame(game)) {
+        return game.data.winners.map(function (playerResult) {
+                return playerResult.playerId;
+            }).indexOf(playerId) > -1;
+    }
+    return game.data.winners.playerId == playerId;
 }
 
 /*******************************************************
