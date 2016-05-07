@@ -100,12 +100,15 @@ a {
 .foos-header,
 .foos-part-title,
 .foos-game-details-link {
-    background-color: #43A047;
+    background-color: #3d9241;
     color: #ffffff;
 }
 
-body, #foos-nav > *:hover, a {
-    color: #2E7D32;
+body,
+#foos-nav > *:hover,
+.foos-game-details-link:hover,
+a {
+    color: #2c682f;
 }
 
 #foos-nav > a {
@@ -117,7 +120,7 @@ body, #foos-nav > *:hover, a {
 }
 
 .foos-part, .foos-game-details-link {
-    border: 5px solid #43A047;
+    border: 5px solid #3d9241;
     border-radius: 5px;
 }
 
