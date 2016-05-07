@@ -38,6 +38,23 @@ exports.getPlayers = function () {
     }).hits;
 };
 
+
+exports.getPlayersByGame = function (game, winners) {
+
+    var playerResults;
+    if (winners == undefined) {
+        playerResults = exports.concat(game.data.winners, game.data.losers);
+    } else if (winners) {
+        playerResults = exports.toArray(game.data.winners);
+    } else {
+        playerResults = exports.toArray(game.data.losers);
+    }
+
+    return playerResults.map(function (playerResult) {
+        return exports.getContentByKey(playerResult.playerId);
+    });
+};
+
 exports.getTeams = function () {
     return contentLib.query({
         start: 0,
@@ -47,14 +64,33 @@ exports.getTeams = function () {
     }).hits;
 };
 
-exports.getTeamByPlayerIds = function (playerIds) {
-    return contentLib.query({
+exports.getTeamByPlayerIds = function (playerIds, createDummy) {
+    var team = contentLib.query({
         start: 0,
         count: 1,
         query: "data.playerIds = '" + playerIds[0] + "' AND data.playerIds = '" + playerIds[1] + "'",
         contentTypes: [app.name + ":team"],
         sort: "displayName ASC"
     }).hits[0];
+
+    exports.log("test", {"team": team, "!team": !team, "createDummy": createDummy});
+    if (!team && createDummy) {
+        var player1DisplayName = exports.getContentByKey(playerIds[0]).displayName;
+        var player2DisplayName = exports.getContentByKey(playerIds[1]).displayName;
+        team = {
+            displayName: "Team " + player1DisplayName + player2DisplayName
+        }
+    }
+
+    return team;
+};
+
+exports.getTeamByGame = function (game, winning, createDummy) {
+    var playerResults = winning ? game.data.winners : game.data.losers;
+    var playerIds = playerResults.map(function (playerResult) {
+        return playerResult.playerId
+    });
+    return exports.getTeamByPlayerIds(playerIds, createDummy);
 };
 
 exports.getLatestModificationTime = function () {

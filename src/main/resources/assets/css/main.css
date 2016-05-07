@@ -46,7 +46,12 @@ body {
 .foos-table,
 .foos-row,
 .foos-cell-team-name,
-div.foos-cell-text {
+div.foos-cell-text,
+#foos-game-replay-title,
+.foos-game-replay-display,
+.foos-game-replay-title-team,
+.foos-game-replay-display-team,
+.foos-game-replay-goal {
     display: flex;
 }
 
@@ -58,7 +63,8 @@ div.foos-cell-text {
 .foos-release-body,
 .foos-game-sub-details,
 .foos-game-sub-details-players,
-.foos-table {
+.foos-table,
+.foos-game-replay-display-team {
     flex-direction: column;
 }
 
@@ -73,7 +79,9 @@ div.foos-cell-text {
 .foos-part-title,
 #foos-players .foos-player-link,
 .foos-week,
-.foos-game-details-link {
+.foos-game-details-link,
+.foos-game-replay-title-team,
+.foos-game-replay-display-team {
     justify-content: center;
 }
 
@@ -250,56 +258,16 @@ ul {
     flex: 0 0 3em;
 }
 
+/***************************************************
+** Game replay
+****************************************************/
 
-/** test on formatting the replay, just revert or change it */
-
-.foos-game-replay {
-    display: flex;
+.foos-game-replay-title-team,
+.foos-game-replay-goal-side,
+.foos-game-replay-display-team {
+    flex: 1 0 20%;
 }
 
-.foos-replay-comment {
-    display: flex;
-    flex: 1;
-}
 
-.foos-game-replay.winner {
-    color: #43A047;
-    background-color: #ffffff;
-}
 
-.foos-game-replay.loser {
-    color: #43A047;
-    background-color: #fcfcfc;
-}
 
-.foos-game-replay .foos-replay-time {
-    align-self: center;
-}
-
-.foos-game-replay .foos-replay-score {
-    font-family: "Lucida Console", Monaco, monospace;
-    font-size: 14px;
-    align-self: center;
-    color: #060;
-}
-
-.foos-game-replay .foos-replay-score span {
-    padding: 0;
-}
-
-.foos-game-replay span.foos-replay-loser {
-    color: darkred;
-}
-
-.foos-game-replay span.foos-replay-winner {
-    color: darkred;
-}
-
-.foos-replay-comment .foos-replay-comment-text {
-    padding: 0.5em 1em;
-    flex: 1;
-}
-
-.foos-replay-comment .foos-replay-image-placeholder {
-    width: 20px;
-}

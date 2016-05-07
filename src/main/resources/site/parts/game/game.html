@@ -1,39 +1,52 @@
-<div>
+<div id>
     {{{gamesWidget}}}
 
 
-    {{#details}}
+    {{#gameDetails}}
     <div class="foos-part">
         <div class="foos-part-title">
             <span>Replay</span>
         </div>
         <div class="foos-part-body">
-            {{#comments}}
-            <div class="foos-game-replay {{team}}">
-                <div class="foos-replay-time">{{time}}</div>
-                <div class="foos-replay-comment">
-                    {{#winnerImg}}
-                    <img src="{{winnerImg}}"/>
-                    {{/winnerImg}}
-                    {{^winnerImg}}
-                    <span class="foos-replay-image-placeholder"></span>
-                    {{/winnerImg}}
-
-                    <div class="foos-replay-comment-text">{{text}}</div>
-
-                    {{#loserImg}}
-                    <img src="{{loserImg}}"/>
-                    {{/loserImg}}
-                    {{^loserImg}}
-                    <span class="foos-replay-image-placeholder"></span>
-                    {{/loserImg}}
+            <div id="foos-game-replay-title">
+                <div class="foos-game-replay-title-team">
+                    <span>{{winnersDisplayName}}</span>
                 </div>
-                <div class="foos-replay-score"><span class="{{winnerTeamOnTop}}">{{{winnerScore}}}</span> - <span
-                        class="{{loserTeamOnTop}}">{{{loserScore}}}</span>
+                <span>VS</span>
+
+                <div class="foos-game-replay-title-team">
+                    <span>{{losersDisplayName}}</span>
                 </div>
             </div>
-            {{/comments}}
+            <div class="foos-game-replay-display">
+                <div class="foos-game-replay-display-team">
+                    {{#winners}}
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <img src="{{gen.pictureUrl}}"/>
+                        <span>{{displayName}}</span>
+                    </a>
+                    {{/winners}}
+                </div>
+                <img src="{{tableImgUrl}}">
+
+                <div class="foos-game-replay-display-team">
+                    {{#losers}}
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <img src="{{gen.pictureUrl}}"/>
+                        <span>{{displayName}}</span>
+                    </a>
+                    {{/losers}}
+                </div>
+            </div>
+            {{#goals}}
+            <div class="foos-game-replay-goal">
+                <span class="foos-game-replay-goal-side">{{winner}}</span>
+                <span>{{score}}</span>
+                <span class="foos-game-replay-goal-side">{{loser}}</span>
+
+            </div>
+            {{/goals}}
         </div>
     </div>
-    {{/details}}
+    {{/gameDetails}}
 </div>
