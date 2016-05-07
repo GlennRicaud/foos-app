@@ -26,32 +26,11 @@ body {
 ****************************************************/
 
 /* Flex containers */
-#foos-body,
-#foos-nav,
-#foos-main,
-#foos-main-container,
-.foos-part,
-.foos-part-title,
-.foos-part-body,
-.foos-release,
-.foos-release-date,
-.foos-release-body,
-.foos-game-details,
-.foos-game-sub-details,
-.foos-game-sub-details-players,
-.foos-game-details-link,
-.foos-player-link,
-.foos-team-link,
-.foos-week,
-.foos-table,
-.foos-row,
-.foos-cell-team-name,
-div.foos-cell-text,
-#foos-game-replay-title,
-.foos-game-replay-display,
-.foos-game-replay-title-team,
-.foos-game-replay-display-team,
-.foos-game-replay-goal {
+body,
+nav,
+main,
+div,
+a {
     display: flex;
 }
 
