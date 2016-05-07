@@ -14,10 +14,24 @@
                 <span>{{losersDisplayName}}</span>
             </div>
             <div>
-                <div>Winners</div>
+                <div>
+                    {{#winners}}
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <img src="{{gen.pictureUrl}}"/>
+                        <span>{{displayName}}</span>
+                    </a>
+                    {{/winners}}
+                </div>
                 <img src="{{tableImgUrl}}">
 
-                <div>Losers</div>
+                <div>
+                    {{#losers}}
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <img src="{{gen.pictureUrl}}"/>
+                        <span>{{displayName}}</span>
+                    </a>
+                    {{/losers}}
+                </div>
             </div>
         </div>
     </div>
