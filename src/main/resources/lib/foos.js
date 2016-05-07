@@ -47,14 +47,24 @@ exports.getTeams = function () {
     }).hits;
 };
 
-exports.getTeamByPlayerIds = function (playerIds) {
-    return contentLib.query({
+exports.getTeamByPlayerIds = function (playerIds, createDummy) {
+    var team = contentLib.query({
         start: 0,
         count: 1,
         query: "data.playerIds = '" + playerIds[0] + "' AND data.playerIds = '" + playerIds[1] + "'",
         contentTypes: [app.name + ":team"],
         sort: "displayName ASC"
     }).hits[0];
+
+    if (!team && createDummy) {
+        var player1DisplayName = exports.getContentByKey(playerIds[0]).displayName;
+        var player2DisplayName = exports.getContentByKey(playerIds[1]).displayName;
+        team = {
+            displayName: "Team " + player1DisplayName + player2DisplayName
+        }
+    }
+
+    return team;
 };
 
 exports.getLatestModificationTime = function () {

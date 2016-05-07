@@ -2,16 +2,24 @@
     {{{gamesWidget}}}
 
 
-    {{#details}}
+    {{#gameDetails}}
     <div class="foos-part">
         <div class="foos-part-title">
             <span>Replay</span>
         </div>
         <div class="foos-part-body">
-            {{#comments}}
-            <span>{{time}}: {{text}}</span>
-            {{/comments}}
+            <div>
+                <span>{{winnersDisplayName}}</span>
+                <span>VS</span>
+                <span>{{losersDisplayName}}</span>
+            </div>
+            <div>
+                <div>Winners</div>
+                <img src="{{tableImgUrl}}">
+
+                <div>Losers</div>
+            </div>
         </div>
     </div>
-    {{/details}}
+    {{/gameDetails}}
 </div>

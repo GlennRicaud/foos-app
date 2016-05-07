@@ -17,15 +17,8 @@ exports.render = function (games, nbGamesThreshold) {
         //If the team is not cached
         if (!team) {
             //Retrieves the team
-            team = foosLib.getTeamByPlayerIds(playerIds);
-
-            //If the team does not exist create a dummy team
-            if (!team) {
-                team = {
-                    displayName: "Team " + foosLib.getContentByKey(playerIds[0]).displayName +
-                                 foosLib.getContentByKey(playerIds[1]).displayName
-                }
-            } else {
+            team = foosLib.getTeamByPlayerIds(playerIds, true);
+            if (team._path) {
                 foosLib.generatePictureUrl(team, 18);
                 foosLib.generatePageUrl(team);
             }
