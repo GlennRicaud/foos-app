@@ -68,7 +68,8 @@ a {
 #foos-body,
 .foos-player-link,
 .foos-team-link,
-.foos-cell-team-name {
+.foos-cell-team-name,
+.foos-game-replay-goal {
     align-items: center;
 }
 
@@ -136,6 +137,11 @@ ul {
 ** Text
 ****************************************************/
 
+@font-face {
+    font-family: 'Tagesschrift';
+    src: url('../font/ds-digi.ttf');
+}
+
 #foos-nav {
     font-size: 24px;
 }
@@ -152,6 +158,12 @@ ul {
 .foos-game-comment,
 #foos-league-details .foos-part-body {
     font-size: 14px;
+}
+
+.foos-game-replay-goal-score {
+    font-family: 'Tagesschrift', 'Georgia', serif;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 /***************************************************
@@ -246,6 +258,8 @@ ul {
 .foos-game-replay-display-team {
     flex: 1 0 0;
 }
+
+
 
 
 

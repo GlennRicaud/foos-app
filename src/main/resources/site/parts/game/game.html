@@ -6,16 +6,6 @@
             <span>First half</span>
         </div>
         <div class="foos-part-body">
-            <div class="foos-game-replay-title">
-                <div class="foos-game-replay-title-team">
-                    <span>{{winnersDisplayName}}</span>
-                </div>
-                <span>VS</span>
-
-                <div class="foos-game-replay-title-team">
-                    <span>{{losersDisplayName}}</span>
-                </div>
-            </div>
             <div class="foos-game-replay-display">
                 <div class="foos-game-replay-display-team">
                     {{#firstHalfWinners}}
@@ -39,7 +29,7 @@
             {{#firstHalfGoals}}
             <div class="foos-game-replay-goal">
                 <span class="foos-game-replay-goal-side">{{winner}}</span>
-                <span>{{score}}</span>
+                <span class="foos-game-replay-goal-score">{{score}}</span>
                 <span class="foos-game-replay-goal-side">{{loser}}</span>
 
             </div>
@@ -51,16 +41,6 @@
             <span>Second half</span>
         </div>
         <div class="foos-part-body">
-            <div class="foos-game-replay-title">
-                <div class="foos-game-replay-title-team">
-                    <span>{{winnersDisplayName}}</span>
-                </div>
-                <span>VS</span>
-
-                <div class="foos-game-replay-title-team">
-                    <span>{{losersDisplayName}}</span>
-                </div>
-            </div>
             <div class="foos-game-replay-display">
                 <div class="foos-game-replay-display-team">
                     {{#secondHalfWinners}}
@@ -84,7 +64,7 @@
             {{#secondHalfGoals}}
             <div class="foos-game-replay-goal">
                 <span class="foos-game-replay-goal-side">{{winner}}</span>
-                <span>{{score}}</span>
+                <span class="foos-game-replay-goal-score">{{score}}</span>
                 <span class="foos-game-replay-goal-side">{{loser}}</span>
 
             </div>
