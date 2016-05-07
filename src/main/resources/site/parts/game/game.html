@@ -1,4 +1,4 @@
-<div>
+<div id>
     {{{gamesWidget}}}
 
 
@@ -9,9 +9,14 @@
         </div>
         <div class="foos-part-body">
             <div id="foos-game-replay-title">
-                <span class="foos-game-replay-title-team">{{winnersDisplayName}}</span>
+                <div class="foos-game-replay-title-team">
+                    <span>{{winnersDisplayName}}</span>
+                </div>
                 <span>VS</span>
-                <span class="foos-game-replay-title-team">{{losersDisplayName}}</span>
+
+                <div class="foos-game-replay-title-team">
+                    <span>{{losersDisplayName}}</span>
+                </div>
             </div>
             <div class="foos-game-replay-display">
                 <div class="foos-game-replay-display-team">

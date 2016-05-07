@@ -68,7 +68,7 @@ function generateGameDetails(game) {
 function generateGoalsDetails(game) {
     var winnersScore = 0;
     var losersScore = 0;
-    var winnerIds = game.data.winners.map(function (playerResult) {
+    var winnerIds = foosLib.toArray(game.data.winners).map(function (playerResult) {
         return playerResult.playerId
     });
 
@@ -78,7 +78,9 @@ function generateGoalsDetails(game) {
     });
 
 
-    return game.data.goals.map(function (goal) {
+    return game.data.goals.sort(function (goal1, goal2) {
+        return goal1.time - goal2.time;
+    }).map(function (goal) {
         var winnerScored = (!goal.against && winnerIds.indexOf(goal.playerId) > -1) ||
                            (goal.against && winnerIds.indexOf(goal.playerId) == -1);
 

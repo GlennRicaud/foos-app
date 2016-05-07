@@ -49,6 +49,7 @@ body {
 div.foos-cell-text,
 #foos-game-replay-title,
 .foos-game-replay-display,
+.foos-game-replay-title-team,
 .foos-game-replay-display-team,
 .foos-game-replay-goal {
     display: flex;
@@ -79,6 +80,7 @@ div.foos-cell-text,
 #foos-players .foos-player-link,
 .foos-week,
 .foos-game-details-link,
+.foos-game-replay-title-team,
 .foos-game-replay-display-team {
     justify-content: center;
 }
@@ -263,7 +265,7 @@ ul {
 .foos-game-replay-title-team,
 .foos-game-replay-goal-side,
 .foos-game-replay-display-team {
-    flex: 1 0 30%;
+    flex: 1 0 20%;
 }
 
 
