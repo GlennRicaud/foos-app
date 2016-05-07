@@ -244,7 +244,7 @@ ul {
 .foos-game-replay-title-team,
 .foos-game-replay-goal-side,
 .foos-game-replay-display-team {
-    flex: 1 0 20%;
+    flex: 1 0 0;
 }
 
 

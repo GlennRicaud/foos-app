@@ -55,17 +55,23 @@ function generateGameDetails(game) {
         foosLib.generatePageUrl(player);
     });
 
+    var firstHalfGoals = [], secondHalfGoals = [];
+    generateGoalsDetails(game, firstHalfGoals, secondHalfGoals)
+
     return {
         winnersDisplayName: winnersDisplayName,
         losersDisplayName: losersDisplayName,
-        winners: winners,
-        losers: losers,
-        goals: generateGoalsDetails(game)
+        firstHalfWinners: winners,
+        secondHalfWinners: winners.slice(0).reverse(),
+        firstHalfLosers: losers,
+        secondHalfLosers: losers.slice(0).reverse(),
+        firstHalfGoals: firstHalfGoals,
+        secondHalfGoals: secondHalfGoals
 
     };
 }
 
-function generateGoalsDetails(game) {
+function generateGoalsDetails(game, firstHalf, secondHalf) {
     var winnersScore = 0;
     var losersScore = 0;
     var winnerIds = foosLib.toArray(game.data.winners).map(function (playerResult) {
@@ -77,10 +83,10 @@ function generateGoalsDetails(game) {
         playersById[player._id] = player;
     });
 
-
-    return game.data.goals.sort(function (goal1, goal2) {
+    var currentHalf = firstHalf;
+    game.data.goals.sort(function (goal1, goal2) {
         return goal1.time - goal2.time;
-    }).map(function (goal) {
+    }).forEach(function (goal) {
         var winnerScored = (!goal.against && winnerIds.indexOf(goal.playerId) > -1) ||
                            (goal.against && winnerIds.indexOf(goal.playerId) == -1);
 
@@ -90,18 +96,22 @@ function generateGoalsDetails(game) {
             losersScore++;
         }
 
-        var time = "(" + formatTime(goal.time) + ")";
-        var abc = playersById[goal.playerId].displayName + " scores!";
-        var winner = winnerScored ? time + " " + abc : "";
-        var loser = winnerScored ? "" : abc + " " + time;
+        var comment = playersById[goal.playerId].displayName + " scores! (" + formatTime(goal.time) +
+                      ")" + (goal.against ? " ... against himself" : "");
+        var winner = winnerScored ? comment : "";
+        var loser = winnerScored ? "" : comment;
 
 
-        return {
+        currentHalf.push({
             time: formatTime(game.time),
             winner: winner,
             score: winnersScore + " - " + losersScore,
             loser: loser
-        };
+        });
+
+        if (winnersScore >= 5 || losersScore >= 5) {
+            currentHalf = secondHalf;
+        }
     });
 }
 
