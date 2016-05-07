@@ -220,16 +220,19 @@ exports.generatePictureUrl = function (content, size) {
 exports.generatePlayerStats = function (player) {
     var games = exports.getGamesByPlayerId(player._id);
 
-    player.stats = {
+    var stats = {
         nbGames: {
+            name: "# games",
             solo: 0,
             team: 0
         },
         nbWonGames: {
+            name: "# won games",
             solo: 0,
             team: 0
         },
-        nbGoals: {
+        nbScoredGoals: {
+            name: "# scored goals",
             solo: 0,
             team: 0
         }
@@ -238,25 +241,35 @@ exports.generatePlayerStats = function (player) {
 
     games.forEach(function (game) {
         if (exports.isTeamGame(game)) {
-            player.stats.nbGames.team++;
-            if (exports.isWinner(game, player._id)) {
-                player.stats.nbWonGames.team++;
-            }
+            stats.nbGames.team++;
+            game.data.winners.forEach(function (playerResult) {
+                if (playerResult.playerId == player._id) {
+                    stats.nbWonGames.team++;
+                    stats.nbScoredGoals.team += playerResult.score;
+                }
+            });
+
         } else {
-            player.stats.nbGames.solo++;
-            if (exports.isWinner(game, player._id)) {
-                player.stats.nbWonGames.solo++;
+            stats.nbGames.solo++;
+            if (game.data.winners.playerId == player._id) {
+                stats.nbWonGames.solo++;
+                stats.nbScoredGoals.solo += game.data.winners.score;
             }
         }
     });
 
-    for (var statName in player.stats) {
-        var stat = player.stats[statName];
+    player.stats = [];
+    for (var statName in stats) {
+        var stat = stats[statName];
         stat.total = stat.solo + stat.team;
         for (var subStatName in stat) {
             var subStat = stat[subStatName];
-            subStat = subStat.toFixed(0);
+            if (!isNaN(subStat)) {
+                stat[subStatName] = subStat.toFixed(0);
+            }
         }
+
+        player.stats.push(stat);
     }
 }
 

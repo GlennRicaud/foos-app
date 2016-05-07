@@ -27,12 +27,14 @@
                     <span class="foos-cell-number">Team</span>
                     <span class="foos-cell-number">Total</span>
                 </div>
+                {{#player.stats}}
                 <div class="foos-row {{#gen.evenRow}}foos-row-even{{/gen.evenRow}}">
-                    <span class="foos-cell-text"># games</span>
-                    <span class="foos-cell-number">{{player.stats.nbGames.solo}}</span>
-                    <span class="foos-cell-number">{{player.stats.nbGames.team}}</span>
-                    <span class="foos-cell-number">{{player.stats.nbGames.total}}</span>
+                    <span class="foos-cell-text">{{name}}</span>
+                    <span class="foos-cell-number">{{solo}}</span>
+                    <span class="foos-cell-number">{{team}}</span>
+                    <span class="foos-cell-number">{{total}}</span>
                 </div>
+                {{/player.stats}}
             </div>
         </div>
     </div>

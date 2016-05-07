@@ -10,7 +10,6 @@ exports.get = function (req) {
     //Retrieves the games played
     var games = foosLib.getGamesByPlayerId(player._id);
 
-
     var view = resolve('player.html');
     var body = mustacheLib.render(view, {
         player: player,
