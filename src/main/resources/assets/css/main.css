@@ -105,9 +105,12 @@ a {
 }
 
 body,
-#foos-nav > *:hover,
-.foos-game-details-link:hover,
 a {
+    color: #327635;
+}
+
+#foos-nav > *:hover,
+.foos-game-details-link:hover {
     color: #2c682f;
 }
 
