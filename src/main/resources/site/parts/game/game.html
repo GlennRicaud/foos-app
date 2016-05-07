@@ -8,13 +8,13 @@
             <span>Replay</span>
         </div>
         <div class="foos-part-body">
-            <div>
-                <span>{{winnersDisplayName}}</span>
+            <div id="foos-game-replay-title">
+                <span class="foos-game-replay-title-team">{{winnersDisplayName}}</span>
                 <span>VS</span>
-                <span>{{losersDisplayName}}</span>
+                <span class="foos-game-replay-title-team">{{losersDisplayName}}</span>
             </div>
-            <div>
-                <div>
+            <div class="foos-game-replay-display">
+                <div class="foos-game-replay-display-team">
                     {{#winners}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
                         <img src="{{gen.pictureUrl}}"/>
@@ -24,7 +24,7 @@
                 </div>
                 <img src="{{tableImgUrl}}">
 
-                <div>
+                <div class="foos-game-replay-display-team">
                     {{#losers}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
                         <img src="{{gen.pictureUrl}}"/>
@@ -34,10 +34,10 @@
                 </div>
             </div>
             {{#goals}}
-            <div>
-                <span>{{winner}}</span>
+            <div class="foos-game-replay-goal">
+                <span class="foos-game-replay-goal-side">{{winner}}</span>
                 <span>{{score}}</span>
-                <span>{{loser}}</span>
+                <span class="foos-game-replay-goal-side">{{loser}}</span>
 
             </div>
             {{/goals}}

@@ -46,7 +46,11 @@ body {
 .foos-table,
 .foos-row,
 .foos-cell-team-name,
-div.foos-cell-text {
+div.foos-cell-text,
+#foos-game-replay-title,
+.foos-game-replay-display,
+.foos-game-replay-display-team,
+.foos-game-replay-goal {
     display: flex;
 }
 
@@ -58,7 +62,8 @@ div.foos-cell-text {
 .foos-release-body,
 .foos-game-sub-details,
 .foos-game-sub-details-players,
-.foos-table {
+.foos-table,
+.foos-game-replay-display-team {
     flex-direction: column;
 }
 
@@ -73,7 +78,8 @@ div.foos-cell-text {
 .foos-part-title,
 #foos-players .foos-player-link,
 .foos-week,
-.foos-game-details-link {
+.foos-game-details-link,
+.foos-game-replay-display-team {
     justify-content: center;
 }
 
@@ -250,8 +256,15 @@ ul {
     flex: 0 0 3em;
 }
 
+/***************************************************
+** Game replay
+****************************************************/
 
-
+.foos-game-replay-title-team,
+.foos-game-replay-goal-side,
+.foos-game-replay-display-team {
+    flex: 1 0 30%;
+}
 
 
 
