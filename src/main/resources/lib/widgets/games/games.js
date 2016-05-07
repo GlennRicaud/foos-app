@@ -8,6 +8,9 @@ exports.render = function (games, detailsButton) {
         foosLib.generateGameStats(game);
         foosLib.generateGameComments(game);
 
+        foosLib.log("game", game);
+        game.gen.winners = foosLib.isTeamGame(game) ? foosLib.getTeamByGame(game, true, true).displayName : game.data.winners.gen.name;
+        game.gen.losers = foosLib.isTeamGame(game) ? foosLib.getTeamByGame(game, false, true).displayName : game.data.losers.gen.name;
         game.gen.score.winners = game.gen.score.winners.toFixed();
         game.gen.score.losers = game.gen.score.losers.toFixed();
         foosLib.toArray(game.data.winners).

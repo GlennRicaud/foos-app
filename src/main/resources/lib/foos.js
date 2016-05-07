@@ -369,6 +369,14 @@ exports.generateGameComments = function (game) {
 }
 
 /*******************************************************
+ * Misc functions
+ *******************************************************/
+
+exports.isTeamGame = function (game) {
+    return game.data.winners.length == 2;
+}
+
+/*******************************************************
  * Generic functions
  *******************************************************/
 

@@ -166,10 +166,15 @@ ul {
     font-size: 14px;
 }
 
-.foos-game-replay-goal-score {
+.foos-game-replay-goal-score,
+.foos-game-score {
     font-family: 'Tagesschrift', 'Georgia', serif;
     font-weight: bold;
     font-size: 24px;
+}
+
+.foos-game-score {
+    font-size: 36px;
 }
 
 /***************************************************
@@ -264,6 +269,17 @@ ul {
 .foos-game-replay-display-team {
     flex: 1 0 0;
 }
+
+.foos-game-score-winners {
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.foos-game-score-losers {
+    justify-content: flex-start;
+    align-items: center;
+}
+
 
 
 

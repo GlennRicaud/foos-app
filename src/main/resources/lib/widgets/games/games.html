@@ -8,7 +8,10 @@
 
         <div class="foos-game-details">
             <div class="foos-game-sub-details">
-                <span>Winners: {{gen.score.winners}}</span>
+                <div class="foos-game-score-winners">
+                    <span class="foos-game-team">{{gen.winners}}</span>
+                    <span class="foos-game-score">{{gen.score.winners}}</span>
+                </div>
 
                 <div class="foos-game-sub-details-players">
                     {{#data.winners}}
@@ -20,7 +23,11 @@
                 </div>
             </div>
             <div class="foos-game-sub-details">
-                <span>Losers: {{gen.score.losers}}</span>
+
+                <div class="foos-game-score-losers">
+                    <span class="foos-game-score">{{gen.score.losers}}</span>
+                    <span>{{gen.losers}}</span>
+                </div>
 
                 <div class="foos-game-sub-details-players">
                     {{#data.losers}}
