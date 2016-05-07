@@ -59,9 +59,48 @@ function generateGameDetails(game) {
         winnersDisplayName: winnersDisplayName,
         losersDisplayName: losersDisplayName,
         winners: winners,
-        losers: losers
+        losers: losers,
+        goals: generateGoalsDetails(game)
 
     };
+}
+
+function generateGoalsDetails(game) {
+    var winnersScore = 0;
+    var losersScore = 0;
+    var winnerIds = game.data.winners.map(function (playerResult) {
+        return playerResult.playerId
+    });
+
+    var playersById = {};
+    foosLib.getPlayersByGame(game).forEach(function (player) {
+        playersById[player._id] = player;
+    });
+
+
+    return game.data.goals.map(function (goal) {
+        var winnerScored = (!goal.against && winnerIds.indexOf(goal.playerId) > -1) ||
+                           (goal.against && winnerIds.indexOf(goal.playerId) == -1);
+
+        if (winnerScored) {
+            winnersScore++;
+        } else {
+            losersScore++;
+        }
+
+        var time = "(" + formatTime(goal.time) + ")";
+        var abc = playersById[goal.playerId].displayName + " scores!";
+        var winner = winnerScored ? time + " " + abc : "";
+        var loser = winnerScored ? "" : abc + " " + time;
+
+
+        return {
+            time: formatTime(game.time),
+            winner: winner,
+            score: winnersScore + " - " + losersScore,
+            loser: loser
+        };
+    });
 }
 
 function formatTime(time) {
