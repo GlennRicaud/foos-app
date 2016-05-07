@@ -9,29 +9,7 @@
         </div>
         <div class="foos-part-body">
             {{#comments}}
-            <div class="foos-game-replay {{team}}">
-                <div class="foos-replay-time">{{time}}</div>
-                <div class="foos-replay-comment">
-                    {{#winnerImg}}
-                    <img src="{{winnerImg}}"/>
-                    {{/winnerImg}}
-                    {{^winnerImg}}
-                    <span class="foos-replay-image-placeholder"></span>
-                    {{/winnerImg}}
-
-                    <div class="foos-replay-comment-text">{{text}}</div>
-
-                    {{#loserImg}}
-                    <img src="{{loserImg}}"/>
-                    {{/loserImg}}
-                    {{^loserImg}}
-                    <span class="foos-replay-image-placeholder"></span>
-                    {{/loserImg}}
-                </div>
-                <div class="foos-replay-score"><span class="{{winnerTeamOnTop}}">{{{winnerScore}}}</span> - <span
-                        class="{{loserTeamOnTop}}">{{{loserScore}}}</span>
-                </div>
-            </div>
+            <span>{{time}}: {{text}}</span>
             {{/comments}}
         </div>
     </div>

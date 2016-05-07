@@ -40,56 +40,22 @@ exports.get = function (req) {
             return undefined;
         }
 
-        var playersById = {}, w, id;
-        foosLib.concat(game.data.winners, game.data.losers).forEach(function (playerResult) {
-            playersById[playerResult.playerId] = foosLib.getContentByKey(playerResult.playerId);
-        });
-        for (w = 0; w < game.data.winners.length; w++) {
-            id = game.data.winners[w].playerId;
-            playersById[id].gen = {winner: true};
-        }
-        for (w = 0; w < game.data.losers.length; w++) {
-            id = game.data.losers[w].playerId;
-            playersById[id].gen = {winner: false};
-        }
+        var playersById = {};
+        foosLib.concat(game.data.winners, game.data.losers).
+            forEach(function (playerResult) {
+                playersById[playerResult.playerId] = foosLib.getContentByKey(playerResult.playerId);
+            });
+
 
         var goals = game.data.goals.sort(function (goal1, goal2) {
             return goal1.time - goal2.time;
         });
 
-        var comments = [], winnerScore = 0, loserScore = 0;
+        var comments = [];
         for (var i = 0; i < goals.length; i++) {
             var goal = goals[i];
-            var commentTime = formatTime(goal.time);
-            var player = playersById[goal.playerId];
-            var playerImg = getMiniPlayerImage(player);
-            var winnerImg = player.gen.winner ? playerImg : undefined;
-            var loserImg = player.gen.winner ? undefined : playerImg;
-            var team = player.gen.winner ? 'winner' : 'loser';
-            if (player.gen.winner) {
-                if (!goal.against) {
-                    winnerScore++;
-                } else {
-                    loserScore++;
-                }
-            } else if (!player.gen.winner) {
-                if (goal.against) {
-                    winnerScore++;
-                } else {
-                    loserScore++;
-                }
-            }
-            comments.push({
-                time: commentTime,
-                text: generateComment(),
-                winnerImg: winnerImg,
-                loserImg: loserImg,
-                team: team,
-                winnerScore: formatScore(winnerScore),
-                loserScore: formatScore(loserScore),
-                winnerTeamOnTop: winnerScore > loserScore ? 'foos-replay-winner' : '',
-                loserTeamOnTop: winnerScore < loserScore ? 'foos-replay-loser' : ''
-            });
+            var commentTime = Math.floor(goal.time / 60) + "′" + (goal.time % 60) + "′′";
+            comments.push({time: commentTime, text: generateComment()});
             var previousGoal = goal;
         }
 
@@ -104,27 +70,8 @@ exports.get = function (req) {
         gamesWidget: gamesWidgetLib.render([game], false),
         details: generateDetails(game)
     });
-
     return {
         body: body
     }
-};
-
-var formatTime = function (time) {
-    var min = Math.floor(time / 60);
-    var sec = time % 60;
-    return (min < 10 ? "0" : "") + min + "′" + (sec < 10 ? "0" : "") + sec + "′′";
-};
-
-var formatScore = function (score) {
-    return (score < 10 ? "&nbsp;" : "") + score;
-};
-
-var getMiniPlayerImage = function (player, size) {
-    size = size || 20;
-    return portalLib.imageUrl({
-        id: player.data.picture,
-        scale: 'square(' + size + ')',
-        filter: 'rounded(' + (size / 2).toFixed(0) + ')'
-    });
-};
+}
+;
