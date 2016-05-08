@@ -235,34 +235,49 @@ exports.generatePlayerStats = function (player) {
             name: "# scored goals",
             solo: 0,
             team: 0
+        },
+        nbScoredGoalsAgainst: {
+            name: "# scored goals against",
+            solo: 0,
+            team: 0
+        },
+        nbTeamGoals: {
+            name: "# team goals",
+            solo: "N/A",
+            team: 0
+        },
+        nbOpponentGoals: {
+            name: "# opponent goals",
+            solo: 0,
+            team: 0
         }
     };
 
 
     games.forEach(function (game) {
-        if (exports.isTeamGame(game)) {
-            stats.nbGames.team++;
-            game.data.winners.forEach(function (playerResult) {
-                if (playerResult.playerId == player._id) {
-                    stats.nbWonGames.team++;
-                    stats.nbScoredGoals.team += playerResult.score;
-                }
-            });
+            var playerResult = exports.getPlayerResult(game, player._id);
+            var isWinner = exports.isWinner(game, player._id);
+            var isTeamGame = exports.isTeamGame(game);
+            var attrName = isTeamGame ? "team" : "solo";
 
-        } else {
-            stats.nbGames.solo++;
-            if (game.data.winners.playerId == player._id) {
-                stats.nbWonGames.solo++;
-                stats.nbScoredGoals.solo += game.data.winners.score;
+            stats.nbGames[attrName]++;
+            stats.nbScoredGoals[attrName] += playerResult.score;
+            stats.nbScoredGoalsAgainst[attrName] += playerResult.against ? playerResult.against : 0;
+            stats.nbOpponentGoals[attrName] += exports.getScore(game, !isWinner);
+            if (isWinner) {
+                stats.nbWonGames[attrName]++;
+            }
+            if (isTeamGame) {
+                stats.nbTeamGoals.team += exports.getScore(game, isWinner);
             }
         }
-    });
+    );
 
     player.stats = [];
     var even = false;
     for (var statName in stats) {
         var stat = stats[statName];
-        stat.total = stat.solo + stat.team;
+        stat.total = stat.solo == "N/A" ? "N/A" : (stat.solo + stat.team);
         for (var subStatName in stat) {
             var subStat = stat[subStatName];
             if (!isNaN(subStat)) {
@@ -358,6 +373,21 @@ exports.isWinner = function (game, playerId) {
             }).indexOf(playerId) > -1;
     }
     return game.data.winners.playerId == playerId;
+}
+
+exports.getPlayerResult = function (game, playerId) {
+    return exports.concat(game.data.winners, game.data.losers).filter(function (playerResult) {
+        return playerResult.playerId == playerId;
+    })[0];
+}
+
+exports.getScore = function (game, won) {
+    var score = 0;
+    var teamResults = won ? game.data.winners : game.data.losers;
+    exports.toArray(teamResults).forEach(function (playerResult) {
+        score += playerResult.score;
+    });
+    return score;
 }
 
 /*******************************************************
