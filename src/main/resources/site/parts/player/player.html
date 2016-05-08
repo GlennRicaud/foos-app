@@ -19,7 +19,7 @@
         <div class="foos-part-title">
             <span>{{player.displayName}} statistics</span>
         </div>
-        <div class="foos-part-body">
+        <div class="foos-part-body foos-part-body-table">
             <div class="foos-table">
                 <div class="foos-row foos-header">
                     <span class="foos-cell-text">Statistic</span>
@@ -28,7 +28,7 @@
                     <span class="foos-cell-number">Total</span>
                 </div>
                 {{#player.stats}}
-                <div class="foos-row {{#gen.evenRow}}foos-row-even{{/gen.evenRow}}">
+                <div class="foos-row {{#even}}foos-row-even{{/even}}">
                     <span class="foos-cell-text">{{name}}</span>
                     <span class="foos-cell-number">{{solo}}</span>
                     <span class="foos-cell-number">{{team}}</span>

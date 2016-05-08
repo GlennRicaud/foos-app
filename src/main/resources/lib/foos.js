@@ -259,6 +259,7 @@ exports.generatePlayerStats = function (player) {
     });
 
     player.stats = [];
+    var even = false;
     for (var statName in stats) {
         var stat = stats[statName];
         stat.total = stat.solo + stat.team;
@@ -268,6 +269,8 @@ exports.generatePlayerStats = function (player) {
                 stat[subStatName] = subStat.toFixed(0);
             }
         }
+        stat.even = even;
+        even = !even;
 
         player.stats.push(stat);
     }
