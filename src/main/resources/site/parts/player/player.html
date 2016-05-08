@@ -8,6 +8,9 @@
                 <li>Positive: {{player.data.positive}}</li>
                 <li>Negative: {{player.data.negative}}</li>
                 <li>Special trick: {{player.data.special}}</li>
+                {{#player.data.handedness}}
+                <li>Handedness: {{player.data.handedness}}</li>
+                {{/player.data.handedness}}
                 {{#player.data.description}}
                 <li>Description: {{player.data.description}}</li>
                 {{/player.data.description}}
