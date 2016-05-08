@@ -272,7 +272,6 @@ exports.generatePlayerStats = function (player) {
         }
     };
 
-    var index = 0;
     games.forEach(function (game) {
             var playerResult = exports.getPlayerResult(game, player._id);
             var isWinner = exports.isWinner(game, player._id);
