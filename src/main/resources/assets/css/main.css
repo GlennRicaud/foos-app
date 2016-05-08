@@ -37,6 +37,7 @@ a {
 /* Flex columns */
 #foos-body,
 #foos-main-container,
+.foos-part-title,
 .foos-part,
 .foos-part-body,
 .foos-release-body,
@@ -49,14 +50,15 @@ a {
 
 #foos-players .foos-part-body,
 #foos-teams .foos-part-body,
+#foos-team .foos-part-body,
 #foos-weeks .foos-part-body {
     flex-direction: row;
 }
 
 /* Flex centered items on main axis */
 #foos-main,
-.foos-part-title,
 #foos-players .foos-player-link,
+#foos-team .foos-part-body,
 .foos-week,
 .foos-game-details-link,
 .foos-game-replay-title-team,
@@ -66,6 +68,7 @@ a {
 
 /* Flex centered items on cross axis */
 #foos-body,
+.foos-part-title,
 .foos-player-link,
 .foos-team-link,
 .foos-cell-team-name,
@@ -162,7 +165,8 @@ ul {
 }
 
 .foos-game-comment,
-#foos-league-details .foos-part-body {
+#foos-league-details .foos-part-body,
+.foos-game-details-date {
     font-size: 14px;
 }
 
