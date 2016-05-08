@@ -73,7 +73,6 @@ exports.getTeamByPlayerIds = function (playerIds, createDummy) {
         sort: "displayName ASC"
     }).hits[0];
 
-    exports.log("test", {"team": team, "!team": !team, "createDummy": createDummy});
     if (!team && createDummy) {
         var player1DisplayName = exports.getContentByKey(playerIds[0]).displayName;
         var player2DisplayName = exports.getContentByKey(playerIds[1]).displayName;
@@ -231,45 +230,78 @@ exports.generatePlayerStats = function (player) {
             solo: 0,
             team: 0
         },
-        nbScoredGoals: {
-            name: "# scored goals",
+        nbGamesWithExtraTime: {
+            name: "# games with extra time",
             solo: 0,
             team: 0
         },
-        nbScoredGoalsAgainst: {
-            name: "# scored goals against",
+        nbWonGamesWithExtraTime: {
+            name: "# won games with extra time",
+            solo: 0,
+            team: 0
+        },
+        nbPlayerGoals: {
+            name: "# player goals",
+            solo: 0,
+            team: 0
+        },
+        nbPlayersGoalsAgainst: {
+            name: "# player goals against",
             solo: 0,
             team: 0
         },
         nbTeamGoals: {
             name: "# team goals",
-            solo: "N/A",
+            solo: 0,
+            team: 0
+        },
+        nbTeamPoints: {
+            name: "# team points",
+            solo: 0,
             team: 0
         },
         nbOpponentGoals: {
             name: "# opponent goals",
             solo: 0,
             team: 0
+        },
+        nbOpponentPoints: {
+            name: "# opponent points",
+            solo: 0,
+            team: 0
         }
     };
 
-
+    var index = 0;
     games.forEach(function (game) {
             var playerResult = exports.getPlayerResult(game, player._id);
             var isWinner = exports.isWinner(game, player._id);
             var isTeamGame = exports.isTeamGame(game);
             var attrName = isTeamGame ? "team" : "solo";
+            var teamGoals = exports.getGoals(game, isWinner);
+            var teamPoints = exports.getScore(game, isWinner);
+            var opponentGoals = exports.getGoals(game, !isWinner);
+            var opponentPoints = exports.getScore(game, !isWinner);
+            var maxScore = exports.getScore(game, true);
+            var isExtraTime = maxScore > 10;
 
             stats.nbGames[attrName]++;
-            stats.nbScoredGoals[attrName] += playerResult.score;
-            stats.nbScoredGoalsAgainst[attrName] += playerResult.against ? playerResult.against : 0;
-            stats.nbOpponentGoals[attrName] += exports.getScore(game, !isWinner);
             if (isWinner) {
                 stats.nbWonGames[attrName]++;
             }
-            if (isTeamGame) {
-                stats.nbTeamGoals.team += exports.getScore(game, isWinner);
+            if (isExtraTime) {
+                stats.nbGamesWithExtraTime[attrName]++;
             }
+            if (isWinner && isExtraTime) {
+                stats.nbWonGamesWithExtraTime[attrName]++;
+            }
+            stats.nbPlayerGoals[attrName] += playerResult.score;
+            stats.nbPlayersGoalsAgainst[attrName] += playerResult.against ? playerResult.against : 0;
+            stats.nbTeamGoals[attrName] += teamGoals;
+            stats.nbTeamPoints[attrName] += teamPoints;
+            stats.nbOpponentGoals[attrName] += opponentGoals;
+            stats.nbOpponentPoints[attrName] += opponentPoints;
+            index++;
         }
     );
 
@@ -381,11 +413,22 @@ exports.getPlayerResult = function (game, playerId) {
     })[0];
 }
 
-exports.getScore = function (game, won) {
+exports.getGoals = function (game, won) {
     var score = 0;
     var teamResults = won ? game.data.winners : game.data.losers;
     exports.toArray(teamResults).forEach(function (playerResult) {
         score += playerResult.score;
+    });
+    return score;
+}
+
+exports.getScore = function (game, won) {
+    var score = exports.getGoals(game, won);
+    var teamResults = won ? game.data.losers : game.data.winners;
+    exports.toArray(teamResults).forEach(function (playerResult) {
+        if (playerResult.against) {
+            score += playerResult.against;
+        }
     });
     return score;
 }
