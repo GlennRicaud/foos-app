@@ -300,7 +300,6 @@ exports.generatePlayerStats = function (player) {
             stats.nbTeamPoints[attrName] += teamPoints;
             stats.nbOpponentGoals[attrName] += opponentGoals;
             stats.nbOpponentPoints[attrName] += opponentPoints;
-            index++;
         }
     );
 

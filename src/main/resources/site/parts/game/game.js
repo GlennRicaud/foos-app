@@ -63,8 +63,8 @@ function generateGameDetails(game) {
         losersDisplayName: losersDisplayName,
         firstHalfWinners: winners,
         secondHalfWinners: winners.slice(0).reverse(),
-        firstHalfLosers: losers,
-        secondHalfLosers: losers.slice(0).reverse(),
+        firstHalfLosers: losers.slice(0).reverse(),
+        secondHalfLosers: losers,
         firstHalfGoals: firstHalfGoals,
         secondHalfGoals: secondHalfGoals
 
