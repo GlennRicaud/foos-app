@@ -275,8 +275,20 @@ exports.generatePlayerStats = function (player) {
             solo: 0,
             team: 0
         },
+        nbAttackerGames: {
+            name: "# games as attacker (2nd half & extra time)",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        nbDefenderGames: {
+            name: "# games as defender (2nd half & extra time)",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
         nbStatGoals: {
-            name: "# player goals with temporal stats",
+            name: "# player goals with temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
@@ -286,12 +298,27 @@ exports.generatePlayerStats = function (player) {
             team: 0
         },
         nbFinalGoals: {
-            name: "# final goal",
+            name: "# fatalities",
             solo: 0,
             team: 0
         },
         nbQuickGoals: {
             name: "# quick goals (< 10s)",
+            solo: 0,
+            team: 0
+        },
+        nbFirstHalfGoals: {
+            name: "# first half goals",
+            solo: 0,
+            team: 0
+        },
+        nbSecondHalfGoals: {
+            name: "# second half goals",
+            solo: 0,
+            team: 0
+        },
+        nbExtraTimeGoals: {
+            name: "# extra time goals",
             solo: 0,
             team: 0
         },
@@ -350,16 +377,44 @@ exports.generatePlayerStats = function (player) {
                     stats.nbFinalGoals[attrName]++;
                 }
 
+                if (isTeamGame) {
+                    if (game.data.winners[0].playerId == player._id || game.data.losers[0].playerId == player._id) {
+                        stats.nbAttackerGames.team++;
+                    } else {
+                        stats.nbDefenderGames.team++;
+                    }
+                }
+
                 var previousGoalTime = 0;
+                var winnersScore = 0;
+                var losersScore = 0;
                 goals.forEach(function (goal) {
-                    if (goal.playerId == player._id) {
-                        stats.nbStatGoals[attrName]++;
-                        var deltaTime = goal.time - previousGoalTime;
-                        if (deltaTime < 10) {
-                            stats.nbQuickGoals[attrName]++;
+                    if (!goal.against) {
+                        if (exports.isWinner(game, goal.playerId)) {
+                            winnersScore++;
+                        } else {
+                            losersScore++;
                         }
-                        privateStats.sumTimeStatGoals[attrName] += deltaTime;
-                        privateStats.sumTimeStatGoals.total += deltaTime;
+
+                        if (goal.playerId == player._id) {
+                            stats.nbStatGoals[attrName]++;
+                            var deltaTime = goal.time - previousGoalTime;
+                            if (deltaTime < 10) {
+                                stats.nbQuickGoals[attrName]++;
+                            }
+                            privateStats.sumTimeStatGoals[attrName] += deltaTime;
+                            privateStats.sumTimeStatGoals.total += deltaTime;
+
+                            var nbPeriodGoalsStat;
+                            if (winnersScore > 10 || losersScore > 10) {
+                                nbPeriodGoalsStat = stats.nbExtraTimeGoals;
+                            } else if (winnersScore > 5 || losersScore > 5) {
+                                nbPeriodGoalsStat = stats.nbSecondHalfGoals;
+                            } else {
+                                nbPeriodGoalsStat = stats.nbFirstHalfGoals;
+                            }
+                            nbPeriodGoalsStat[attrName]++;
+                        }
                     }
                     previousGoalTime = goal.time;
                 });
@@ -376,7 +431,8 @@ exports.generatePlayerStats = function (player) {
     }
 
     ["solo", "team", "total"].forEach(function (attrName) {
-        stats.avgDeltaTimeGoals[attrName] = privateStats.sumTimeStatGoals[attrName] / stats.nbStatGoals[attrName];
+        stats.avgDeltaTimeGoals[attrName] =
+            stats.nbStatGoals[attrName] == 0 ? "N/A" : (privateStats.sumTimeStatGoals[attrName] / stats.nbStatGoals[attrName]);
     });
 
 
