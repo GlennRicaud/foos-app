@@ -70,6 +70,7 @@ body {
     top: 0;
     left: 50%;
     margin: 0 0 0 -3px;
+    z-index: 10;
 }
 
 #field .circle {
@@ -355,5 +356,61 @@ body {
     }
     75% {
         border-color: darkred;
+    }
+}
+
+.paused-game {
+    animation-name: pauseAnimation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name: pauseAnimation;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes pauseAnimation {
+    0% {
+        border-color: #fff;
+    }
+    50% {
+        border-color: #7db96a;
+    }
+}
+
+@-webkit-keyframes pauseAnimation {
+    0% {
+        border-color: #fff;
+    }
+    50% {
+        border-color: #7db96a;
+    }
+}
+
+.paused-game-alt {
+    animation-name: pauseAnimationAlt;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name: pauseAnimationAlt;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes pauseAnimationAlt {
+    0% {
+        background-color: #fff;
+    }
+    50% {
+        background-color: #7db96a;
+    }
+}
+
+@-webkit-keyframes pauseAnimationAlt {
+    0% {
+        background-color: #fff;
+    }
+    50% {
+        background-color: #7db96a;
     }
 }

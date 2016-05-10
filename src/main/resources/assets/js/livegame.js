@@ -23,12 +23,12 @@ var GAME = (function () {
     var gamePlayersDivs = ['player1', 'player2', 'player3', 'player4'];
     var gameStarted = false;
     var gameEnded = false;
-    var initTime;
+    var lastTime, totalTimeSec, pauseTime;
     var playerSelected = -1;
     var gameSavedUrl;
     var singlesGame = false;
     var goals = [];
-    var goalsAgainst = [];
+    var paused = false;
 
     toggleRight = function (show) {
         $('#player3, #player4, #goal-right').toggle(show);
@@ -69,12 +69,29 @@ var GAME = (function () {
         $('#goal-left').on('click', onSelectGoal);
         $('#goal-right').on('click', onSelectGoal);
         $('#mainRegion').on('click', onFieldClick);
+        $('.circle').on('click', onCircleClick);
 
         showPlayers();
 
         toggleMiddle(false);
         $('#title span').text('Play');
         toggleStart(true);
+    };
+
+    onCircleClick = function () {
+        paused = !paused;
+        $('.circle,#field').toggleClass('paused-game', paused);
+        $('.ball').toggleClass('paused-game-alt', paused);
+        if (paused) {
+            pauseTime = new Date();
+        } else {
+            var now = new Date();
+            var pausedTime = now.getTime() - pauseTime.getTime();
+            // console.log('Paused time: ' + pausedTime);
+            // console.log('lastTime: ' + lastTime);
+            lastTime = new Date(lastTime.getTime() + pausedTime);
+            // console.log('new lastTime: ' + lastTime);
+        }
     };
 
     onFieldClick = function () {
@@ -84,8 +101,11 @@ var GAME = (function () {
     };
 
     addGoal = function (player, against) {
-        var offsetSeconds = Math.abs((new Date().getTime() - initTime.getTime()) / 1000);
-        var goalInfo = {playerId: player.id, time: offsetSeconds, against: against};
+        var now = new Date();
+        var offsetSeconds = Math.abs((now.getTime() - lastTime.getTime()) / 1000);
+        lastTime = now;
+        totalTimeSec += offsetSeconds;
+        var goalInfo = {playerId: player.id, time: totalTimeSec, against: against};
         goals.push(goalInfo);
     };
 
@@ -110,7 +130,7 @@ var GAME = (function () {
     };
 
     onSelectPlayer = function (e) {
-        if (gameEnded) {
+        if (gameEnded || paused) {
             return;
         }
 
@@ -137,6 +157,9 @@ var GAME = (function () {
     };
 
     onSelectGoal = function (e) {
+        if (paused) {
+            return;
+        }
         if (!gameStarted || (playerSelected == -1)) {
             if (!gameStarted) {
                 singlesGame = !singlesGame;
@@ -199,7 +222,8 @@ var GAME = (function () {
         showScore();
 
         gameStarted = true;
-        initTime = new Date();
+        lastTime = new Date();
+        totalTimeSec = 0;
 
         saveSelectedPlayers();
     };
