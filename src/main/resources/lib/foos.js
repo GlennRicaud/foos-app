@@ -269,6 +269,45 @@ exports.generatePlayerStats = function (player) {
             name: "# opponent points",
             solo: 0,
             team: 0
+        },
+        nbStatGames: {
+            name: "# games with temporal stats (used for below stats)",
+            solo: 0,
+            team: 0
+        },
+        nbStatGoals: {
+            name: "# player goals with temporal stats",
+            solo: 0,
+            team: 0
+        },
+        nbFirstBloods: {
+            name: "# first bloods",
+            solo: 0,
+            team: 0
+        },
+        nbFinalGoals: {
+            name: "# final goal",
+            solo: 0,
+            team: 0
+        },
+        nbQuickGoals: {
+            name: "# quick goals (< 10s)",
+            solo: 0,
+            team: 0
+        },
+        avgDeltaTimeGoals: {
+            name: "Avg. time to score",
+            solo: 0,
+            team: 0,
+            total: 0
+        }
+    };
+
+    var privateStats = {
+        sumTimeStatGoals: {
+            solo: 0,
+            team: 0,
+            total: 0
         }
     };
 
@@ -300,14 +339,51 @@ exports.generatePlayerStats = function (player) {
             stats.nbTeamPoints[attrName] += teamPoints;
             stats.nbOpponentGoals[attrName] += opponentGoals;
             stats.nbOpponentPoints[attrName] += opponentPoints;
+
+            var goals = game.data.goals;
+            if (goals) {
+                stats.nbStatGames[attrName]++;
+                if (goals[0].playerId == player._id) {
+                    stats.nbFirstBloods[attrName]++;
+                }
+                if (goals[goals.length - 1].playerId == player._id) {
+                    stats.nbFinalGoals[attrName]++;
+                }
+
+                var previousGoalTime = 0;
+                goals.forEach(function (goal) {
+                    if (goal.playerId == player._id) {
+                        stats.nbStatGoals[attrName]++;
+                        var deltaTime = goal.time - previousGoalTime;
+                        if (deltaTime < 10) {
+                            stats.nbQuickGoals[attrName]++;
+                        }
+                        privateStats.sumTimeStatGoals[attrName] += deltaTime;
+                        privateStats.sumTimeStatGoals.total += deltaTime;
+                    }
+                    previousGoalTime = goal.time;
+                });
+            }
         }
     );
+
+    //Computes the sum for each
+    for (var statName in stats) {
+        var stat = stats[statName];
+        if (!stat.total) {
+            stat.total = stat.solo + stat.team;
+        }
+    }
+
+    ["solo", "team", "total"].forEach(function (attrName) {
+        stats.avgDeltaTimeGoals[attrName] = privateStats.sumTimeStatGoals[attrName] / stats.nbStatGoals[attrName];
+    });
+
 
     player.stats = [];
     var even = false;
     for (var statName in stats) {
         var stat = stats[statName];
-        stat.total = stat.solo == "N/A" ? "N/A" : (stat.solo + stat.team);
         for (var subStatName in stat) {
             var subStat = stat[subStatName];
             if (!isNaN(subStat)) {
