@@ -298,7 +298,7 @@ exports.generatePlayerStats = function (player) {
             team: 0
         },
         nbFinalGoals: {
-            name: "# fatalities",
+            name: "# final shot",
             solo: 0,
             team: 0
         },
@@ -322,11 +322,40 @@ exports.generatePlayerStats = function (player) {
             solo: 0,
             team: 0
         },
+        nbAttackerGoals: {
+            name: "# player goals as attacker",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        nbDefenderGoals: {
+            name: "# player goals as defender",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
         avgDeltaTimeGoals: {
             name: "Avg. time to score",
             solo: 0,
             team: 0,
             total: 0
+        },
+        nbStatOpponentGoals: {
+            name: "# opponent goals with temporal stats (used for below stats)",
+            solo: 0,
+            team: 0
+        },
+        nbAttackerOpponentGoals: {
+            name: "# opponent goals as attacker",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        nbDefenderOpponentGoals: {
+            name: "# opponent goals as defender",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
         }
     };
 
@@ -339,88 +368,124 @@ exports.generatePlayerStats = function (player) {
     };
 
     games.forEach(function (game) {
-            var playerResult = exports.getPlayerResult(game, player._id);
-            var isWinner = exports.isWinner(game, player._id);
-            var isTeamGame = exports.isTeamGame(game);
-            var attrName = isTeamGame ? "team" : "solo";
-            var teamGoals = exports.getGoals(game, isWinner);
-            var teamPoints = exports.getScore(game, isWinner);
-            var opponentGoals = exports.getGoals(game, !isWinner);
-            var opponentPoints = exports.getScore(game, !isWinner);
-            var maxScore = exports.getScore(game, true);
-            var isExtraTime = maxScore > 10;
+        var playerResult = exports.getPlayerResult(game, player._id);
+        var isWinner = exports.isWinner(game, player._id);
+        var isTeamGame = exports.isTeamGame(game);
+        var attrName = isTeamGame ? "team" : "solo";
+        var teamGoals = exports.getGoals(game, isWinner);
+        var teamPoints = exports.getScore(game, isWinner);
+        var opponentGoals = exports.getGoals(game, !isWinner);
+        var opponentPoints = exports.getScore(game, !isWinner);
+        var maxScore = exports.getScore(game, true);
+        var isExtraTime = maxScore > 10;
 
-            stats.nbGames[attrName]++;
-            if (isWinner) {
-                stats.nbWonGames[attrName]++;
-            }
-            if (isExtraTime) {
-                stats.nbGamesWithExtraTime[attrName]++;
-            }
-            if (isWinner && isExtraTime) {
-                stats.nbWonGamesWithExtraTime[attrName]++;
-            }
-            stats.nbPlayerGoals[attrName] += playerResult.score;
-            stats.nbPlayersGoalsAgainst[attrName] += playerResult.against ? playerResult.against : 0;
-            stats.nbTeamGoals[attrName] += teamGoals;
-            stats.nbTeamPoints[attrName] += teamPoints;
-            stats.nbOpponentGoals[attrName] += opponentGoals;
-            stats.nbOpponentPoints[attrName] += opponentPoints;
+        stats.nbGames[attrName]++;
+        if (isWinner) {
+            stats.nbWonGames[attrName]++;
+        }
+        if (isExtraTime) {
+            stats.nbGamesWithExtraTime[attrName]++;
+        }
+        if (isWinner && isExtraTime) {
+            stats.nbWonGamesWithExtraTime[attrName]++;
+        }
+        stats.nbPlayerGoals[attrName] += playerResult.score;
+        stats.nbPlayersGoalsAgainst[attrName] += playerResult.against ? playerResult.against : 0;
+        stats.nbTeamGoals[attrName] += teamGoals;
+        stats.nbTeamPoints[attrName] += teamPoints;
+        stats.nbOpponentGoals[attrName] += opponentGoals;
+        stats.nbOpponentPoints[attrName] += opponentPoints;
 
-            var goals = game.data.goals;
-            if (goals) {
-                stats.nbStatGames[attrName]++;
-                if (goals[0].playerId == player._id) {
-                    stats.nbFirstBloods[attrName]++;
+
+        var goals = game.data.goals;
+        if (goals) {
+            stats.nbStatGames[attrName]++;
+
+            var firstBlood = goals[0].playerId == player._id;
+            var lastShot = goals[goals.length - 1].playerId == player._id;
+
+
+            if (firstBlood) {
+                stats.nbFirstBloods[attrName]++;
+            }
+            if (lastShot) {
+                stats.nbFinalGoals[attrName]++;
+            }
+
+            var startAsDefender = false;
+            if (isTeamGame) {
+                startAsDefender = game.data.winners[0].playerId == player._id || game.data.losers[0].playerId == player._id;
+                if (startAsDefender) {
+                    stats.nbAttackerGames.team++;
+                } else {
+                    stats.nbDefenderGames.team++;
                 }
-                if (goals[goals.length - 1].playerId == player._id) {
-                    stats.nbFinalGoals[attrName]++;
-                }
+            }
 
-                if (isTeamGame) {
-                    if (game.data.winners[0].playerId == player._id || game.data.losers[0].playerId == player._id) {
-                        stats.nbAttackerGames.team++;
+            var previousGoalTime = 0;
+            var winnersScore = 0;
+            var losersScore = 0;
+            goals.forEach(function (goal) {
+                if (!goal.against) {
+
+                    var isWinnerGoal = exports.isWinner(game, goal.playerId);
+                    if (isWinnerGoal) {
+                        winnersScore++;
                     } else {
-                        stats.nbDefenderGames.team++;
+                        losersScore++;
                     }
-                }
 
-                var previousGoalTime = 0;
-                var winnersScore = 0;
-                var losersScore = 0;
-                goals.forEach(function (goal) {
-                    if (!goal.against) {
-                        if (exports.isWinner(game, goal.playerId)) {
-                            winnersScore++;
+                    var extraTime = winnersScore > 10 || losersScore > 10;
+                    var afterHalfTime = winnersScore > 5 || losersScore > 5;
+                    var deltaTime = goal.time - previousGoalTime;
+
+                    var isAttacker = isTeamGame && ((afterHalfTime && startAsDefender) || (!afterHalfTime && !startAsDefender));
+                    var isDefender = isTeamGame && ((afterHalfTime && !startAsDefender) || (!afterHalfTime && startAsDefender));
+                    var isScoring = goal.playerId == player._id;
+                    var isLosingGoal = (isWinnerGoal && !isWinner) || (!isWinnerGoal && isWinner);
+
+                    if (isScoring) {
+
+                        stats.nbStatGoals[attrName]++;
+
+                        if (deltaTime < 10) {
+                            stats.nbQuickGoals[attrName]++;
+                        }
+                        privateStats.sumTimeStatGoals[attrName] += deltaTime;
+                        privateStats.sumTimeStatGoals.total += deltaTime;
+
+                        var nbPeriodGoalsStat;
+                        if (extraTime) {
+                            nbPeriodGoalsStat = stats.nbExtraTimeGoals;
+                        } else if (afterHalfTime) {
+                            nbPeriodGoalsStat = stats.nbSecondHalfGoals;
                         } else {
-                            losersScore++;
+                            nbPeriodGoalsStat = stats.nbFirstHalfGoals;
+                        }
+                        nbPeriodGoalsStat[attrName]++;
+
+                        if (isAttacker) {
+                            stats.nbAttackerGoals.team++;
+                        } else if (isDefender) {
+                            stats.nbDefenderGoals.team++;
                         }
 
-                        if (goal.playerId == player._id) {
-                            stats.nbStatGoals[attrName]++;
-                            var deltaTime = goal.time - previousGoalTime;
-                            if (deltaTime < 10) {
-                                stats.nbQuickGoals[attrName]++;
-                            }
-                            privateStats.sumTimeStatGoals[attrName] += deltaTime;
-                            privateStats.sumTimeStatGoals.total += deltaTime;
 
-                            var nbPeriodGoalsStat;
-                            if (winnersScore > 10 || losersScore > 10) {
-                                nbPeriodGoalsStat = stats.nbExtraTimeGoals;
-                            } else if (winnersScore > 5 || losersScore > 5) {
-                                nbPeriodGoalsStat = stats.nbSecondHalfGoals;
-                            } else {
-                                nbPeriodGoalsStat = stats.nbFirstHalfGoals;
-                            }
-                            nbPeriodGoalsStat[attrName]++;
+                    } else if (isLosingGoal) {
+
+                        stats.nbStatOpponentGoals[attrName]++;
+
+                        if (isAttacker) {
+                            stats.nbAttackerOpponentGoals.team++;
+                        } else if (isDefender) {
+                            stats.nbDefenderOpponentGoals.team++;
                         }
                     }
                     previousGoalTime = goal.time;
-                });
-            }
+                }
+            });
         }
-    );
+    });
 
     //Computes the sum for each
     for (var statName in stats) {
