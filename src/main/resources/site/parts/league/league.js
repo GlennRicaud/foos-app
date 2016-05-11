@@ -16,7 +16,7 @@ exports.get = function (req) {
     function doGet() {
         var currentWeek = foosLib.getLatestWeek();
         var weekGames = foosLib.getTeamGamesBetween(currentWeek.data.start, currentWeek.data.end);
-        var weekLeagueWidget = leagueWidgetLib.render(weekGames, 3);
+        var weekLeagueWidget = leagueWidgetLib.render(weekGames, 2);
 
         var month = new Date().getMonth();
         var monthName = MONTH_NAMES[month];
@@ -24,10 +24,10 @@ exports.get = function (req) {
 
         var day = new Date().getDate();
         var monthGames = foosLib.getTeamGamesBetween("2016-" + monthIsoNumber + "-01", "2016-" + monthIsoNumber + "-31");
-        var monthLeagueWidget = leagueWidgetLib.render(monthGames, 2 + Math.min(6, Math.ceil(day / 7)));
+        var monthLeagueWidget = leagueWidgetLib.render(monthGames, Math.max(2, Math.min(4, Math.ceil(day / 7))));
 
         var yearGames = foosLib.getTeamGames();
-        var yearLeagueWidget = leagueWidgetLib.render(yearGames, 2 + foosLib.getWeekCount());
+        var yearLeagueWidget = leagueWidgetLib.render(yearGames, Math.max(2, foosLib.getWeekCount()));
 
         var view = resolve('league.html');
         var body = mustacheLib.render(view, {
