@@ -2,7 +2,7 @@ var thymeleaf = require('/lib/xp/thymeleaf');
 var portalLib = require('/lib/xp/portal');
 var contentLib = require('/lib/xp/content');
 var contextLib = require('/lib/xp/context');
-var foosLib = require('/lib/foos');
+var foosRetrievalLib = require('/lib/foos-retrieval');
 
 exports.get = function (req) {
     if (req.params.d) {
@@ -78,7 +78,7 @@ var saveGame = function (req) {
 };
 
 var getData = function () {
-    var plist = foosLib.getPlayers();
+    var plist = foosRetrievalLib.getPlayers();
     var players = [];
     var audioUrl = getAudioUrl();
 

@@ -1,24 +1,29 @@
 var mustacheLib = require('/lib/xp/mustache');
-var foosLib = require('/lib/foos');
+var foosGameStatsLib = require('/lib/foos-game-stats');
+var foosRetrievalLib = require('/lib/foos-retrieval');
+var foosUtilLib = require('/lib/foos-util');
+var foosUrlLib = require('/lib/foos-url');
 
 
 // Handle the GET request
 exports.render = function (games, detailsButton) {
     games.forEach(function (game) {
-        foosLib.generateGameStats(game);
-        foosLib.generateGameComments(game);
+        foosGameStatsLib.generateGameStats(game);
+        foosGameStatsLib.generateGameComments(game);
 
-        game.gen.winners = foosLib.isTeamGame(game) ? foosLib.getTeamByGame(game, true, true).displayName : game.data.winners.gen.name;
-        game.gen.losers = foosLib.isTeamGame(game) ? foosLib.getTeamByGame(game, false, true).displayName : game.data.losers.gen.name;
+        game.gen.winners =
+            foosUtilLib.isTeamGame(game) ? foosRetrievalLib.getTeamByGame(game, true, true).displayName : game.data.winners.gen.name;
+        game.gen.losers =
+            foosUtilLib.isTeamGame(game) ? foosRetrievalLib.getTeamByGame(game, false, true).displayName : game.data.losers.gen.name;
         game.gen.score.winners = game.gen.score.winners.toFixed();
         game.gen.score.losers = game.gen.score.losers.toFixed();
-        foosLib.toArray(game.data.winners).
-            concat(foosLib.toArray(game.data.losers)).
+        foosUtilLib.toArray(game.data.winners).
+            concat(foosUtilLib.toArray(game.data.losers)).
             forEach(function (playerResult) {
                 playerResult.against = playerResult.against > 0 ? playerResult.against : undefined;
             });
         if (detailsButton && game.data.goals) {
-            foosLib.generatePageUrl(game);
+            foosUrlLib.generatePageUrl(game);
         }
     });
 

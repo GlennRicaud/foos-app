@@ -1,13 +1,13 @@
 var mustacheLib = require('/lib/xp/mustache');
 var portalLib = require('/lib/xp/portal');
-var foosLib = require('/lib/foos');
+var foosUrlLib = require('/lib/foos-url');
 
 // Handle the GET request
 exports.get = function (req) {
     var content = portalLib.getContent();
 
     var mainRegion = content.page.regions["main"];
-    var siteUrl = foosLib.getFoosSiteUrl();
+    var siteUrl = foosUrlLib.getFoosSiteUrl();
     var mainCssUrl = portalLib.assetUrl({path: "css/main.css"});
     var favIconUrl = portalLib.assetUrl({path: "img/foosball.png"});
 

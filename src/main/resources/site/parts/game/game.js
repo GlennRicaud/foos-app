@@ -1,6 +1,8 @@
 var mustacheLib = require('/lib/xp/mustache');
 var portalLib = require('/lib/xp/portal');
-var foosLib = require('/lib/foos');
+var foosRetrievalLib = require('/lib/foos-retrieval');
+var foosUrlLib = require('/lib/foos-url');
+var foosUtilLib = require('/lib/foos-util');
 var gamesWidgetLib = require('/lib/widgets/games/games');
 
 var view = resolve('game.html');
@@ -32,17 +34,17 @@ function generateGameDetails(game) {
     var losers;
 
     if (game.data.winners.length == 2) {
-        var winingTeam = foosLib.getTeamByGame(game, true, true);
-        var losingTeam = foosLib.getTeamByGame(game, false, true);
+        var winingTeam = foosRetrievalLib.getTeamByGame(game, true, true);
+        var losingTeam = foosRetrievalLib.getTeamByGame(game, false, true);
         winnersDisplayName = winingTeam.displayName;
         losersDisplayName = losingTeam.displayName;
 
-        winners = foosLib.getPlayersByGame(game, true);
-        losers = foosLib.getPlayersByGame(game, false);
+        winners = foosRetrievalLib.getPlayersByGame(game, true);
+        losers = foosRetrievalLib.getPlayersByGame(game, false);
 
     } else {
-        var winner = foosLib.getContentByKey(game.data.winners.playerId);
-        var loser = foosLib.getContentByKey(game.data.losers.playerId);
+        var winner = foosRetrievalLib.getContentByKey(game.data.winners.playerId);
+        var loser = foosRetrievalLib.getContentByKey(game.data.losers.playerId);
 
         winnersDisplayName = winner.displayName;
         losersDisplayName = loser.displayName;
@@ -50,9 +52,9 @@ function generateGameDetails(game) {
         losers = [loser];
     }
 
-    foosLib.concat(winners, losers).forEach(function (player) {
-        foosLib.generatePictureUrl(player);
-        foosLib.generatePageUrl(player);
+    foosUtilLib.concat(winners, losers).forEach(function (player) {
+        foosUrlLib.generatePictureUrl(player);
+        foosUrlLib.generatePageUrl(player);
     });
 
     var firstHalfGoals = [], secondHalfGoals = [];
@@ -74,12 +76,12 @@ function generateGameDetails(game) {
 function generateGoalsDetails(game, firstHalf, secondHalf) {
     var winnersScore = 0;
     var losersScore = 0;
-    var winnerIds = foosLib.toArray(game.data.winners).map(function (playerResult) {
+    var winnerIds = foosUtilLib.toArray(game.data.winners).map(function (playerResult) {
         return playerResult.playerId
     });
 
     var playersById = {};
-    foosLib.getPlayersByGame(game).forEach(function (player) {
+    foosRetrievalLib.getPlayersByGame(game).forEach(function (player) {
         playersById[player._id] = player;
     });
 

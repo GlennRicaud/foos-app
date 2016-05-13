@@ -1,13 +1,14 @@
 var mustacheLib = require('/lib/xp/mustache');
-var foosLib = require('/lib/foos');
+var foosRetrievalLib = require('/lib/foos-retrieval');
+var foosUrlLib = require('/lib/foos-url');
 
 // Handle the GET request
 exports.get = function (req) {
-    var players = foosLib.getPlayers();
+    var players = foosRetrievalLib.getPlayers();
 
     players.forEach(function (player) {
-        foosLib.generatePictureUrl(player);
-        foosLib.generatePageUrl(player);
+        foosUrlLib.generatePictureUrl(player);
+        foosUrlLib.generatePageUrl(player);
     });
 
     var view = resolve('players.html');

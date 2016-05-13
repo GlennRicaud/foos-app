@@ -1,6 +1,6 @@
 var cacheLib = require('/lib/xp/cache');
 var mustacheLib = require('/lib/xp/mustache');
-var foosLib = require('/lib/foos');
+var foosRetrievalLib = require('/lib/foos-retrieval');
 
 var leagueWidgetLib = require('/lib/widgets/league/league');
 
@@ -14,8 +14,8 @@ var leagueCache = cacheLib.newCache({size: 1});
 exports.get = function (req) {
 
     function doGet() {
-        var currentWeek = foosLib.getLatestWeek();
-        var weekGames = foosLib.getTeamGamesBetween(currentWeek.data.start, currentWeek.data.end);
+        var currentWeek = foosRetrievalLib.getLatestWeek();
+        var weekGames = foosRetrievalLib.getTeamGamesBetween(currentWeek.data.start, currentWeek.data.end);
         var weekLeagueWidget = leagueWidgetLib.render(weekGames, 2);
 
         var month = new Date().getMonth();
@@ -23,11 +23,11 @@ exports.get = function (req) {
         var monthIsoNumber = ++month < 10 ? "0" + month.toFixed(0) : month.toFixed(0);
 
         var day = new Date().getDate();
-        var monthGames = foosLib.getTeamGamesBetween("2016-" + monthIsoNumber + "-01", "2016-" + monthIsoNumber + "-31");
+        var monthGames = foosRetrievalLib.getTeamGamesBetween("2016-" + monthIsoNumber + "-01", "2016-" + monthIsoNumber + "-31");
         var monthLeagueWidget = leagueWidgetLib.render(monthGames, Math.max(2, Math.min(4, Math.ceil(day / 7))));
 
-        var yearGames = foosLib.getTeamGames();
-        var yearLeagueWidget = leagueWidgetLib.render(yearGames, Math.max(2, foosLib.getWeekCount()));
+        var yearGames = foosRetrievalLib.getTeamGames();
+        var yearLeagueWidget = leagueWidgetLib.render(yearGames, Math.max(2, foosRetrievalLib.getWeekCount()));
 
         var view = resolve('league.html');
         var body = mustacheLib.render(view, {
@@ -42,6 +42,6 @@ exports.get = function (req) {
         }
     }
 
-    var key = req.mode + req.branch + foosLib.getLatestModificationTime();
+    var key = req.mode + req.branch + foosRetrievalLib.getLatestModificationTime();
     return leagueCache.get(key, doGet);
 };

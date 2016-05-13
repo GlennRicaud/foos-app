@@ -1,6 +1,3 @@
-var contentLib = require('/lib/xp/content');
-var foosLib = require('/lib/foos');
-
 exports.get = function () {
     //
     //function upgradeEditor(game) {

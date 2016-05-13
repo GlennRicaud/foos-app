@@ -1,5 +1,7 @@
 var mustacheLib = require('/lib/xp/mustache');
-var foosLib = require('/lib/foos');
+var foosGameStatsLib = require('/lib/foos-game-stats');
+var foosRetrievalLib = require('/lib/foos-retrieval');
+var foosUrlLib = require('/lib/foos-url');
 
 var VICTORY_WITHOUT_EXTRA_FACTOR = 3;
 var VICTORY_WITH_EXTRA_FACTOR = 2;
@@ -17,10 +19,10 @@ exports.render = function (games, nbGamesThreshold) {
         //If the team is not cached
         if (!team) {
             //Retrieves the team
-            team = foosLib.getTeamByPlayerIds(playerIds, true);
+            team = foosRetrievalLib.getTeamByPlayerIds(playerIds, true);
             if (team._path) {
-                foosLib.generatePictureUrl(team, 18);
-                foosLib.generatePageUrl(team);
+                foosUrlLib.generatePictureUrl(team, 18);
+                foosUrlLib.generatePageUrl(team);
             }
 
             team.gen = team.gen || {};
@@ -51,7 +53,7 @@ exports.render = function (games, nbGamesThreshold) {
     }
 
     games.forEach(function (game) {
-        foosLib.generateGameBasicStats(game);
+        foosGameStatsLib.generateGameBasicStats(game);
 
         var winningTeam = getTeamByGame(game, true);
         winningTeam.gen.nbVictories++;

@@ -1,5 +1,4 @@
 var mustacheLib = require('/lib/xp/mustache');
-var foosLib = require('/lib/foos');
 
 // Handle the GET request
 exports.get = function (req) {
