@@ -8,7 +8,20 @@ exports.get = function (req) {
     var player = portalLib.getContent();
     var playerStats = foosPlayerStatsLib.generatePlayerStats(player);
 
-    log.info("playerStats:%s", JSON.stringify(playerStats, null, 2));
+    var playerStatsArray = [];
+    var even = false;
+    for (var statName in playerStats) {
+        var playerStat = playerStats[statName];
+        for (var subStatName in playerStat) {
+            var subStat = playerStat[subStatName];
+            if (!isNaN(subStat)) {
+                playerStat[subStatName] = subStat.toFixed(0);
+            }
+        }
+        playerStat.even = even;
+        even = !even;
+        playerStatsArray.push(playerStat);
+    }
 
     //Retrieves the games played
     var games = foosRetrievalLib.getGamesByPlayerId(player._id);
@@ -16,7 +29,7 @@ exports.get = function (req) {
     var view = resolve('player.html');
     var body = mustacheLib.render(view, {
         player: player,
-        playerStats: playerStats,
+        playerStats: playerStatsArray,
         wonGamesWidget: gamesWidgetLib.render(games, true)
     });
     return {

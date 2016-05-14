@@ -286,21 +286,5 @@ exports.generatePlayerStats = function (player) {
     });
 
 
-    var statsArray = [];
-    var even = false;
-    for (var statName in stats) {
-        var stat = stats[statName];
-        for (var subStatName in stat) {
-            var subStat = stat[subStatName];
-            if (!isNaN(subStat)) {
-                stat[subStatName] = subStat.toFixed(0);
-            }
-        }
-        stat.even = even;
-        even = !even;
-
-        statsArray.push(stat);
-    }
-
-    return statsArray;
+    return stats;
 };
