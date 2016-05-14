@@ -6,7 +6,9 @@ var gamesWidgetLib = require('/lib/widgets/games/games');
 
 exports.get = function (req) {
     var player = portalLib.getContent();
-    foosPlayerStatsLib.generatePlayerStats(player);
+    var playerStats = foosPlayerStatsLib.generatePlayerStats(player);
+
+    log.info("playerStats:%s", JSON.stringify(playerStats, null, 2));
 
     //Retrieves the games played
     var games = foosRetrievalLib.getGamesByPlayerId(player._id);
@@ -14,6 +16,7 @@ exports.get = function (req) {
     var view = resolve('player.html');
     var body = mustacheLib.render(view, {
         player: player,
+        playerStats: playerStats,
         wonGamesWidget: gamesWidgetLib.render(games, true)
     });
     return {

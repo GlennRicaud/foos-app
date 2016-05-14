@@ -286,7 +286,7 @@ exports.generatePlayerStats = function (player) {
     });
 
 
-    player.stats = [];
+    var statsArray = [];
     var even = false;
     for (var statName in stats) {
         var stat = stats[statName];
@@ -299,6 +299,8 @@ exports.generatePlayerStats = function (player) {
         stat.even = even;
         even = !even;
 
-        player.stats.push(stat);
+        statsArray.push(stat);
     }
+
+    return statsArray;
 };
