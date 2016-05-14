@@ -1,7 +1,35 @@
+var contentLib = require('/lib/xp/content');
+var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 
 exports.generatePlayerStats = function (player) {
+    var playerStatsContent = foosRetrievalLib.getContentByKey(player._path + '/stats');
+    if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) {
+        var playerStats = doGeneratePlayerStats(player);
+
+        if (playerStatsContent) {
+            contentLib.modify({
+                key: playerStatsContent._id,
+                editor: function (c) {
+                    c.data = playerStats
+                }
+            });
+        } else {
+            contentLib.create({
+                parentPath: player._path,
+                displayName: "Stats",
+                contentType: 'base:unstructured',
+                data: playerStats
+            });
+        }
+        return playerStats;
+    }
+
+    return playerStatsContent.data;
+};
+
+function doGeneratePlayerStats(player) {
     var games = foosRetrievalLib.getGamesByPlayerId(player._id);
 
     var stats = {
