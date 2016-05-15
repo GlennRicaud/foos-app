@@ -5,7 +5,8 @@ var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 
 exports.generatePlayerStats = function (player) {
-    var playerStatsContent = foosRetrievalLib.getContentByKey(player._path + '/stats');
+    var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
+    var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
     if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) {
         var playerStats = doGeneratePlayerStats(player);
 
@@ -22,8 +23,8 @@ exports.generatePlayerStats = function (player) {
         } else {
             storePlayerStatsFunction = function () {
                 return contentLib.create({
-                    parentPath: player._path,
-                    displayName: "Stats",
+                    parentPath: playerStatsFolder._path,
+                    displayName: player._name,
                     contentType: 'base:unstructured',
                     data: playerStats
                 });

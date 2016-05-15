@@ -6,9 +6,12 @@ var foosPerfLib = require('/lib/foos-perf');
 var gamesWidgetLib = require('/lib/widgets/games/games');
 
 exports.get = function (req) {
+    foosPerfLib.startChrono("player");
     var player = portalLib.getContent();
 
+    foosPerfLib.startChrono("generatePlayerStats");
     var playerStats = foosPlayerStatsLib.generatePlayerStats(player);
+    foosPerfLib.stopChrono("generatePlayerStats");
 
     var playerStatsArray = [];
     var even = false;
