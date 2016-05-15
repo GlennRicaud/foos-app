@@ -121,6 +121,18 @@ function doGeneratePlayerStats(player) {
             solo: 0,
             team: 0
         },
+        nbAttackerGoals: {
+            name: "# player goals as attacker",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        nbDefenderGoals: {
+            name: "# player goals as defender",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
         nbFirstBloods: {
             name: "# first bloods",
             solo: 0,
@@ -151,18 +163,6 @@ function doGeneratePlayerStats(player) {
             solo: 0,
             team: 0
         },
-        nbAttackerGoals: {
-            name: "# player goals as attacker",
-            solo: "N/A",
-            team: 0,
-            total: "N/A"
-        },
-        nbDefenderGoals: {
-            name: "# player goals as defender",
-            solo: "N/A",
-            team: 0,
-            total: "N/A"
-        },
         avgDeltaTimeGoals: {
             name: "Avg. time to score",
             solo: 0,
@@ -175,13 +175,30 @@ function doGeneratePlayerStats(player) {
             team: 0
         },
         nbAttackerOpponentGoals: {
-            name: "# opponent goals as attacker",
+            name: "# opponent goals with you as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderOpponentGoals: {
-            name: "# opponent goals as defender",
+            name: "# opponent goals with you as defender",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        nbStatTeammateGoals: {
+            name: "# teammate goals with temporal stats (used for below stats)",
+            solo: 0,
+            team: 0
+        },
+        nbAttackerTeammateGoals: {
+            name: "# teammate goals with you as attacker",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        nbDefenderTeammateGoals: {
+            name: "# teammate goals with you as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
@@ -210,14 +227,32 @@ function doGeneratePlayerStats(player) {
             team: 0,
             total: "N/A"
         },
+        defenseScore: {
+            name: "Defense score",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
         longshotsScore: {
             name: "Longshots score",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
-        attackerScore: {
-            name: "Attacker score",
+        strikerScore: {
+            name: "Striker score",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        attackScore: {
+            name: "Attack score",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        supportScore: {
+            name: "Support score",
             solo: "N/A",
             team: 0,
             total: "N/A"
@@ -345,6 +380,13 @@ function doGeneratePlayerStats(player) {
                         } else if (isDefender) {
                             stats.nbDefenderOpponentGoals.team++;
                         }
+                    } else {
+                        stats.nbStatTeammateGoals[attrName]++;
+                        if (isAttacker) {
+                            stats.nbAttackerTeammateGoals.team++;
+                        } else if (isDefender) {
+                            stats.nbDefenderTeammateGoals.team++;
+                        }
                     }
                     previousGoalTime = goal.time;
                 } else {
@@ -371,8 +413,10 @@ function doGeneratePlayerStats(player) {
     //Scores
     stats.goalKeepingScore.team = (1 - (stats.nbDefenderOpponentGoals.team / stats.defenderDividend.team)) * 100;
     stats.midfieldBlockingScore.team = (1 - (stats.nbAttackerOpponentGoals.team / stats.attackerDividend.team)) * 100;
+    stats.defenseScore.team = (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
     stats.longshotsScore.team = (stats.nbDefenderGoals.team / stats.defenderDividend.team) * 100;
-    stats.attackerScore.team = (stats.nbAttackerGoals.team / stats.attackerDividend.team) * 100;
+    stats.strikerScore.team = (stats.nbAttackerGoals.team / stats.attackerDividend.team) * 100;
+    stats.attackScore.team = (stats.longshotsScore.team + stats.strikerScore.team) / 2;
 
     //Computes the sum for each
     for (var statName in stats) {
