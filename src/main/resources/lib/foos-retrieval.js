@@ -1,4 +1,5 @@
 var contentLib = require('/lib/xp/content');
+var portalLib = require('/lib/xp/portal');
 var foosUtilLib = require('/lib/foos-util');
 
 /*******************************************************
@@ -85,9 +86,19 @@ exports.getLatestModificationTime = function () {
     return contentLib.query({
         start: 0,
         count: 1,
+        query: "type != 'base:unstructured'",
         sort: "modifiedTime DESC"
     }).hits[0].modifiedTime;
-}
+};
+
+exports.getLatestGameModificationTime = function () {
+    return contentLib.query({
+        start: 0,
+        count: 1,
+        contentTypes: [app.name + ":game"],
+        sort: "modifiedTime DESC"
+    }).hits[0].modifiedTime;
+};
 
 exports.getLatestWeek = function () {
     return contentLib.query({
@@ -132,10 +143,10 @@ exports.getGamesByWeekPath = function (weekPath) {
     }).hits;
 };
 
-exports.getGamesByPlayerId = function (playerId) {
+exports.getGamesByPlayerId = function (playerId, count) {
     return contentLib.query({
         start: 0,
-        count: -1,
+        count: count || -1,
         query: "data.winners.playerId = '" + playerId + "' OR data.losers.playerId = '" + playerId + "'",
         contentTypes: [app.name + ":game"],
         sort: "data.date DESC, displayName DESC"
@@ -178,3 +189,28 @@ exports.getTeamGamesBetween = function (start, end) {
         return game.data.date.localeCompare(start) >= 0 && game.data.date.localeCompare(end) <= 0;
     });
 };
+
+
+exports.getPlayerStatsFolder = function () {
+    var tmpFolder = createOrGetFolder(portalLib.getSite()._path, "Tmp");
+    var statsFolder = createOrGetFolder(tmpFolder._path, "Stats");
+    return createOrGetFolder(statsFolder._path, "Players");
+};
+
+function createOrGetFolder(parentPath, displayName) {
+    var folder = contentLib.get({
+        key: parentPath + "/" + displayName,
+        branch: 'draft'
+    });
+
+    if (!folder) {
+        folder = contentLib.create({
+            parentPath: parentPath,
+            displayName: displayName,
+            contentType: "base:folder",
+            branch: "draft",
+            data: {}
+        });
+    }
+    return folder;
+}

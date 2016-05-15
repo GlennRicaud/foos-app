@@ -1,7 +1,51 @@
+var contentLib = require('/lib/xp/content');
+var contextLib = require('/lib/xp/context');
+var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 
 exports.generatePlayerStats = function (player) {
+    var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
+    var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
+    if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) {
+        var playerStats = doGeneratePlayerStats(player);
+
+        var storePlayerStatsFunction;
+        if (playerStatsContent) {
+            storePlayerStatsFunction = function () {
+                return contentLib.modify({
+                    key: playerStatsContent._id,
+                    editor: function (c) {
+                        c.data = playerStats
+                    }
+                });
+            }
+        } else {
+            storePlayerStatsFunction = function () {
+                return contentLib.create({
+                    parentPath: playerStatsFolder._path,
+                    displayName: player._name,
+                    contentType: 'base:unstructured',
+                    data: playerStats
+                });
+            }
+        }
+
+        contextLib.run({
+                user: {
+                    login: 'su',
+                    userStore: 'system'
+                }
+            },
+            storePlayerStatsFunction);
+
+        return playerStats;
+    }
+
+    return playerStatsContent.data;
+};
+
+function doGeneratePlayerStats(player) {
     var games = foosRetrievalLib.getGamesByPlayerId(player._id);
 
     var stats = {
@@ -286,19 +330,5 @@ exports.generatePlayerStats = function (player) {
     });
 
 
-    player.stats = [];
-    var even = false;
-    for (var statName in stats) {
-        var stat = stats[statName];
-        for (var subStatName in stat) {
-            var subStat = stat[subStatName];
-            if (!isNaN(subStat)) {
-                stat[subStatName] = subStat.toFixed(0);
-            }
-        }
-        stat.even = even;
-        even = !even;
-
-        player.stats.push(stat);
-    }
+    return stats;
 };

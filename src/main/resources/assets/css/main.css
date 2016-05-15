@@ -61,6 +61,7 @@ a {
 #foos-team .foos-part-body,
 .foos-week,
 .foos-game-details-link,
+.foos-end-page-link,
 .foos-game-replay-title-team,
 .foos-game-replay-display-team {
     justify-content: center;
@@ -79,7 +80,8 @@ a {
 /* Flex unshrinkable */
 #foos-nav,
 .foos-part,
-.foos-part-title {
+.foos-part-title,
+.foos-end-page-link {
     flex-shrink: 0;
 }
 
@@ -102,7 +104,8 @@ a {
 #foos-nav,
 .foos-header,
 .foos-part-title,
-.foos-game-details-link {
+.foos-game-details-link,
+.foos-end-page-link {
     background-color: #3d9241;
     color: #ffffff;
 }
@@ -113,7 +116,8 @@ a {
 }
 
 #foos-nav > *:hover,
-.foos-game-details-link:hover {
+.foos-game-details-link:hover,
+.foos-end-page-link:hover {
     color: #2c682f;
 }
 
@@ -125,7 +129,9 @@ a {
     background-color: #C8E6C9;
 }
 
-.foos-part, .foos-game-details-link {
+.foos-part,
+.foos-game-details-link,
+.foos-end-page-link {
     border: 5px solid #3d9241;
     border-radius: 5px;
 }
@@ -202,7 +208,8 @@ ul {
 ** Dynamic part
 ****************************************************/
 
-.foos-part {
+.foos-part,
+.foos-end-page-link {
     margin-top: 10px;
 }
 
