@@ -14,6 +14,7 @@ var leagueCache = cacheLib.newCache({size: 1});
 exports.get = function (req) {
 
     function doGet() {
+        log.info("doGetLeague");
         var currentWeek = foosRetrievalLib.getLatestWeek();
         var weekGames = foosRetrievalLib.getTeamGamesBetween(currentWeek.data.start, currentWeek.data.end);
         var weekLeagueWidget = leagueWidgetLib.render(weekGames, 2);

@@ -86,6 +86,7 @@ exports.getLatestModificationTime = function () {
     return contentLib.query({
         start: 0,
         count: 1,
+        query: "type != 'base:unstructured'",
         sort: "modifiedTime DESC"
     }).hits[0].modifiedTime;
 };
