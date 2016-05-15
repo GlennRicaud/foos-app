@@ -46,7 +46,6 @@ exports.generatePlayerStats = function (player) {
 };
 
 function doGeneratePlayerStats(player) {
-    log.info("goGeneratePlayerStats");
     var games = foosRetrievalLib.getGamesByPlayerId(player._id);
 
     var stats = {

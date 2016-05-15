@@ -9,13 +9,8 @@ var gamesWidgetLib = require('/lib/widgets/games/games');
 exports.get = function (req) {
     var gamesCount = req.params.gamescount || 10;
 
-
-    foosPerfLib.startChrono("player");
     var player = portalLib.getContent();
-
-    foosPerfLib.startChrono("generatePlayerStats");
     var playerStats = foosPlayerStatsLib.generatePlayerStats(player);
-    foosPerfLib.stopChrono("generatePlayerStats");
 
     var playerStatsArray = [];
     var even = false;
@@ -35,18 +30,13 @@ exports.get = function (req) {
     //Retrieves the games played
     var games = foosRetrievalLib.getGamesByPlayerId(player._id, gamesCount);
 
-
-    foosPerfLib.startChrono("gamesWidgetLib");
-    var gamesWidget = gamesWidgetLib.render(games, true);
-    foosPerfLib.stopChrono("gamesWidgetLib");
-
     var view = resolve('player.html');
+    var gamesWidget = gamesWidgetLib.render(games, true);
     var body = mustacheLib.render(view, {
         player: player,
         playerStats: playerStatsArray,
         gamesWidget: gamesWidget
     });
-    foosPerfLib.stopChrono("player");
     return {
         body: body
     }
