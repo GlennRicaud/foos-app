@@ -3,9 +3,13 @@ var portalLib = require('/lib/xp/portal');
 var foosPlayerStatsLib = require('/lib/foos-player-stats');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosPerfLib = require('/lib/foos-perf');
+var foosUtilLib = require('/lib/foos-util');
 var gamesWidgetLib = require('/lib/widgets/games/games');
 
 exports.get = function (req) {
+    var gamesCount = req.params.gamescount || 10;
+
+
     foosPerfLib.startChrono("player");
     var player = portalLib.getContent();
 
@@ -29,7 +33,7 @@ exports.get = function (req) {
     }
 
     //Retrieves the games played
-    var games = foosRetrievalLib.getGamesByPlayerId(player._id);
+    var games = foosRetrievalLib.getGamesByPlayerId(player._id, gamesCount);
 
 
     foosPerfLib.startChrono("gamesWidgetLib");

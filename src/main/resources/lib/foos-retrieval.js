@@ -143,10 +143,10 @@ exports.getGamesByWeekPath = function (weekPath) {
     }).hits;
 };
 
-exports.getGamesByPlayerId = function (playerId) {
+exports.getGamesByPlayerId = function (playerId, count) {
     return contentLib.query({
         start: 0,
-        count: -1,
+        count: count || -1,
         query: "data.winners.playerId = '" + playerId + "' OR data.losers.playerId = '" + playerId + "'",
         contentTypes: [app.name + ":game"],
         sort: "data.date DESC, displayName DESC"
