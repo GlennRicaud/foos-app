@@ -1,4 +1,5 @@
 var contentLib = require('/lib/xp/content');
+var contextLib = require('/lib/xp/context');
 var portalLib = require('/lib/xp/portal');
 var foosUtilLib = require('/lib/foos-util');
 
@@ -203,12 +204,22 @@ function createOrGetFolder(parentPath, displayName) {
     });
 
     if (!folder) {
-        folder = contentLib.create({
-            parentPath: parentPath,
-            displayName: displayName,
-            contentType: "base:folder",
-            data: {}
-        });
+
+        folder = contextLib.run({
+                user: {
+                    login: 'su',
+                    userStore: 'system'
+                }
+            },
+            function () {
+                return contentLib.create({
+                    parentPath: parentPath,
+                    displayName: displayName,
+                    contentType: "base:folder",
+                    data: {}
+                });
+            });
+
     }
     return folder;
 }
