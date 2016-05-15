@@ -399,10 +399,6 @@ function doGeneratePlayerStats(player) {
             });
 
             if (isTeamGame) {
-                foosUtilLib.log("startAsDefender", startAsDefender);
-                foosUtilLib.log("startAsDefender", startAsDefender);
-                foosUtilLib.log("(winnersScore - 5)", (winnersScore - 5));
-
                 stats.attackerDividend.team += startAsDefender ? (winnersScore - 5) : 5;
                 stats.defenderDividend.team += startAsDefender ? 5 : (winnersScore - 5);
             }
