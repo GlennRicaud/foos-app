@@ -2,10 +2,12 @@ var mustacheLib = require('/lib/xp/mustache');
 var portalLib = require('/lib/xp/portal');
 var foosPlayerStatsLib = require('/lib/foos-player-stats');
 var foosRetrievalLib = require('/lib/foos-retrieval');
+var foosPerfLib = require('/lib/foos-perf');
 var gamesWidgetLib = require('/lib/widgets/games/games');
 
 exports.get = function (req) {
     var player = portalLib.getContent();
+
     var playerStats = foosPlayerStatsLib.generatePlayerStats(player);
 
     var playerStatsArray = [];
@@ -26,12 +28,18 @@ exports.get = function (req) {
     //Retrieves the games played
     var games = foosRetrievalLib.getGamesByPlayerId(player._id);
 
+
+    foosPerfLib.startChrono("gamesWidgetLib");
+    var gamesWidget = gamesWidgetLib.render(games, true);
+    foosPerfLib.stopChrono("gamesWidgetLib");
+
     var view = resolve('player.html');
     var body = mustacheLib.render(view, {
         player: player,
         playerStats: playerStatsArray,
-        wonGamesWidget: gamesWidgetLib.render(games, true)
+        gamesWidget: gamesWidget
     });
+    foosPerfLib.stopChrono("player");
     return {
         body: body
     }

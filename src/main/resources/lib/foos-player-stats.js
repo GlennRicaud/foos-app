@@ -1,4 +1,5 @@
 var contentLib = require('/lib/xp/content');
+var contextLib = require('/lib/xp/context');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
@@ -8,21 +9,35 @@ exports.generatePlayerStats = function (player) {
     if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) {
         var playerStats = doGeneratePlayerStats(player);
 
+        var storePlayerStatsFunction;
         if (playerStatsContent) {
-            contentLib.modify({
-                key: playerStatsContent._id,
-                editor: function (c) {
-                    c.data = playerStats
-                }
-            });
+            storePlayerStatsFunction = function () {
+                return contentLib.modify({
+                    key: playerStatsContent._id,
+                    editor: function (c) {
+                        c.data = playerStats
+                    }
+                });
+            }
         } else {
-            contentLib.create({
-                parentPath: player._path,
-                displayName: "Stats",
-                contentType: 'base:unstructured',
-                data: playerStats
-            });
+            storePlayerStatsFunction = function () {
+                return contentLib.create({
+                    parentPath: player._path,
+                    displayName: "Stats",
+                    contentType: 'base:unstructured',
+                    data: playerStats
+                });
+            }
         }
+
+        contextLib.run({
+                user: {
+                    login: 'su',
+                    userStore: 'system'
+                }
+            },
+            storePlayerStatsFunction);
+
         return playerStats;
     }
 
@@ -30,6 +45,7 @@ exports.generatePlayerStats = function (player) {
 };
 
 function doGeneratePlayerStats(player) {
+    log.info("goGeneratePlayerStats");
     var games = foosRetrievalLib.getGamesByPlayerId(player._id);
 
     var stats = {
