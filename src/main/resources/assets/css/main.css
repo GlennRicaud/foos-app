@@ -41,7 +41,8 @@ a {
 .foos-part,
 .foos-part-body,
 .foos-release-body,
-.foos-game-sub-details,
+.foos-game-details-winners,
+.foos-game-details-losers,
 .foos-game-sub-details-players,
 .foos-table,
 .foos-game-replay-display-team {
@@ -246,7 +247,8 @@ ul {
     width: 100%;
 }
 
-.foos-game-sub-details {
+.foos-game-details-winners,
+.foos-game-details-losers {
     flex: 0 0 50%;
 }
 
@@ -283,6 +285,10 @@ ul {
 .foos-game-replay-goal-side,
 .foos-game-replay-display-team {
     flex: 1 0 0;
+}
+
+.foos-game-details-winners a {
+    justify-content: flex-end;
 }
 
 .foos-game-score-winners {

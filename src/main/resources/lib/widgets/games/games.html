@@ -7,7 +7,7 @@
     <div class="foos-part-body">
 
         <div class="foos-game-details">
-            <div class="foos-game-sub-details">
+            <div class="foos-game-details-winners">
                 <div class="foos-game-score-winners">
                     <span class="foos-game-team">{{gen.winners}}</span>
                     <span class="foos-game-score">{{gen.score.winners}}</span>
@@ -16,13 +16,13 @@
                 <div class="foos-game-sub-details-players">
                     {{#data.winners}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
-                        <img src="{{gen.pictureUrl}}"/>
                         <span>{{gen.name}}: {{score}} goals {{#against}}(+{{against}} against){{/against}}</span>
+                        <img src="{{gen.pictureUrl}}"/>
                     </a>
                     {{/data.winners}}
                 </div>
             </div>
-            <div class="foos-game-sub-details">
+            <div class="foos-game-details-losers">
 
                 <div class="foos-game-score-losers">
                     <span class="foos-game-score">{{gen.score.losers}}</span>
