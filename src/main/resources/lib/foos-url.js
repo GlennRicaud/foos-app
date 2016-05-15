@@ -11,6 +11,13 @@ exports.getFoosSiteUrl = function () {
     });
 };
 
+exports.getCurrentPageUrl = function (params) {
+    return portalLib.pageUrl({
+        id: portalLib.getContent()._id,
+        params: params
+    });
+};
+
 /*******************************************************
  * Generation functions
  *******************************************************/
