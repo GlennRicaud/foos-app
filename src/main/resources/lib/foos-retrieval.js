@@ -199,8 +199,7 @@ exports.getPlayerStatsFolder = function () {
 
 function createOrGetFolder(parentPath, displayName) {
     var folder = contentLib.get({
-        key: parentPath + "/" + displayName,
-        branch: 'draft'
+        key: parentPath + "/" + displayName
     });
 
     if (!folder) {
@@ -208,7 +207,6 @@ function createOrGetFolder(parentPath, displayName) {
             parentPath: parentPath,
             displayName: displayName,
             contentType: "base:folder",
-            branch: "draft",
             data: {}
         });
     }
