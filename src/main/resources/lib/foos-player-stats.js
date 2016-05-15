@@ -185,6 +185,42 @@ function doGeneratePlayerStats(player) {
             solo: "N/A",
             team: 0,
             total: "N/A"
+        },
+        defenderDividend: {
+            name: "The defender dividend (Explanations coming...)",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        attackerDividend: {
+            name: "The attacker dividend (Explanations coming...)",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        goalKeepingScore: {
+            name: "Goalkeeping score",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        midfieldBlockingScore: {
+            name: "Midfield blocking score",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        longshotsScore: {
+            name: "Longshots score",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        attackerScore: {
+            name: "Attacker score",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
         }
     };
 
@@ -255,9 +291,9 @@ function doGeneratePlayerStats(player) {
             var winnersScore = 0;
             var losersScore = 0;
             goals.forEach(function (goal) {
+                var isWinnerGoal = foosUtilLib.isWinner(game, goal.playerId);
                 if (!goal.against) {
 
-                    var isWinnerGoal = foosUtilLib.isWinner(game, goal.playerId);
                     if (isWinnerGoal) {
                         winnersScore++;
                     } else {
@@ -311,10 +347,32 @@ function doGeneratePlayerStats(player) {
                         }
                     }
                     previousGoalTime = goal.time;
+                } else {
+                    if (isWinnerGoal) {
+                        losersScore++;
+                    } else {
+                        winnersScore++;
+                    }
                 }
             });
+
+            if (isTeamGame) {
+                foosUtilLib.log("startAsDefender", startAsDefender);
+                foosUtilLib.log("startAsDefender", startAsDefender);
+                foosUtilLib.log("(winnersScore - 5)", (winnersScore - 5));
+
+                stats.attackerDividend.team += startAsDefender ? (winnersScore - 5) : 5;
+                stats.defenderDividend.team += startAsDefender ? 5 : (winnersScore - 5);
+            }
         }
     });
+
+
+    //Scores
+    stats.goalKeepingScore.team = (1 - (stats.nbDefenderOpponentGoals.team / stats.defenderDividend.team)) * 100;
+    stats.midfieldBlockingScore.team = (1 - (stats.nbAttackerOpponentGoals.team / stats.attackerDividend.team)) * 100;
+    stats.longshotsScore.team = (stats.nbDefenderGoals.team / stats.defenderDividend.team) * 100;
+    stats.attackerScore.team = (stats.nbAttackerGoals.team / stats.attackerDividend.team) * 100;
 
     //Computes the sum for each
     for (var statName in stats) {
