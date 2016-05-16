@@ -4,10 +4,14 @@ var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 
+var foosPLayerStatsTime = new Date();
+
 exports.generatePlayerStats = function (player) {
+
     var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
     var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
-    if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) {
+    if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime() ||
+        playerStatsContent.modifiedTime < foosPLayerStatsTime) {
         var playerStats = doGeneratePlayerStats(player);
 
         var storePlayerStatsFunction;
@@ -413,6 +417,7 @@ function doGeneratePlayerStats(player) {
     stats.longshotsScore.team = (stats.nbDefenderGoals.team / stats.defenderDividend.team) * 100;
     stats.strikerScore.team = (stats.nbAttackerGoals.team / stats.attackerDividend.team) * 100;
     stats.attackScore.team = (stats.longshotsScore.team + stats.strikerScore.team) / 2;
+    stats.supportScore.team = (stats.nbDefenderTeammateGoals.team / stats.attackerDividend.team) * 100;
 
     //Computes the sum for each
     for (var statName in stats) {
