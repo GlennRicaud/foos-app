@@ -1,0 +1,26 @@
+<content-type>
+  <display-name>Release</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input type="Date" name="date">
+      <label>Release date</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <item-set name="features">
+      <label>Features</label>
+      <items>
+        <input name="description" type="TextLine">
+          <label>Description</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input name="details" type="TextLine">
+          <label>Details</label>
+          <occurrences minimum="0" maximum="0"/>
+        </input>
+      </items>
+      <occurrences minimum="1" maximum="0"/>
+    </item-set>
+
+
+  </form>
+</content-type>

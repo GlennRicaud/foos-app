@@ -4,115 +4,27 @@
             <span>What's new ?</span>
         </div>
         <div class="foos-part-body">
+            {{#releases}}
             <div class="foos-release">
                 <div class="foos-release-date">
-                    <span>2016-04-19</span>
+                    <span>{{data.date}}</span>
                 </div>
                 <div class="foos-release-body">
                     <ul>
-                        <li>Live Game victory music! (Made by Aro)</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-18</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>New domain name: foos.es/foos (Owned by Aro)
+                        {{#data.features}}
+                        <li>{{description}}
                             <ul>
-                                <li>Mi querido nieto, no hay que olvidar que Foos es Foos!</li>
+                                {{#details}}
+                                <li>{{.}}</li>
+                                {{/details}}
                             </ul>
                         </li>
+                        {{/data.features}}
+
                     </ul>
                 </div>
             </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-15</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>Finally run on a proper server</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-14</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>Live Game page ! (Made by Aro)</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-13</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>Major display refactoring</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-12</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>Minor display change
-                            <ul>
-                                <li>Smaller filtered teams</li>
-                                <li>Team images in league</li>
-                            </ul>
-                        </li>
-                        <li>Comments/tags on games</li>
-                        <li>Removed home stats. (Will come back with stats junkie page)</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-06</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>Fav icon</li>
-                        <li>Home: New part "What's new"</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-05</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>League Enonic: Improved score computation</li>
-                        <li>League Enonic: Separation into 3 leagues: Weekly, Monthly and Yearly</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>2016-04-04</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        <li>New page: League Enonic</li>
-                        <li>New page: Team
-                            <ul>
-                                <li>Create/Update your teams with a personalized picture and name</li>
-                            </ul>
-                        </li>
-                        <li>Team & Player page: Chronological listing of games played for players and teams</li>
-                    </ul>
-                </div>
-            </div>
+            {{/releases}}
         </div>
     </div>
     <div class="foos-part">

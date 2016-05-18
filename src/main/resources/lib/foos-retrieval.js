@@ -127,6 +127,15 @@ exports.getWeekCount = function () {
     }).total;
 };
 
+exports.getReleases = function () {
+    return contentLib.query({
+        start: 0,
+        count: 10,
+        contentTypes: [app.name + ":release"],
+        sort: "data.date DESC"
+    }).hits;
+};
+
 exports.getGames = function () {
     return contentLib.query({
         start: 0,
