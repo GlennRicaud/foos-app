@@ -13,11 +13,13 @@
                     <ul>
                         {{#data.features}}
                         <li>{{description}}
+                            {{#gen.hasDetails}}
                             <ul>
                                 {{#details}}
                                 <li>{{.}}</li>
                                 {{/details}}
                             </ul>
+                            {{/gen.hasDetails}}
                         </li>
                         {{/data.features}}
 
