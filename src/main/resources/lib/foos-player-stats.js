@@ -220,43 +220,43 @@ function doGeneratePlayerStats(player) {
             total: "N/A"
         },
         goalKeepingScore: {
-            name: "Goalkeeping score",
+            name: "Goalkeeping score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         midfieldBlockingScore: {
-            name: "Midfield blocking score",
+            name: "Midfield blocking score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         defenseScore: {
-            name: "Defense score",
+            name: "Defense score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         longshotsScore: {
-            name: "Longshots score",
+            name: "Longshots score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         strikerScore: {
-            name: "Striker score",
+            name: "Striker score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         attackScore: {
-            name: "Attack score",
+            name: "Attack score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         supportScore: {
-            name: "Support score",
+            name: "Support score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
