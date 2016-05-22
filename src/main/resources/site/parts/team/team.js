@@ -33,7 +33,7 @@ exports.get = function (req) {
     var body = mustacheLib.render(view, {
         team: team,
         players: players,
-        wonGamesWidget: gamesWidgetLib.render(games)
+        wonGamesWidget: gamesWidgetLib.render(games, true)
     });
     return {
         body: body
