@@ -10,6 +10,10 @@ $.ajax("{{playerStatsServiceUrl}}").done(function (data) {
         $("#foos-stats-junkie-select").append("<option value='" + statName + "'>" + firstPlayer[statName].name + "</option>");
     }
 
+    data.sort(function (playerStats1, playerStats2) {
+        return playerStats2[firstStatName].team - playerStats1[firstStatName].team
+    });
+
 
     data.forEach(function (playerStats) {
         var template = '{{{playerStatsRowTemplate}}}';
@@ -17,7 +21,9 @@ $.ajax("{{playerStatsServiceUrl}}").done(function (data) {
             even: (index % 2) == 0,
             rank: index,
             displayName: playerStats.playerName,
-            value: playerStats[firstStatName].total
+            soloValue: playerStats[firstStatName].solo,
+            teamValue: playerStats[firstStatName].team,
+            totalValue: playerStats[firstStatName].total
         });
 
         $("#foos-stats-junkie-table").append(row);
