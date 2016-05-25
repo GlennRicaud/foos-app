@@ -261,20 +261,20 @@ ul {
 ** Foos league table
 ****************************************************/
 
-.foos-cell-rank {
-    flex: 0 0 3em;
+.foos-cell-rank,
+.foos-cell-number {
+    flex: 0 0;
+    min-width: 3em;
 }
 
 .foos-cell-text {
-    flex: 1 0 10em;
+    flex: 1 0;
+    min-width: 10em;
 }
 
 .foos-cell-3-numbers {
-    flex: 1 0 5em;
-}
-
-.foos-cell-number {
-    flex: 0 0 3em;
+    flex: 1 0;
+    min-width: 5em;
 }
 
 /***************************************************
