@@ -141,32 +141,32 @@ function doGeneratePlayerStats(player) {
             total: "N/A"
         },
         nbFirstBloods: {
-            name: "# first bloods",
+            name: "# First bloods",
             solo: 0,
             team: 0
         },
         nbFinalGoals: {
-            name: "# final shot",
+            name: "# Final shot",
             solo: 0,
             team: 0
         },
         nbQuickGoals: {
-            name: "# quick goals (< 10s)",
+            name: "# Quick goals (< 10s)",
             solo: 0,
             team: 0
         },
         nbFirstHalfGoals: {
-            name: "# first half goals",
+            name: "# First half goals",
             solo: 0,
             team: 0
         },
         nbSecondHalfGoals: {
-            name: "# second half goals",
+            name: "# Second half goals",
             solo: 0,
             team: 0
         },
         nbExtraTimeGoals: {
-            name: "# extra time goals",
+            name: "# Extra time goals",
             solo: 0,
             team: 0
         },
@@ -177,35 +177,35 @@ function doGeneratePlayerStats(player) {
             total: 0
         },
         nbStatOpponentGoals: {
-            name: "# opponent goals with temporal stats (used for below stats)",
+            name: "# Opponent goals with temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerOpponentGoals: {
-            name: "# opponent goals with you as attacker",
+            name: "# Opponent goals with you as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderOpponentGoals: {
-            name: "# opponent goals with you as defender",
+            name: "# Opponent goals with you as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbStatTeammateGoals: {
-            name: "# teammate goals with temporal stats (used for below stats)",
+            name: "# Teammate goals with temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerTeammateGoals: {
-            name: "# teammate goals with you as attacker",
+            name: "# Teammate goals with you as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderTeammateGoals: {
-            name: "# teammate goals with you as defender",
+            name: "# Teammate goals with you as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
@@ -254,6 +254,12 @@ function doGeneratePlayerStats(player) {
         },
         attackScore: {
             name: "Attack score (Explanations coming...)",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        score: {
+            name: "Score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
@@ -420,6 +426,7 @@ function doGeneratePlayerStats(player) {
     stats.longshotsScore.team = (stats.nbDefenderGoals.team / stats.defenderDividend.team) * 100;
     stats.strikerScore.team = (stats.nbAttackerGoals.team / stats.attackerDividend.team) * 100;
     stats.attackScore.team = (stats.longshotsScore.team + stats.strikerScore.team) / 2;
+    stats.score.team = (stats.defenseScore.team + stats.attackScore.team) / 2;
     stats.supportScore.team = (stats.nbDefenderTeammateGoals.team / stats.attackerDividend.team) * 100;
 
     //Computes the sum for each
