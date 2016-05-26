@@ -93,8 +93,7 @@ a {
 }
 
 /* Flex growing */
-#foos-main,
-.foos-part {
+#foos-main {
     flex-grow: 1;
 }
 

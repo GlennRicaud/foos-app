@@ -4,14 +4,16 @@ var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 
-var foosPLayerStatsTime = new Date();
+var foosPLayerStatsTime = new Date().toISOString();
+
 
 exports.generatePlayerStats = function (player) {
 
     var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
     var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
-    if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime() ||
-        playerStatsContent.modifiedTime < foosPLayerStatsTime) {
+
+    if (!playerStatsContent || (playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) ||
+        (playerStatsContent.modifiedTime < foosPLayerStatsTime)) {
         var playerStats = doGeneratePlayerStats(player);
 
         var storePlayerStatsFunction;
@@ -20,7 +22,8 @@ exports.generatePlayerStats = function (player) {
                 return contentLib.modify({
                     key: playerStatsContent._id,
                     editor: function (c) {
-                        c.data = playerStats
+                        c.data = playerStats;
+                        return c;
                     }
                 });
             }
@@ -54,85 +57,85 @@ function doGeneratePlayerStats(player) {
 
     var stats = {
         nbGames: {
-            name: "# games",
+            name: "# Games",
             solo: 0,
             team: 0
         },
         nbWonGames: {
-            name: "# won games",
+            name: "# Won games",
             solo: 0,
             team: 0
         },
         nbGamesWithExtraTime: {
-            name: "# games with extra time",
+            name: "# Games w/ extra time",
             solo: 0,
             team: 0
         },
         nbWonGamesWithExtraTime: {
-            name: "# won games with extra time",
+            name: "# Won games w/ extra time",
             solo: 0,
             team: 0
         },
         nbPlayerGoals: {
-            name: "# player goals",
+            name: "# Player goals",
             solo: 0,
             team: 0
         },
         nbPlayersGoalsAgainst: {
-            name: "# player goals against",
+            name: "# Player goals against",
             solo: 0,
             team: 0
         },
         nbTeamGoals: {
-            name: "# team goals",
+            name: "# Team goals",
             solo: 0,
             team: 0
         },
         nbTeamPoints: {
-            name: "# team points",
+            name: "# Team points",
             solo: 0,
             team: 0
         },
         nbOpponentGoals: {
-            name: "# opponent goals",
+            name: "# Opponent goals",
             solo: 0,
             team: 0
         },
         nbOpponentPoints: {
-            name: "# opponent points",
+            name: "# Opponent points",
             solo: 0,
             team: 0
         },
         nbStatGames: {
-            name: "# games with temporal stats (used for below stats)",
+            name: "# Games with temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerGames: {
-            name: "# games as attacker (2nd half & extra time)",
+            name: "# Games as attacker (2nd half & extra time)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderGames: {
-            name: "# games as defender (2nd half & extra time)",
+            name: "# Games as defender (2nd half & extra time)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbStatGoals: {
-            name: "# player goals with temporal stats (used for below stats)",
+            name: "# Player goals with temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerGoals: {
-            name: "# player goals as attacker",
+            name: "# Player goals as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderGoals: {
-            name: "# player goals as defender",
+            name: "# Player goals as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
