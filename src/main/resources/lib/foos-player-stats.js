@@ -4,7 +4,7 @@ var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 
-var foosPLayerStatsTime = new Date().toISOString();
+var foosPlayerStatsTime = new Date().toISOString();
 
 
 exports.generatePlayerStats = function (player) {
@@ -13,7 +13,7 @@ exports.generatePlayerStats = function (player) {
     var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
 
     if (!playerStatsContent || (playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) ||
-        (playerStatsContent.modifiedTime < foosPLayerStatsTime)) {
+        (playerStatsContent.modifiedTime < foosPlayerStatsTime)) {
         var playerStats = doGeneratePlayerStats(player);
 
         var storePlayerStatsFunction;
