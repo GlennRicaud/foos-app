@@ -24,23 +24,32 @@ function refreshFoosStatsJunkieTable() {
     $("#foos-stats-junkie-table .foos-body").remove();
 
     playerStats.sort(function (playerStats1, playerStats2) {
+        if ("N/A" == playerStats1[currentStatName].team) {
+            return 1;
+        }
+        if ("N/A" == playerStats2[currentStatName].team) {
+            return -1;
+        }
         return playerStats2[currentStatName].team - playerStats1[currentStatName].team
     });
 
     var template = '{{{playerStatsRowTemplate}}}';
     var index = 1;
     playerStats.forEach(function (playerStats) {
-        console.log(playerStats.playerName + JSON.stringify(playerStats[currentStatName], null, 2));
         var row = Mustache.render(template, {
             even: (index % 2) == 0,
             rank: index,
             displayName: playerStats.playerName,
-            soloValue: playerStats[currentStatName].solo,
-            teamValue: playerStats[currentStatName].team.toFixed(0),
-            totalValue: playerStats[currentStatName].total
+            soloValue: formatAsInteger(playerStats[currentStatName].solo),
+            teamValue: formatAsInteger(playerStats[currentStatName].team),
+            totalValue: formatAsInteger(playerStats[currentStatName].total)
         });
 
         $("#foos-stats-junkie-table").append(row);
         index++;
     });
+}
+
+function formatAsInteger(number) {
+    return isNaN(number) ? number : number.toFixed(0);
 }

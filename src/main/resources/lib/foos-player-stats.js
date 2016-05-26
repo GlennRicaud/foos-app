@@ -66,6 +66,11 @@ function doGeneratePlayerStats(player) {
             solo: 0,
             team: 0
         },
+        ratioWonGames: {
+            name: "% Won games",
+            solo: 0,
+            team: 0
+        },
         nbGamesWithExtraTime: {
             name: "# Games w/ extra time",
             solo: 0,
@@ -418,16 +423,23 @@ function doGeneratePlayerStats(player) {
         }
     });
 
-
     //Scores
-    stats.goalKeepingScore.team = 100 - foosUtilLib.toPercentageRatio(stats.nbDefenderOpponentGoals.team, stats.defenderDividend.team);
-    stats.midfieldBlockingScore.team = 100 - foosUtilLib.toPercentageRatio(stats.nbAttackerOpponentGoals.team, stats.attackerDividend.team);
-    stats.defenseScore.team = (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
-    stats.longshotsScore.team = foosUtilLib.toPercentageRatio(stats.nbDefenderGoals.team, stats.defenderDividend.team);
-    stats.strikerScore.team = foosUtilLib.toPercentageRatio(stats.nbAttackerGoals.team, stats.attackerDividend.team);
-    stats.attackScore.team = (stats.longshotsScore.team + stats.strikerScore.team) / 2;
-    stats.score.team = (stats.defenseScore.team + stats.attackScore.team) / 2;
-    stats.supportScore.team = foosUtilLib.toPercentageRatio(stats.nbDefenderTeammateGoals.team, stats.attackerDividend.team);
+    stats.goalKeepingScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : 100 - foosUtilLib.toPercentageRatio(stats.nbDefenderOpponentGoals.team,
+            stats.defenderDividend.team);
+    stats.midfieldBlockingScore.team = stats.nbStatGames.team == 0 ? "N/A" : 100 -
+                                                                             foosUtilLib.toPercentageRatio(stats.nbAttackerOpponentGoals.team,
+                                                                                 stats.attackerDividend.team);
+    stats.defenseScore.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
+    stats.longshotsScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbDefenderGoals.team, stats.defenderDividend.team);
+    stats.strikerScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbAttackerGoals.team, stats.attackerDividend.team);
+    stats.attackScore.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.longshotsScore.team + stats.strikerScore.team) / 2;
+    stats.score.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.defenseScore.team + stats.attackScore.team) / 2;
+    stats.supportScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbDefenderTeammateGoals.team,
+            stats.attackerDividend.team);
 
     //Computes the sum for each
     for (var statName in stats) {
@@ -436,6 +448,11 @@ function doGeneratePlayerStats(player) {
             stat.total = stat.solo + stat.team;
         }
     }
+
+    //Ratios
+    ["solo", "team", "total"].forEach(function (attrName) {
+        stats.ratioWonGames[attrName] = foosUtilLib.toPercentageRatio(stats.nbWonGames[attrName], stats.nbGames[attrName]);
+    });
 
     ["solo", "team", "total"].forEach(function (attrName) {
         stats.avgDeltaTimeGoals[attrName] =
