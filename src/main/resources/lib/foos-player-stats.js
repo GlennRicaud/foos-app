@@ -420,14 +420,14 @@ function doGeneratePlayerStats(player) {
 
 
     //Scores
-    stats.goalKeepingScore.team = (1 - (stats.nbDefenderOpponentGoals.team / stats.defenderDividend.team)) * 100;
-    stats.midfieldBlockingScore.team = (1 - (stats.nbAttackerOpponentGoals.team / stats.attackerDividend.team)) * 100;
+    stats.goalKeepingScore.team = 100 - foosUtilLib.toPercentageRatio(stats.nbDefenderOpponentGoals.team, stats.defenderDividend.team);
+    stats.midfieldBlockingScore.team = 100 - foosUtilLib.toPercentageRatio(stats.nbAttackerOpponentGoals.team, stats.attackerDividend.team);
     stats.defenseScore.team = (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
-    stats.longshotsScore.team = (stats.nbDefenderGoals.team / stats.defenderDividend.team) * 100;
-    stats.strikerScore.team = (stats.nbAttackerGoals.team / stats.attackerDividend.team) * 100;
+    stats.longshotsScore.team = foosUtilLib.toPercentageRatio(stats.nbDefenderGoals.team, stats.defenderDividend.team);
+    stats.strikerScore.team = foosUtilLib.toPercentageRatio(stats.nbAttackerGoals.team, stats.attackerDividend.team);
     stats.attackScore.team = (stats.longshotsScore.team + stats.strikerScore.team) / 2;
     stats.score.team = (stats.defenseScore.team + stats.attackScore.team) / 2;
-    stats.supportScore.team = (stats.nbDefenderTeammateGoals.team / stats.attackerDividend.team) * 100;
+    stats.supportScore.team = foosUtilLib.toPercentageRatio(stats.nbDefenderTeammateGoals.team, stats.attackerDividend.team);
 
     //Computes the sum for each
     for (var statName in stats) {

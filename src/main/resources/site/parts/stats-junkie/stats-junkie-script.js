@@ -16,9 +16,7 @@ $.ajax("{{playerStatsServiceUrl}}").done(function (data) {
         refreshFoosStatsJunkieTable();
     });
     refreshFoosStatsJunkieTable();
-    console.log("before");
     $("#foos-stats-junkie-tmp-message").remove();
-    console.log("after");
 });
 
 
@@ -32,12 +30,13 @@ function refreshFoosStatsJunkieTable() {
     var template = '{{{playerStatsRowTemplate}}}';
     var index = 1;
     playerStats.forEach(function (playerStats) {
+        console.log(playerStats.playerName + JSON.stringify(playerStats[currentStatName], null, 2));
         var row = Mustache.render(template, {
             even: (index % 2) == 0,
             rank: index,
             displayName: playerStats.playerName,
             soloValue: playerStats[currentStatName].solo,
-            teamValue: playerStats[currentStatName].team,
+            teamValue: playerStats[currentStatName].team.toFixed(0),
             totalValue: playerStats[currentStatName].total
         });
 
