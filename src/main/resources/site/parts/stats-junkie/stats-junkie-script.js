@@ -14,11 +14,17 @@ $.ajax("{{playerStatsServiceUrl}}").done(function (data) {
     $("#foos-stats-junkie-tmp-message").hide();
 });
 
+$("#foos-stats-junkie-select").change(function () {
+    currentStatName = $("#foos-stats-junkie-select").val();
+    refreshFoosStatsJunkieTable();
+});
+
 function refreshFoosStatsJunkieTable() {
+    $("#foos-stats-junkie-table .foos-body").remove();
+
     playerStats.sort(function (playerStats1, playerStats2) {
         return playerStats2[currentStatName].team - playerStats1[currentStatName].team
     });
-
 
     var template = '{{{playerStatsRowTemplate}}}';
     var index = 1;
@@ -28,7 +34,7 @@ function refreshFoosStatsJunkieTable() {
             rank: index,
             displayName: playerStats.playerName,
             soloValue: playerStats[currentStatName].solo,
-            teamValue: playerStats[currentStatName].team,
+            teamValue: playerStats[currentStatName].team.toFixed(0),
             totalValue: playerStats[currentStatName].total
         });
 
