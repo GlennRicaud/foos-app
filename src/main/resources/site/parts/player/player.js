@@ -18,7 +18,7 @@ exports.get = function (req) {
         for (var subStatName in playerStat) {
             var subStat = playerStat[subStatName];
             if (!isNaN(subStat)) {
-                playerStat[subStatName] = subStat.toFixed(0);
+                playerStat[subStatName] = formatValue(subStat);
             }
         }
         playerStat.even = even;
@@ -41,3 +41,10 @@ exports.get = function (req) {
         body: body
     }
 };
+
+function formatValue(number) {
+    if (isNaN(number)) {
+        return number;
+    }
+    return number % 1 === 0 ? number.toFixed(0) : number.toFixed(1);
+}

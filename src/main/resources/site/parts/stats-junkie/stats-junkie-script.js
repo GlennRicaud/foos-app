@@ -40,9 +40,9 @@ function refreshFoosStatsJunkieTable() {
             even: (index % 2) == 0,
             rank: index,
             displayName: playerStats.playerName,
-            soloValue: formatAsInteger(playerStats[currentStatName].solo),
-            teamValue: formatAsInteger(playerStats[currentStatName].team),
-            totalValue: formatAsInteger(playerStats[currentStatName].total)
+            soloValue: formatValue(playerStats[currentStatName].solo),
+            teamValue: formatValue(playerStats[currentStatName].team),
+            totalValue: formatValue(playerStats[currentStatName].total)
         });
 
         $("#foos-stats-junkie-table").append(row);
@@ -50,6 +50,9 @@ function refreshFoosStatsJunkieTable() {
     });
 }
 
-function formatAsInteger(number) {
-    return isNaN(number) ? number : number.toFixed(0);
+function formatValue(number) {
+    if (isNaN(number)) {
+        return number;
+    }
+    return number % 1 === 0 ? number.toFixed(0) : number.toFixed(1);
 }

@@ -81,8 +81,18 @@ function doGeneratePlayerStats(player) {
             solo: 0,
             team: 0
         },
+        ratioWonGamesWithExtraTime: {
+            name: "% Won games w/ extra time",
+            solo: 0,
+            team: 0
+        },
         nbPlayerGoals: {
             name: "# Player goals",
+            solo: 0,
+            team: 0
+        },
+        ratioPlayerGoals: {
+            name: "# Player goals / game",
             solo: 0,
             team: 0
         },
@@ -129,7 +139,7 @@ function doGeneratePlayerStats(player) {
             total: "N/A"
         },
         nbStatGoals: {
-            name: "# Player goals with temporal stats (used for below stats)",
+            name: "# Player goals w/ temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
@@ -182,35 +192,35 @@ function doGeneratePlayerStats(player) {
             total: 0
         },
         nbStatOpponentGoals: {
-            name: "# Opponent goals with temporal stats (used for below stats)",
+            name: "# Opponent goals w/ temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerOpponentGoals: {
-            name: "# Opponent goals with you as attacker",
+            name: "# Opponent goals w/ you as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderOpponentGoals: {
-            name: "# Opponent goals with you as defender",
+            name: "# Opponent goals w/ you as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbStatTeammateGoals: {
-            name: "# Teammate goals with temporal stats (used for below stats)",
+            name: "# Teammate goals w/ temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerTeammateGoals: {
-            name: "# Teammate goals with you as attacker",
+            name: "# Teammate goals w/ you as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderTeammateGoals: {
-            name: "# Teammate goals with you as defender",
+            name: "# Teammate goals w/ you as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
@@ -452,6 +462,9 @@ function doGeneratePlayerStats(player) {
     //Ratios
     ["solo", "team", "total"].forEach(function (attrName) {
         stats.ratioWonGames[attrName] = foosUtilLib.toPercentageRatio(stats.nbWonGames[attrName], stats.nbGames[attrName]);
+        stats.ratioWonGamesWithExtraTime[attrName] =
+            foosUtilLib.toPercentageRatio(stats.nbWonGamesWithExtraTime[attrName], stats.nbGamesWithExtraTime[attrName]);
+        stats.ratioPlayerGoals[attrName] = foosUtilLib.toRatio(stats.nbPlayerGoals[attrName], stats.nbGames[attrName]);
     });
 
     ["solo", "team", "total"].forEach(function (attrName) {
