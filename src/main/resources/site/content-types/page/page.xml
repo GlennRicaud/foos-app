@@ -1,0 +1,6 @@
+<content-type>
+  <display-name>Page</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+  </form>
+</content-type>

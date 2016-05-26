@@ -4,14 +4,16 @@ var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 
-var foosPLayerStatsTime = new Date();
+var foosPlayerStatsTime = new Date().toISOString();
+
 
 exports.generatePlayerStats = function (player) {
 
     var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
     var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
-    if (!playerStatsContent || playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime() ||
-        playerStatsContent.modifiedTime < foosPLayerStatsTime) {
+
+    if (!playerStatsContent || (playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) ||
+        (playerStatsContent.modifiedTime < foosPlayerStatsTime)) {
         var playerStats = doGeneratePlayerStats(player);
 
         var storePlayerStatsFunction;
@@ -20,7 +22,8 @@ exports.generatePlayerStats = function (player) {
                 return contentLib.modify({
                     key: playerStatsContent._id,
                     editor: function (c) {
-                        c.data = playerStats
+                        c.data = playerStats;
+                        return c;
                     }
                 });
             }
@@ -54,116 +57,131 @@ function doGeneratePlayerStats(player) {
 
     var stats = {
         nbGames: {
-            name: "# games",
+            name: "# Games",
             solo: 0,
             team: 0
         },
         nbWonGames: {
-            name: "# won games",
+            name: "# Won games",
+            solo: 0,
+            team: 0
+        },
+        ratioWonGames: {
+            name: "% Won games",
             solo: 0,
             team: 0
         },
         nbGamesWithExtraTime: {
-            name: "# games with extra time",
+            name: "# Games w/ extra time",
             solo: 0,
             team: 0
         },
         nbWonGamesWithExtraTime: {
-            name: "# won games with extra time",
+            name: "# Won games w/ extra time",
+            solo: 0,
+            team: 0
+        },
+        ratioWonGamesWithExtraTime: {
+            name: "% Won games w/ extra time",
             solo: 0,
             team: 0
         },
         nbPlayerGoals: {
-            name: "# player goals",
+            name: "# Player goals",
+            solo: 0,
+            team: 0
+        },
+        ratioPlayerGoals: {
+            name: "# Player goals / game",
             solo: 0,
             team: 0
         },
         nbPlayersGoalsAgainst: {
-            name: "# player goals against",
+            name: "# Player goals against",
             solo: 0,
             team: 0
         },
         nbTeamGoals: {
-            name: "# team goals",
+            name: "# Team goals",
             solo: 0,
             team: 0
         },
         nbTeamPoints: {
-            name: "# team points",
+            name: "# Team points",
             solo: 0,
             team: 0
         },
         nbOpponentGoals: {
-            name: "# opponent goals",
+            name: "# Opponent goals",
             solo: 0,
             team: 0
         },
         nbOpponentPoints: {
-            name: "# opponent points",
+            name: "# Opponent points",
             solo: 0,
             team: 0
         },
         nbStatGames: {
-            name: "# games with temporal stats (used for below stats)",
+            name: "# Games with temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerGames: {
-            name: "# games as attacker (2nd half & extra time)",
+            name: "# Games as attacker (2nd half & extra time)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderGames: {
-            name: "# games as defender (2nd half & extra time)",
+            name: "# Games as defender (2nd half & extra time)",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbStatGoals: {
-            name: "# player goals with temporal stats (used for below stats)",
+            name: "# Player goals w/ temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerGoals: {
-            name: "# player goals as attacker",
+            name: "# Player goals as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderGoals: {
-            name: "# player goals as defender",
+            name: "# Player goals as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbFirstBloods: {
-            name: "# first bloods",
+            name: "# First bloods",
             solo: 0,
             team: 0
         },
         nbFinalGoals: {
-            name: "# final shot",
+            name: "# Final shot",
             solo: 0,
             team: 0
         },
         nbQuickGoals: {
-            name: "# quick goals (< 10s)",
+            name: "# Quick goals (< 10s)",
             solo: 0,
             team: 0
         },
         nbFirstHalfGoals: {
-            name: "# first half goals",
+            name: "# First half goals",
             solo: 0,
             team: 0
         },
         nbSecondHalfGoals: {
-            name: "# second half goals",
+            name: "# Second half goals",
             solo: 0,
             team: 0
         },
         nbExtraTimeGoals: {
-            name: "# extra time goals",
+            name: "# Extra time goals",
             solo: 0,
             team: 0
         },
@@ -174,35 +192,35 @@ function doGeneratePlayerStats(player) {
             total: 0
         },
         nbStatOpponentGoals: {
-            name: "# opponent goals with temporal stats (used for below stats)",
+            name: "# Opponent goals w/ temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerOpponentGoals: {
-            name: "# opponent goals with you as attacker",
+            name: "# Opponent goals w/ you as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderOpponentGoals: {
-            name: "# opponent goals with you as defender",
+            name: "# Opponent goals w/ you as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbStatTeammateGoals: {
-            name: "# teammate goals with temporal stats (used for below stats)",
+            name: "# Teammate goals w/ temporal stats (used for below stats)",
             solo: 0,
             team: 0
         },
         nbAttackerTeammateGoals: {
-            name: "# teammate goals with you as attacker",
+            name: "# Teammate goals w/ you as attacker",
             solo: "N/A",
             team: 0,
             total: "N/A"
         },
         nbDefenderTeammateGoals: {
-            name: "# teammate goals with you as defender",
+            name: "# Teammate goals w/ you as defender",
             solo: "N/A",
             team: 0,
             total: "N/A"
@@ -251,6 +269,12 @@ function doGeneratePlayerStats(player) {
         },
         attackScore: {
             name: "Attack score (Explanations coming...)",
+            solo: "N/A",
+            team: 0,
+            total: "N/A"
+        },
+        score: {
+            name: "Score (Explanations coming...)",
             solo: "N/A",
             team: 0,
             total: "N/A"
@@ -409,15 +433,23 @@ function doGeneratePlayerStats(player) {
         }
     });
 
-
     //Scores
-    stats.goalKeepingScore.team = (1 - (stats.nbDefenderOpponentGoals.team / stats.defenderDividend.team)) * 100;
-    stats.midfieldBlockingScore.team = (1 - (stats.nbAttackerOpponentGoals.team / stats.attackerDividend.team)) * 100;
-    stats.defenseScore.team = (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
-    stats.longshotsScore.team = (stats.nbDefenderGoals.team / stats.defenderDividend.team) * 100;
-    stats.strikerScore.team = (stats.nbAttackerGoals.team / stats.attackerDividend.team) * 100;
-    stats.attackScore.team = (stats.longshotsScore.team + stats.strikerScore.team) / 2;
-    stats.supportScore.team = (stats.nbDefenderTeammateGoals.team / stats.attackerDividend.team) * 100;
+    stats.goalKeepingScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : 100 - foosUtilLib.toPercentageRatio(stats.nbDefenderOpponentGoals.team,
+            stats.defenderDividend.team);
+    stats.midfieldBlockingScore.team = stats.nbStatGames.team == 0 ? "N/A" : 100 -
+                                                                             foosUtilLib.toPercentageRatio(stats.nbAttackerOpponentGoals.team,
+                                                                                 stats.attackerDividend.team);
+    stats.defenseScore.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
+    stats.longshotsScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbDefenderGoals.team, stats.defenderDividend.team);
+    stats.strikerScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbAttackerGoals.team, stats.attackerDividend.team);
+    stats.attackScore.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.longshotsScore.team + stats.strikerScore.team) / 2;
+    stats.score.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.defenseScore.team + stats.attackScore.team) / 2;
+    stats.supportScore.team =
+        stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbDefenderTeammateGoals.team,
+            stats.attackerDividend.team);
 
     //Computes the sum for each
     for (var statName in stats) {
@@ -426,6 +458,14 @@ function doGeneratePlayerStats(player) {
             stat.total = stat.solo + stat.team;
         }
     }
+
+    //Ratios
+    ["solo", "team", "total"].forEach(function (attrName) {
+        stats.ratioWonGames[attrName] = foosUtilLib.toPercentageRatio(stats.nbWonGames[attrName], stats.nbGames[attrName]);
+        stats.ratioWonGamesWithExtraTime[attrName] =
+            foosUtilLib.toPercentageRatio(stats.nbWonGamesWithExtraTime[attrName], stats.nbGamesWithExtraTime[attrName]);
+        stats.ratioPlayerGoals[attrName] = foosUtilLib.toRatio(stats.nbPlayerGoals[attrName], stats.nbGames[attrName]);
+    });
 
     ["solo", "team", "total"].forEach(function (attrName) {
         stats.avgDeltaTimeGoals[attrName] =

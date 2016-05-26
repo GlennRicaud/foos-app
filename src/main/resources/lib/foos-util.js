@@ -59,8 +59,12 @@ exports.concat = function (object1, object2) {
     return exports.toArray(object1).concat(exports.toArray(object2));
 }
 
+exports.toRatio = function (numerator, denominator) {
+    return numerator / (denominator > 0 ? denominator : 1);
+}
+
 exports.toPercentageRatio = function (numerator, denominator) {
-    return Math.floor(numerator * 100 / (denominator > 0 ? denominator : 1))
+    return numerator * 100 / (denominator > 0 ? denominator : 1);
 }
 
 exports.log = function (message, object) {
