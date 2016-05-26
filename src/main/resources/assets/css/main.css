@@ -11,12 +11,18 @@ a {
     text-decoration: none;
 }
 
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 /* Document values */
 html, body {
     height: 100%
 }
 
-body {
+body, select {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
@@ -106,7 +112,8 @@ a {
 .foos-header,
 .foos-part-title,
 .foos-game-details-link,
-.foos-end-page-link {
+.foos-end-page-link,
+select {
     background-color: #3d9241;
     color: #ffffff;
 }
@@ -137,6 +144,11 @@ a {
     border-radius: 5px;
 }
 
+select {
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+}
+
 /***************************************************
 ** Padding
 ****************************************************/
@@ -145,7 +157,8 @@ a {
 .foos-text,
 span,
 img,
-ul {
+ul,
+select {
     padding: 0.5em 1em;
 }
 
@@ -165,6 +178,10 @@ ul {
 .foos-week,
 .foos-part-title {
     font-size: 20px;
+}
+
+select {
+    font-size: 14px;
 }
 
 .foos-filtered-teams {
@@ -279,7 +296,6 @@ ul {
 
 .foos-cell-stat {
     flex: 1 0;
-    min-width: 20em;
 }
 
 /***************************************************
