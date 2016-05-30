@@ -297,7 +297,7 @@ var GAME = (function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
-                gameSavedUrl = data.weekUrl;
+                gameSavedUrl = data.gameUrl;
                 $('#field').addClass('game-over');
                 setTimeout(function () {
                     window.location.href = gameSavedUrl;

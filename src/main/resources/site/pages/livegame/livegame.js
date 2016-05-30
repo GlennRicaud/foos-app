@@ -1,8 +1,11 @@
 var thymeleaf = require('/lib/xp/thymeleaf');
+var mustacheLib = require('/lib/xp/mustache');
 var portalLib = require('/lib/xp/portal');
 var contentLib = require('/lib/xp/content');
 var contextLib = require('/lib/xp/context');
 var foosRetrievalLib = require('/lib/foos-retrieval');
+var foosUtilLib = require('/lib/foos-util');
+var httpClient = require('/lib/xp/http-client');
 
 exports.get = function (req) {
     if (req.params.d) {
@@ -25,7 +28,7 @@ exports.get = function (req) {
 };
 
 exports.post = function (req) {
-    var weekContent = contextLib.run({
+    var game = contextLib.run({
         branch: 'draft',
         user: {
             login: 'su',
@@ -35,14 +38,204 @@ exports.post = function (req) {
         return saveGame(req);
     });
 
+    sendHipchatNotification(game);
+
     return {
         body: {
-            weekUrl: portalLib.pageUrl({
-                path: weekContent._path
+            gameUrl: portalLib.pageUrl({
+                path: game._path
             })
         },
         contentType: 'application/json'
     }
+};
+
+var sendHipchatNotification = function (game) {
+    log.info('Hipchat:' + generateHipchatMessage(game));
+    var liveGameContent = portalLib.getContent();
+    var token = liveGameContent.page.config.hipchatToken || '';
+    var roomName = liveGameContent.page.config.hipchatRoom || '';
+    if (token.trim() === '' || roomName.trim() === '') {
+        return;
+    }
+
+    var url = 'https://enonic.hipchat.com/v2/room/' + roomName + '/notification';
+    var body = {
+        "from": "Foos app",
+        "color": "green",
+        "message": generateHipchatMessage(game),
+        "notify": false,
+        "message_format": "html"
+    };
+
+    try {
+        response = httpClient.request({
+            url: url,
+            method: 'POST',
+            contentType: 'application/json',
+            body: JSON.stringify(body),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+
+        });
+    } catch (e) {
+        log.error('Hipchat notification request error: ' + e.message);
+    }
+};
+
+var generateHipchatMessage = function (game) {
+    var view = resolve('hipchat.html');
+
+    var gameUrl = portalLib.pageUrl({
+        path: game._path,
+        type: 'absolute'
+    });
+
+    var winnersDisplayName;
+    var losersDisplayName;
+    var winners;
+    var losers;
+    if (game.data.winners.length == 2) {
+        var winingTeam = foosRetrievalLib.getTeamByGame(game, true, true);
+        var losingTeam = foosRetrievalLib.getTeamByGame(game, false, true);
+        winnersDisplayName = winingTeam.displayName;
+        losersDisplayName = losingTeam.displayName;
+    } else {
+        var winner = foosRetrievalLib.getContentByKey(game.data.winners.playerId);
+        var loser = foosRetrievalLib.getContentByKey(game.data.losers.playerId);
+
+        winnersDisplayName = winner.displayName;
+        losersDisplayName = loser.displayName;
+    }
+    var gameDetails = generateGoalsDetails(game);
+    log.info('Goal details: ' + JSON.stringify(gameDetails, null, 2));
+
+    var title = winnersDisplayName + '   ' + gameDetails.winnersScore + ' - ' + gameDetails.losersScore + '   ' + losersDisplayName;
+
+    var diffScore = gameDetails.winnersScore - gameDetails.losersScore;
+    var action;
+    if (diffScore > 7) {
+        action = randomText(['obliterates', 'destroys']);
+    } else if (diffScore > 4) {
+        action = randomText(['crushes', 'dominates']);
+    } else {
+        action = randomText(['defeats', 'beats']);
+    }
+    var adj = randomText(['an exciting', 'an appealing', 'a hectic', 'a lively']);
+    if (diffScore == 2) {
+        adj = 'a dramatic';
+    } else if (gameDetails.leadChanges > 4) {
+        adj = 'an unpredictable';
+    } else if (gameDetails.winnerTimeLeading < 0.5) {
+        adj = 'a contended';
+    }
+    var summary = winnersDisplayName + ' ' + action + ' ' + losersDisplayName;
+    summary += ' in ' + adj + ' game';
+    if (gameDetails.comeBack) {
+        var comebackAdj = gameDetails.winnerTimeLeading < gameDetails.loserTimeLeading ? 'epic' : 'incredible';
+        summary += ', after an ' + comebackAdj + ' comeback';
+    }
+    if (gameDetails.overtime) {
+        summary += ', on overtime';
+    }
+    summary += '.';
+
+    var body = mustacheLib.render(view, {
+        title: title,
+        line1: summary,
+        gameUrl: gameUrl
+    });
+    return body;
+};
+
+var generateGoalsDetails = function (game) {
+    var winnersScore = 0;
+    var losersScore = 0;
+    var leadChanges = 0;
+    var currentLead = 0;
+    var winnerTimeLeading = 0;
+    var loserTimeLeading = 0;
+    var totalTime = 0;
+    var previousTime = 0;
+    var firstHalfWinner = 0;
+    var secondHalfWinner = 0;
+    var winnerIds = foosUtilLib.toArray(game.data.winners).map(function (playerResult) {
+        return playerResult.playerId
+    });
+
+    var playersById = {};
+    foosRetrievalLib.getPlayersByGame(game).forEach(function (player) {
+        playersById[player._id] = player;
+    });
+
+    game.data.goals.sort(function (goal1, goal2) {
+        return goal1.time - goal2.time;
+    }).forEach(function (goal) {
+        var winnerScored = (!goal.against && winnerIds.indexOf(goal.playerId) > -1) ||
+                           (goal.against && winnerIds.indexOf(goal.playerId) == -1);
+
+        if (winnerScored) {
+            winnersScore++;
+        } else {
+            losersScore++;
+        }
+
+        var newLead = sign(winnersScore - losersScore);
+        var timeDelta = goal.time - previousTime;
+
+        if (currentLead > 0) {
+            winnerTimeLeading = winnerTimeLeading + timeDelta;
+        } else if (currentLead < 0) {
+            loserTimeLeading = loserTimeLeading + timeDelta;
+        }
+
+        if (newLead != 0 && newLead != currentLead) {
+            log.info('Lead change: ' + winnersScore + ' - ' + losersScore);
+            leadChanges++;
+        }
+        if (newLead != 0) {
+            currentLead = newLead;
+        }
+
+        totalTime += timeDelta;
+        previousTime = goal.time;
+
+        if ((winnersScore >= 5 || losersScore >= 5) && firstHalfWinner == 0) {
+            firstHalfWinner = currentLead;
+        }
+    });
+
+    secondHalfWinner = sign(winnersScore - losersScore);
+    return {
+        winnersScore: winnersScore,
+        losersScore: losersScore,
+        overtime: winnersScore > 10,
+        leadChanges: leadChanges,
+        winnerTimeLeading: winnerTimeLeading / totalTime,
+        loserTimeLeading: loserTimeLeading / totalTime,
+        comeBack: secondHalfWinner != firstHalfWinner
+    };
+};
+
+var sign = function (x) {
+    // Math.sign() polyfill
+    x = +x; // convert to a number
+    if (x === 0 || isNaN(x)) {
+        return x;
+    }
+    return x > 0 ? 1 : -1;
+};
+
+var randomText = function (values) {
+    var i = random(0, values.length - 1);
+    return values[i];
+};
+
+var random = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 var saveGame = function (req) {
@@ -74,7 +267,7 @@ var saveGame = function (req) {
         includeDependencies: true
     });
 
-    return weekContent;
+    return createResult;
 };
 
 var getData = function () {

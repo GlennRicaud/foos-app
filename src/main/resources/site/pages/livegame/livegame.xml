@@ -8,6 +8,15 @@
         <allowContentType>media:audio</allowContentType>
       </config>
     </input>
+    <input type="TextLine" name="hipchatRoom">
+      <label>Hipchat Room Name</label>
+      <occurrences minimum="0" maximum="1"/>
+      <default>foos</default>
+    </input>
+    <input type="TextLine" name="hipchatToken">
+      <label>Hipchat Room Token</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
   </config>
   <regions>
     <region name="main"/>
