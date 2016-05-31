@@ -17,6 +17,22 @@
       <label>Hipchat Room Token</label>
       <occurrences minimum="0" maximum="1"/>
     </input>
+    <input type="CheckBox" name="hipchatNotify">
+      <label>Trigger user notification in Hipchat</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+    <input type="RadioButton" name="hipchatColor">
+      <label>Background color for message</label>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="red">Red</option>
+        <option value="purple">Purple</option>
+        <option value="gray">Gray</option>
+        <option value="random">Random</option>
+      </config>
+    </input>
   </config>
   <regions>
     <region name="main"/>

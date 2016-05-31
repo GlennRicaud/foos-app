@@ -55,16 +55,18 @@ var sendHipchatNotification = function (game) {
     var liveGameContent = portalLib.getContent();
     var token = liveGameContent.page.config.hipchatToken || '';
     var roomName = liveGameContent.page.config.hipchatRoom || '';
+    var color = liveGameContent.page.config.hipchatColor || 'green';
+    var notify = !!liveGameContent.page.config.hipchatNotify;
     if (token.trim() === '' || roomName.trim() === '') {
         return;
     }
 
     var url = 'https://enonic.hipchat.com/v2/room/' + roomName + '/notification';
     var body = {
-        "from": "Foos app",
-        "color": "green",
+        // "from": "Foos app",
+        "color": color,
         "message": generateHipchatMessage(game),
-        "notify": false,
+        "notify": notify,
         "message_format": "html"
     };
 
@@ -103,13 +105,21 @@ var generateHipchatMessage = function (game) {
         var losingTeam = foosRetrievalLib.getTeamByGame(game, false, true);
         winnersDisplayName = winingTeam.displayName;
         losersDisplayName = losingTeam.displayName;
+
+        // winners = foosRetrievalLib.getPlayersByGame(game, true);
+        // losers = foosRetrievalLib.getPlayersByGame(game, false);
     } else {
         var winner = foosRetrievalLib.getContentByKey(game.data.winners.playerId);
         var loser = foosRetrievalLib.getContentByKey(game.data.losers.playerId);
-
         winnersDisplayName = winner.displayName;
         losersDisplayName = loser.displayName;
+
+        // winners = [winner];
+        // losers = [loser];
     }
+
+    // TODO get teams picture
+
     var gameDetails = generateGoalsDetails(game);
     log.info('Goal details: ' + JSON.stringify(gameDetails, null, 2));
 
