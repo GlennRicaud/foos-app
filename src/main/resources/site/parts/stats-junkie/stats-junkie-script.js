@@ -1,9 +1,8 @@
 var playerStats;
-var currentStatName;
+var currentStatName = "attackScore";
 
 $.ajax("{{playerStatsServiceUrl}}").done(function (data) {
     playerStats = data;
-    currentStatName = "score";
 
     var firstPlayer = playerStats[0];
     for (var statName in firstPlayer) {

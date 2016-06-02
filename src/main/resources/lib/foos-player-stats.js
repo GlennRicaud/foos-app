@@ -2,9 +2,8 @@ var contentLib = require('/lib/xp/content');
 var contextLib = require('/lib/xp/context');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
-var foosRetrievalLib = require('/lib/foos-retrieval');
 
-var foosPlayerStatsTime = new Date().toISOString();
+var applicationDeploymentTime = new Date().toISOString();
 
 
 exports.generatePlayerStats = function (player) {
@@ -12,8 +11,10 @@ exports.generatePlayerStats = function (player) {
     var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
     var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
 
-    if (!playerStatsContent || (playerStatsContent.modifiedTime < foosRetrievalLib.getLatestGameModificationTime()) ||
-        (playerStatsContent.modifiedTime < foosPlayerStatsTime)) {
+    var latestGameModificationTime = foosRetrievalLib.getLatestGameModificationTime();
+    var time = applicationDeploymentTime > latestGameModificationTime ? applicationDeploymentTime : latestGameModificationTime;
+
+    if (!playerStatsContent || (playerStatsContent.modifiedTime < time)) {
         var playerStats = doGeneratePlayerStats(player);
 
         var storePlayerStatsFunction;
@@ -22,7 +23,9 @@ exports.generatePlayerStats = function (player) {
                 return contentLib.modify({
                     key: playerStatsContent._id,
                     editor: function (c) {
-                        c.data = playerStats;
+                        c.data.time = time;
+                        c.data.stats = playerStats;
+
                         return c;
                     }
                 });
@@ -33,7 +36,10 @@ exports.generatePlayerStats = function (player) {
                     parentPath: playerStatsFolder._path,
                     displayName: player._name,
                     contentType: 'base:unstructured',
-                    data: playerStats
+                    data: {
+                        stats: playerStats,
+                        time: time
+                    }
                 });
             }
         }
@@ -49,7 +55,7 @@ exports.generatePlayerStats = function (player) {
         return playerStats;
     }
 
-    return playerStatsContent.data;
+    return playerStatsContent.data.stats;
 };
 
 function doGeneratePlayerStats(player) {
