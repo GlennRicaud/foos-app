@@ -116,9 +116,13 @@ body {
     background-color: #f7f7f7;
 }
 
+.foos-part {
+    background-color: #fff;
+}
+
 body,
 a {
-    color: #000000;
+    color: #000;
 }
 
 #foos-nav > *:hover,
@@ -128,7 +132,7 @@ a {
 }
 
 #foos-nav > a {
-    color: #ffffff;
+    color: #fff;
 }
 
 .foos-row-even, .foos-game-comment {
@@ -136,7 +140,7 @@ a {
 }
 
 select {
-    border: 1px solid #ffffff;
+    border: 1px solid #fff;
 }
 
 .foos-part,
