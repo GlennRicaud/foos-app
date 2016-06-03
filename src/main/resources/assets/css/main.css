@@ -22,11 +22,6 @@ html, body {
     height: 100%
 }
 
-body, select {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-}
-
 /***************************************************
 ** Flex generic settings
 ****************************************************/
@@ -173,8 +168,24 @@ select {
 ****************************************************/
 
 @font-face {
+    font-family: "OpenSans";
+    src: url("../font/OpenSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "OpenSans";
+    font-weight: bold;
+    src: url("../font/OpenSans-Bold.ttf");
+}
+
+@font-face {
     font-family: 'Tagesschrift';
     src: url('../font/ds-digi.ttf');
+}
+
+body, select {
+    font-family: "OpenSans", Arial, sans-serif;
+    font-weight: bold;
 }
 
 #foos-nav {
