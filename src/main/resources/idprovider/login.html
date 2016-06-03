@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Foos Login</title>
+
+    <link href="{{loginStyleUrl}}" rel="stylesheet">
+    <script src="{{jQueryUrl}}"></script>
+
+    {{{loginConfig}}}
+</head>
+
+<body>
+<div class="container">
+    <img class="form-user-image" src="{{loginImgUrl}}">
+
+    <form class="form-login">
+        <h2 class="form-login-heading">Foos Login</h2>
+        <input type="text" id="inputUsername" class="form-input" placeholder="Username" required autofocus>
+        <input type="password" id="inputPassword" class="form-input" placeholder="Password" required>
+        <button type="submit" class="form-button">LOGIN</button>
+        <span id="errorMessage" class="form-message hidden">Login failed!</span>
+    </form>
+</div>
+
+<script src="{{loginScriptUrl}}"></script>
+</body>
+</html>

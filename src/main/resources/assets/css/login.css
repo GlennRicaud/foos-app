@@ -1,0 +1,110 @@
+/***************************************************
+** Generic settings
+****************************************************/
+
+body {
+    margin: 0;
+}
+
+html, body, .container {
+    height: 100%
+}
+
+/***************************************************
+** Font & color settings
+****************************************************/
+
+body, input, button {
+    font-family: Arial, sans-serif;
+}
+
+.form-login-heading {
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.1;
+}
+
+.form-input, .form-button, .form-message {
+    font-size: 16px;
+    border: none;
+}
+
+.form-button {
+    color: #fff;
+}
+
+.form-message {
+    color: #a94442;
+}
+
+.form-user-image, .form-login {
+    box-shadow: 6px 6px 3px #888888;
+}
+
+/***************************************************
+** Positioning settings
+****************************************************/
+
+.container * {
+    flex-shrink: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-user-image {
+    width: 96px;
+    height: 96px;
+    border: none;
+    border-radius: 48px;
+    z-index: 1;
+}
+
+.form-login {
+    width: 230px;
+    padding: 48px 40px 10px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: -48px;
+}
+
+.form-login-heading, .form-input, .form-message, .form-button {
+    text-align: center;
+    width: 100%;
+}
+
+.form-input, .form-button, .form-message {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form-button {
+    cursor: pointer;
+}
+
+/***************************************************
+** Dynamic settings
+****************************************************/
+
+.hidden {
+    visibility: hidden;
+}
+
+.form-login {
+    background-color: #f7f7f7;
+}
+
+.form-user-image, .form-button {
+    background-color: #3d9241;
+}
+
+.form-button:hover {
+    background-color: #2c682f;
+}
