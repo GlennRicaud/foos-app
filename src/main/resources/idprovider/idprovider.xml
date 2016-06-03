@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <id-provider>
   <mode>LOCAL</mode>
-  <config/>
+  <config>
+    <input name="allowedIps" type="TextLine">
+      <label>allowedIps</label>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input name="password" type="TextLine">
+      <label>Password (Temporary fix)</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+  </config>
 </id-provider>
