@@ -5,8 +5,8 @@
         <div class="foos-cell-text">
             <span>Name</span>
         </div>
-        <span class="foos-cell-3-numbers">Victories (without + with extra time)</span>
-        <span class="foos-cell-3-numbers">Defeats (without + with extra time)</span>
+        <span class="foos-cell-3-numbers">Victories*</span>
+        <span class="foos-cell-3-numbers">Defeats*</span>
         <span class="foos-cell-number">Score</span>
     </div>
     {{#teams}}
@@ -24,4 +24,4 @@
     </div>
     {{/teams}}
 </div>
-<span class="foos-filtered-teams">Filtered teams (<{{nbGamesThreshold}} games): {{#filteredTeams}}({{displayName}}: {{gen.nbGames}} game(s);{{gen.score}}pts) {{/filteredTeams}}</span>
+<span class="foos-filtered-teams">* With + Without extra time<br/>Filtered teams (<{{nbGamesThreshold}} games): {{#filteredTeams}}({{displayName}}: {{gen.nbGames}} game(s);{{gen.score}}pts) {{/filteredTeams}}</span>

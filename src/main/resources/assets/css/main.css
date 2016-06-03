@@ -185,16 +185,17 @@ select {
 
 body, select {
     font-family: "OpenSans", Arial, sans-serif;
-    font-weight: bold;
 }
 
 #foos-nav {
     font-size: 24px;
+    font-weight: bold;
 }
 
 .foos-week,
 .foos-part-title {
     font-size: 20px;
+    font-weight: bold;
 }
 
 select {
@@ -307,7 +308,6 @@ select {
 }
 
 .foos-cell-3-numbers {
-    flex: 1 0;
     min-width: 5em;
 }
 
