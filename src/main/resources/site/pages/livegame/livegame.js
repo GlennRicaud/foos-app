@@ -252,7 +252,7 @@ var saveGame = function (req) {
     var playerResults = JSON.parse(req.body);
 
     var weekContent = ensureWeekContent();
-    var gameNumber = getNextGame(weekContent);
+    var gameNumber = getNextGame();
 
     var createResult = contentLib.create({
         name: 'game' + gameNumber,
@@ -389,12 +389,15 @@ var formatIsoDate = function (date) {
     return new Date(date.getTime() - tzoffset).toISOString().slice(0, 10); // "2016-04-07"
 };
 
-var getNextGame = function (weekContent) {
-    var gamesResult = contentLib.getChildren({
-        key: weekContent._id,
+var getNextGame = function () {
+    var gamesResult = contentLib.query({
         start: 0,
-        count: 1000,
-        branch: 'master'
+        count: 10000,
+        sort: "modifiedTime DESC",
+        branch: 'master',
+        contentTypes: [
+            app.name + ":game"
+        ]
     });
 
     var hits = gamesResult.hits, i;
