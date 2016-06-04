@@ -504,6 +504,7 @@ body {
     flex-direction: column;
     /*justify-content: flex-start;*/
     /*align-items: flex-end;*/
+    padding-bottom: 20px;
 }
 
 #playerSelection.playerSelectionDone {
