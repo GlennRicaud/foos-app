@@ -19,7 +19,7 @@ var GAME = (function () {
     var postUrl;
     var audioUrl;
     var players = [];
-    var gamePlayers = [0, 0, 0, 0];
+    var gamePlayers = [-1, -1, -1, -1];
     var gamePlayersDivs = ['player1', 'player2', 'player3', 'player4'];
     var gameStarted = false;
     var gameEnded = false;
@@ -29,6 +29,7 @@ var GAME = (function () {
     var singlesGame = false;
     var goals = [];
     var paused = false;
+    var shuffleCountDown = false;
 
     toggleRight = function (show) {
         $('#player3, #player4, #goal-right').toggle(show);
@@ -54,24 +55,14 @@ var GAME = (function () {
         if (players.length === 0) {
             return;
         }
-        var i = 0, l = players.length;
-        gamePlayers[PLAYER1] = i % l;
-        gamePlayers[PLAYER2] = (i + 1) % l;
-        gamePlayers[PLAYER3] = (i + 2) % l;
-        gamePlayers[PLAYER4] = (i + 3) % l;
-        loadSelectedPlayers();
-
         $('#player1').on('click', {pid: PLAYER1}, onSelectPlayer);
         $('#player2').on('click', {pid: PLAYER2}, onSelectPlayer);
         $('#player3').on('click', {pid: PLAYER3}, onSelectPlayer);
         $('#player4').on('click', {pid: PLAYER4}, onSelectPlayer);
-        $('#title').on('click', onStart);
         $('#goal-left').on('click', onSelectGoal);
         $('#goal-right').on('click', onSelectGoal);
         $('#mainRegion').on('click', onFieldClick);
         $('.circle').on('click', onCircleClick);
-
-        showPlayers();
 
         toggleMiddle(false);
         $('#title span').text('Play');
@@ -119,6 +110,9 @@ var GAME = (function () {
     showPlayer = function (playerIdx) {
         var div = $('#' + gamePlayersDivs[playerIdx]);
         var player = players[gamePlayers[playerIdx]];
+        if (!player) {
+            return;
+        }
         div.find('img').attr('src', player.pictureUrl);
         div.find('.player-name').text(player.displayName);
         div.find('.player-score').text(player.against ? "+" + player.goals + " -" + player.against + "" : "+" + player.goals);
@@ -156,7 +150,7 @@ var GAME = (function () {
         }
     };
 
-    onSelectGoal = function (e) {
+    onSelectGoal = function () {
         if (paused) {
             return;
         }
@@ -211,7 +205,7 @@ var GAME = (function () {
         }
     };
 
-    onStart = function (e) {
+    doStart = function () {
         toggleStart(false);
         toggleScores(true);
         toggleMiddle(true);
@@ -224,8 +218,6 @@ var GAME = (function () {
         gameStarted = true;
         lastTime = new Date();
         totalTimeSec = 0;
-
-        saveSelectedPlayers();
     };
 
     checkEndGame = function () {
@@ -318,51 +310,136 @@ var GAME = (function () {
         initPlayerSelection();
     };
 
-    saveSelectedPlayers = function () {
-        if (!localStorage) {
-            return;
+    getPlayerIndex = function (playerId) {
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].id === playerId) {
+                return i;
+            }
         }
-        var p1 = players[gamePlayers[PLAYER1]];
-        var p2 = players[gamePlayers[PLAYER2]];
-        var p3 = players[gamePlayers[PLAYER3]];
-        var p4 = players[gamePlayers[PLAYER4]];
-        var selectedPlayers = [p1.name, p2.name, p3.name, p4.name];
-        localStorage.setItem('players', selectedPlayers.join('/'));
+        return -1;
     };
 
-    loadSelectedPlayers = function () {
-        if (!localStorage) {
+    onPlayerClick = function (e) {
+        var pSelected = e.data.p;
+        var playerIdx = getPlayerIndex(pSelected.id);
+
+        for (var pid = 0; pid < gamePlayers.length; pid++) {
+            if (gamePlayers[pid] == playerIdx) {
+                return;
+            }
+            if (singlesGame && (pid === PLAYER2 || pid == PLAYER3)) {
+                continue;
+            }
+            if (gamePlayers[pid] === -1) {
+                break;
+            }
+        }
+        var div = $('#teamPlayer' + (pid + 1));
+        div.addClass('selected');
+        div.find('img').attr('src', pSelected.pictureUrl);
+
+        gamePlayers[pid] = playerIdx;
+
+        if (pid == 3) {
+            $('.players').hide();
+            $('.gameActions').show();
+            $('#playerSelection').addClass('playerSelectionDone');
+            $('.gameActionShuffle').toggle(!singlesGame);
+        }
+    };
+
+    shuffleArray = function (array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    };
+
+    gameSelectionStartClick = function (data) {
+        // switch p3&p4, different layout in field
+        p3 = gamePlayers[PLAYER3];
+        p4 = gamePlayers[PLAYER4];
+        gamePlayers[PLAYER4] = p3;
+        gamePlayers[PLAYER3] = p4;
+        showPlayers();
+
+        $('#gameSelection').hide();
+        $('#mainRegion').show();
+
+        $('#player2,#player4').toggle(!singlesGame);
+
+        doStart();
+    };
+
+    gameSelectionShuffleClick = function () {
+        $('.gameActionStart,.gameActionShuffle').css('visibility', 'hidden');
+        shuffleCountDown = 20;
+        doShuffle();
+    };
+
+    teamPlayerClick = function () {
+        if (gamePlayers[PLAYER2] != -1) {
             return;
         }
-        var playersStored = localStorage.getItem('players');
-        if (!playersStored) {
+        singlesGame = !singlesGame;
+        $('#teamPlayer2,#teamPlayer3').css('visibility', singlesGame ? 'hidden' : 'visible');
+    };
+
+    doShuffle = function () {
+        shuffleArray(gamePlayers);
+        showTeamSelectionPlayers();
+
+        shuffleCountDown--;
+        if (shuffleCountDown === 0) {
+            $('.gameActionStart,.gameActionShuffle').css('visibility', 'visible');
             return;
         }
-        var playerNames = playersStored.split('/');
-        if (playerNames.length != 4) {
-            return;
+        setTimeout(doShuffle, 50);
+    };
+
+    showTeamSelectionPlayers = function () {
+        for (var playerIdx = PLAYER1; playerIdx <= PLAYER4; playerIdx++) {
+            var div = $('#teamPlayer' + (playerIdx + 1));
+            var player = players[gamePlayers[playerIdx]];
+            div.addClass('selected');
+            div.find('img').attr('src', player.pictureUrl);
+        }
+    };
+
+    doInitializeTeamSelection = function (data) {
+        var players = data.players, player, playerEls = [], playerEl, playerNameDiv, playerImg, count = players.length;
+        var photoWidth, lineSize, width;
+
+        width = $('body').width() - 20;
+        lineSize = Math.ceil(count / 2);
+        photoWidth = Math.floor(width / lineSize);
+        photoWidth = Math.floor(photoWidth / 10) * 10;
+        console.log(players);
+        for (var i = 0; i < count; i++) {
+            player = players[i];
+            playerEl = $('<div class="player-option"/>');
+            playerNameDiv = $('<div class="player-name"/>').text(player.name);
+            playerImg = $('<img class="player-photo"/>').attr('src', player.pictureUrl).css('width', photoWidth + 'px');
+            playerEl.append(playerNameDiv).append(playerImg);
+            playerEl.on('click', {p: player}, onPlayerClick);
+            playerEls.push(playerEl);
         }
 
-        var i, l = players.length;
-        for (i = 0; i < l; i++) {
-            if (playerNames[PLAYER1] === players[i].name) {
-                gamePlayers[PLAYER1] = i;
-            }
-            if (playerNames[PLAYER2] === players[i].name) {
-                gamePlayers[PLAYER2] = i;
-            }
-            if (playerNames[PLAYER3] === players[i].name) {
-                gamePlayers[PLAYER3] = i;
-            }
-            if (playerNames[PLAYER4] === players[i].name) {
-                gamePlayers[PLAYER4] = i;
-            }
-        }
+        $('.players').width((photoWidth) * lineSize).append(playerEls);
+        $('.gameActions').width((photoWidth) * lineSize);
+
+        $('.gameActionStart').on('click', gameSelectionStartClick);
+        $('.gameActionShuffle').on('click', gameSelectionShuffleClick);
+        $('.team-player').on('click', teamPlayerClick);
     };
 
     return {
         initialize: function (data) {
             doInitialize(data);
+            doInitializeTeamSelection(data);
 
             toggleLeft(true);
             toggleMiddle(false);

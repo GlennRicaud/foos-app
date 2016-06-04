@@ -6,6 +6,14 @@ body {
     /*overflow: hidden;*/
     margin: 0;
     padding: 0;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
 }
 
 @font-face {
@@ -15,8 +23,8 @@ body {
 
 #field {
     position: absolute;
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
+    width: calc(100% - 5px);
+    height: calc(100% - 5px);
     border: 5px solid #fff;
     background: #7db96a;
     overflow: hidden;
@@ -171,6 +179,10 @@ body {
     top: calc(10%);
 }
 
+#field .player img {
+    width: 60px;
+}
+
 .player#child {
     margin: 0 auto;
 }
@@ -207,7 +219,7 @@ body {
     color: #ffffff;
 
     font-family: 'Tagesschrift', 'Georgia', serif;
-    font-size: 10em;
+    font-size: 8em;
 }
 
 #field .score-left {
@@ -316,7 +328,6 @@ body {
     }
 }
 
-
 .game-over {
     animation-name: gameOverAnimation;
     animation-duration: 4s;
@@ -412,5 +423,173 @@ body {
     }
     50% {
         background-color: #7db96a;
+    }
+}
+
+#gameSelection {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /*background-color: #7db96a;*/
+    background-color: rgba(125, 185, 100, 0.3);
+    align-items: center;
+}
+
+#teamSelection {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    background-image: url('../img/World_map_with_points.svg');
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-size: contain;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-between;
+}
+
+#teamSelection .teamvs {
+    text-align: center;
+    font-size: 2em;
+}
+
+#teamSelection .team {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-around;
+}
+
+#teamSelection .team-player {
+    flex: 1;
+}
+
+#teamSelection .team-player > img {
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+
+#teamSelection .team-player:not(.selected) {
+    -webkit-animation: spin1 10s infinite linear;
+    animation: spin1 10s infinite linear;
+}
+
+@keyframes spin1 {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin1 {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+#playerSelection {
+    /*flex:1;*/
+
+    display: flex;
+    flex-direction: column;
+    /*justify-content: flex-start;*/
+    /*align-items: flex-end;*/
+}
+
+#playerSelection.playerSelectionDone {
+    flex: 0.5;
+}
+
+.players {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.players .player-name {
+    text-transform: uppercase;
+    text-align: center;
+    display: none;
+}
+
+.players .player-photo {
+    position: relative;
+
+}
+
+.players .player-option {
+    height: 100%;
+}
+
+.gameActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    font-size: 7vw;
+}
+
+.gameActionStart {
+    width: 100%;
+    text-align: center;
+    font-family: "OpenSans", Arial, sans-serif;
+
+    animation: play-pulse 2s ease-in-out infinite;
+}
+
+.gameActionShuffle {
+    width: 100%;
+    text-align: center;
+    font-family: "OpenSans", Arial, sans-serif;
+
+    animation: randomize-pulse 2s ease-in-out infinite;
+}
+
+@keyframes play-pulse {
+    0% {
+        color: #fa5b33;
+    }
+    25% {
+        color: firebrick;
+    }
+    50% {
+        color: #fa5b33;
+    }
+    75% {
+        color: firebrick;
+    }
+    100% {
+        color: #fa5b33;
+    }
+}
+
+@keyframes randomize-pulse {
+    0% {
+        color: #51a8fa;
+    }
+    25% {
+        color: darkblue;
+    }
+    50% {
+        color: #51a8fa;
+    }
+    75% {
+        color: darkblue;
+    }
+    100% {
+        color: #51a8fa;
     }
 }

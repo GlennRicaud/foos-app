@@ -51,7 +51,7 @@ exports.post = function (req) {
 };
 
 var sendHipchatNotification = function (game) {
-    log.info('Hipchat:' + generateHipchatMessage(game));
+    // log.info('Hipchat:' + generateHipchatMessage(game));
     var liveGameContent = portalLib.getContent();
     var token = liveGameContent.page.config.hipchatToken || '';
     var roomName = liveGameContent.page.config.hipchatRoom || '';
@@ -323,11 +323,9 @@ var generatePictureUrl = function (content) {
     }
     return portalLib.imageUrl({
         id: content.data.picture,
-        scale: 'square(60)',
-        filter: 'rounded(10,2,0x777777);'
-
+        scale: 'square(200)',
+        filter: 'rounded(8,1,0x777777);'
     });
-
 };
 
 var ensureWeekContent = function () {

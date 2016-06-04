@@ -12,7 +12,28 @@
 <body>
 <audio id="gameAudio"></audio>
 <div style="height:10px"></div>
-<div id="mainRegion" data-portal-region="main">
+<div id="gameSelection">
+    <div id="teamSelection">
+        <div class="team team-left">
+            <div class="team-player team-left-p1" id="teamPlayer1"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-red.svg'})}"/></div>
+            <div class="team-player team-left-p2" id="teamPlayer2"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-red.svg'})}"/></div>
+        </div>
+        <span class="teamvs">VS</span>
+        <div class="team team-right">
+            <div class="team-player team-right-p1" id="teamPlayer3"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-blue.svg'})}"/></div>
+            <div class="team-player team-right-p2" id="teamPlayer4"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-blue.svg'})}"/></div>
+        </div>
+    </div>
+    <div id="playerSelection">
+        <div class="players">
+        </div>
+        <div class="gameActions" style="display: none;">
+            <div class="gameActionStart start-ready">Play</div>
+            <div class="gameActionShuffle start-ready">Shuffle</div>
+        </div>
+    </div>
+</div>
+<div id="mainRegion" data-portal-region="main" style="display: none;">
 
     <div id="field">
         <ul id="corners">
