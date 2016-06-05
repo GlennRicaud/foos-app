@@ -283,7 +283,6 @@ var saveGame = function (req) {
 var getData = function () {
     var plist = foosRetrievalLib.getPlayers();
     var players = [];
-    var audioUrl = getAudioUrl();
 
     plist.forEach(function (p) {
         var player = {};
@@ -297,7 +296,12 @@ var getData = function () {
     var json = {
         players: players,
         postUrl: portalLib.componentUrl({}),
-        audioUrl: audioUrl
+        audioUrl: getAudioUrl(),
+        firstGoalAudio: getAudioUrl('firstGoalAudio'),
+        goal3Audio: getAudioUrl('goal3Audio'),
+        goal5Audio: getAudioUrl('goal5Audio'),
+        goal7Audio: getAudioUrl('goal7Audio'),
+        goal8Audio: getAudioUrl('goal8Audio')
     };
 
     return {
@@ -306,12 +310,12 @@ var getData = function () {
     }
 };
 
-var getAudioUrl = function () {
+var getAudioUrl = function (audioCfgId) {
     var content = portalLib.getContent();
-    if (!content || !content.page || !content.page.config || !content.page.config.victoryAudio) {
+    if (!content || !content.page || !content.page.config || !content.page.config[audioCfgId]) {
         return '';
     }
-    var id = content.page.config.victoryAudio;
+    var id = content.page.config[audioCfgId];
     return portalLib.attachmentUrl({
         id: id
     });

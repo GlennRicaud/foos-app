@@ -17,7 +17,7 @@ var GAME = (function () {
     ];
 
     var postUrl;
-    var audioUrl;
+    var audioUrl, firstGoalAudio, goal3Audio, goal5Audio, goal7Audio, goal8Audio;
     var players = [];
     var gamePlayers = [-1, -1, -1, -1];
     var gamePlayersDivs = ['player1', 'player2', 'player3', 'player4'];
@@ -28,6 +28,9 @@ var GAME = (function () {
     var gameSavedUrl;
     var singlesGame = false;
     var goals = [];
+    var team1Streak = 0;
+    var team2Streak = 0;
+    var firstGoal = false;
     var paused = false;
     var shuffleCountDown = false;
 
@@ -175,11 +178,17 @@ var GAME = (function () {
             } else {
                 scorerTeam.score += 1;
                 player.goals += 1;
+
+                team2Streak++;
+                team1Streak = 0;
             }
         } else {
             if (tid === TEAM1) {
                 scorerTeam.score += 1;
                 player.goals += 1;
+
+                team1Streak++;
+                team2Streak = 0;
             } else {
                 receiverTeam.score += 1;
                 player.against += 1;
@@ -194,6 +203,22 @@ var GAME = (function () {
         $('#goal-right,#goal-left').removeClass('selected');
 
         playerSelected = -1;
+
+        var streak = team1Streak > team2Streak ? team1Streak : team2Streak;
+        if (!against) {
+            if (!firstGoal) {
+                firstGoal = true;
+                playAudio(firstGoalAudio);
+            } else if (streak === 3) {
+                playAudio(goal3Audio);
+            } else if (streak === 5) {
+                playAudio(goal5Audio);
+            } else if (streak === 7) {
+                playAudio(goal7Audio);
+            } else if (streak === 8) {
+                playAudio(goal8Audio);
+            }
+        }
 
         checkEndGame();
     };
@@ -239,12 +264,19 @@ var GAME = (function () {
     };
 
     playVictoryAudio = function () {
+        playAudio(audioUrl, 200);
+    };
+
+    playAudio = function (url, fadeTime) {
+        if (!url) {
+            return;
+        }
+        fadeTime = fadeTime || 0;
         try {
-            if (audioUrl) {
-                var audioElement = $('#gameAudio');
-                audioElement.attr("src", audioUrl);
-                startElementAudio(audioElement, 200);
-            }
+            var audioElement = $('#gameAudio');
+            audioElement.attr("src", url);
+            startElementAudio(audioElement, fadeTime);
+
         } catch (e) {
             console && console.log(e);
         }
@@ -307,6 +339,11 @@ var GAME = (function () {
         }
         postUrl = data.postUrl;
         audioUrl = data.audioUrl;
+        firstGoalAudio = data.firstGoalAudio;
+        goal3Audio = data.goal3Audio;
+        goal5Audio = data.goal5Audio;
+        goal7Audio = data.goal7Audio;
+        goal8Audio = data.goal8Audio;
         initPlayerSelection();
     };
 
@@ -417,7 +454,6 @@ var GAME = (function () {
         lineSize = Math.ceil(count / 2);
         photoWidth = Math.floor(width / lineSize);
         photoWidth = Math.floor(photoWidth / 10) * 10;
-        console.log(players);
         for (var i = 0; i < count; i++) {
             player = players[i];
             playerEl = $('<div class="player-option"/>');

@@ -1,38 +1,83 @@
 <page>
   <display-name>Game page</display-name>
   <config>
-    <input type="ContentSelector" name="victoryAudio">
-      <label>Victory Music</label>
-      <occurrences minimum="1" maximum="1"/>
-      <config>
-        <allowContentType>media:audio</allowContentType>
-      </config>
-    </input>
-    <input type="TextLine" name="hipchatRoom">
-      <label>Hipchat Room Name</label>
-      <occurrences minimum="0" maximum="1"/>
-      <default>foos</default>
-    </input>
-    <input type="TextLine" name="hipchatToken">
-      <label>Hipchat Room Token</label>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
-    <input type="CheckBox" name="hipchatNotify">
-      <label>Trigger user notification in Hipchat</label>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
-    <input type="RadioButton" name="hipchatColor">
-      <label>Background color for message</label>
-      <occurrences minimum="0" maximum="0"/>
-      <config>
-        <option value="yellow">Yellow</option>
-        <option value="green">Green</option>
-        <option value="red">Red</option>
-        <option value="purple">Purple</option>
-        <option value="gray">Gray</option>
-        <option value="random">Random</option>
-      </config>
-    </input>
+    <field-set name="hipchat">
+      <label>Hipchat</label>
+      <items>
+        <input type="TextLine" name="hipchatRoom">
+          <label>Hipchat Room Name</label>
+          <occurrences minimum="0" maximum="1"/>
+          <default>foos</default>
+        </input>
+        <input type="TextLine" name="hipchatToken">
+          <label>Hipchat Room Token</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="CheckBox" name="hipchatNotify">
+          <label>Trigger user notification in Hipchat</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="ComboBox" name="hipchatColor">
+          <label>Background color for message</label>
+          <occurrences minimum="0" maximum="1"/>
+          <config>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="red">Red</option>
+            <option value="purple">Purple</option>
+            <option value="gray">Gray</option>
+            <option value="random">Random</option>
+          </config>
+        </input>
+      </items>
+    </field-set>
+    <field-set name="audio">
+      <label>Audio</label>
+      <items>
+        <input type="ContentSelector" name="victoryAudio">
+          <label>Victory Music</label>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <allowContentType>media:audio</allowContentType>
+          </config>
+        </input>
+        <input type="ContentSelector" name="firstGoalAudio">
+          <label>First blood</label>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <allowContentType>media:audio</allowContentType>
+          </config>
+        </input>
+        <input type="ContentSelector" name="goal3Audio">
+          <label>3 goal2 in a row</label>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <allowContentType>media:audio</allowContentType>
+          </config>
+        </input>
+        <input type="ContentSelector" name="goal5Audio">
+          <label>5 goal2 in a row</label>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <allowContentType>media:audio</allowContentType>
+          </config>
+        </input>
+        <input type="ContentSelector" name="goal7Audio">
+          <label>7 goal2 in a row</label>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <allowContentType>media:audio</allowContentType>
+          </config>
+        </input>
+        <input type="ContentSelector" name="goal8Audio">
+          <label>8 goal2 in a row</label>
+          <occurrences minimum="1" maximum="1"/>
+          <config>
+            <allowContentType>media:audio</allowContentType>
+          </config>
+        </input>
+      </items>
+    </field-set>
   </config>
   <regions>
     <region name="main"/>
