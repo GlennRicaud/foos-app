@@ -36,42 +36,42 @@
       <items>
         <input type="ContentSelector" name="victoryAudio">
           <label>Victory Music</label>
-          <occurrences minimum="1" maximum="1"/>
+          <occurrences minimum="0" maximum="1"/>
           <config>
             <allowContentType>media:audio</allowContentType>
           </config>
         </input>
         <input type="ContentSelector" name="firstGoalAudio">
           <label>First blood</label>
-          <occurrences minimum="1" maximum="1"/>
+          <occurrences minimum="0" maximum="1"/>
           <config>
             <allowContentType>media:audio</allowContentType>
           </config>
         </input>
         <input type="ContentSelector" name="goal3Audio">
-          <label>3 goal2 in a row</label>
-          <occurrences minimum="1" maximum="1"/>
+          <label>3 goals in a row</label>
+          <occurrences minimum="0" maximum="1"/>
           <config>
             <allowContentType>media:audio</allowContentType>
           </config>
         </input>
         <input type="ContentSelector" name="goal5Audio">
-          <label>5 goal2 in a row</label>
-          <occurrences minimum="1" maximum="1"/>
+          <label>5 goals in a row</label>
+          <occurrences minimum="0" maximum="1"/>
           <config>
             <allowContentType>media:audio</allowContentType>
           </config>
         </input>
         <input type="ContentSelector" name="goal7Audio">
-          <label>7 goal2 in a row</label>
-          <occurrences minimum="1" maximum="1"/>
+          <label>7 goals in a row</label>
+          <occurrences minimum="0" maximum="1"/>
           <config>
             <allowContentType>media:audio</allowContentType>
           </config>
         </input>
         <input type="ContentSelector" name="goal8Audio">
-          <label>8 goal2 in a row</label>
-          <occurrences minimum="1" maximum="1"/>
+          <label>8 goals in a row</label>
+          <occurrences minimum="0" maximum="1"/>
           <config>
             <allowContentType>media:audio</allowContentType>
           </config>
