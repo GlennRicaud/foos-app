@@ -3,7 +3,7 @@
 }
 
 body {
-    /*overflow: hidden;*/
+    overflow: hidden;
     margin: 0;
     padding: 0;
 
@@ -23,8 +23,8 @@ body {
 
 #field {
     position: absolute;
-    width: calc(100% - 5px);
-    height: calc(100% - 5px);
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
     border: 5px solid #fff;
     background: #7db96a;
     overflow: hidden;
@@ -173,14 +173,14 @@ body {
 }
 
 #field .player {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    top: calc(10%);
+    top: calc(4%);
 }
 
 #field .player img {
-    width: 60px;
+    width: 80px;
 }
 
 .player#child {
@@ -199,7 +199,7 @@ body {
 }
 
 #field .player-left2 {
-    left: calc(15% + 110px);
+    left: calc(15% + 100px);
     color: darkred;
 }
 
@@ -209,13 +209,13 @@ body {
 }
 
 #field .player-right2 {
-    right: calc(15% + 110px);
+    right: calc(15% + 100px);
     color: darkblue;
 }
 
 #field .score {
     position: absolute;
-    bottom: calc(10%);
+    bottom: calc(4%);
     color: #ffffff;
 
     font-family: 'Tagesschrift', 'Georgia', serif;
@@ -481,10 +481,10 @@ body {
 
 @keyframes spin1 {
     0% {
-        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
-        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
@@ -531,7 +531,7 @@ body {
 }
 
 .players .player-option {
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .gameActions {
