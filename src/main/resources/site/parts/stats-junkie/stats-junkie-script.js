@@ -1,5 +1,5 @@
 var playerStats;
-var currentStatName = "attackScore";
+var currentStatName = "score";
 
 $("#foos-stats-junkie-select").val(currentStatName);
 $("#foos-stats-junkie-select").change(function () {

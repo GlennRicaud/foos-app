@@ -15,17 +15,20 @@ exports.get = function (req) {
     var metaPlayerStats = foosPlayerStatsLib.getMetaPlayerStats();
     var metaPlayerStatArray = foosUtilLib.propertyArray(metaPlayerStats);
 
-    var view = resolve('stats-junkie.html');
     var scriptView = resolve('stats-junkie-script.js');
+
+    var script = mustacheLib.render(scriptView, {
+        playerStatsServiceUrl: playerStatsServiceUrl,
+        playerStatsRowTemplate: thymeleafLib.render(resolve('player-stats-row-template.html'), {})
+    });
+
+    var view = resolve('stats-junkie.html');
     var body = mustacheLib.render(view, {metaPlayerStatArray: metaPlayerStatArray});
     return {
         body: body,
         pageContributions: {
             headEnd: '<script src="' + jqueryUrl + '""/></script>' + '<script src="' + mustacheUrl + '""/></script>',
-            bodyEnd: '<script>' + mustacheLib.render(scriptView, {
-                playerStatsServiceUrl: playerStatsServiceUrl,
-                playerStatsRowTemplate: thymeleafLib.render(resolve('player-stats-row-template.html'), {})
-            }) + '</script>'
+            bodyEnd: '<script>' + script + '</script>'
         }
     }
 };
