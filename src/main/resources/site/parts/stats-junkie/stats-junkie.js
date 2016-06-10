@@ -3,6 +3,8 @@ var mustacheLib = require('/lib/xp/mustache');
 var thymeleafLib = require('/lib/xp/thymeleaf');
 
 var foosRetrievalLib = require('/lib/foos-retrieval');
+var foosPlayerStatsLib = require('/lib/foos-player-stats');
+var foosUtilLib = require('/lib/foos-util');
 
 // Handle the GET request
 exports.get = function (req) {
@@ -10,9 +12,12 @@ exports.get = function (req) {
     var mustacheUrl = portalLib.assetUrl({path: "js/mustache-2.2.1.min.js"});
     var playerStatsServiceUrl = portalLib.serviceUrl({service: "player-stats"});
 
+    var metaPlayerStats = foosPlayerStatsLib.getMetaPlayerStats();
+    var metaPlayerStatArray = foosUtilLib.propertyArray(metaPlayerStats);
+
     var view = resolve('stats-junkie.html');
     var scriptView = resolve('stats-junkie-script.js');
-    var body = mustacheLib.render(view, {});
+    var body = mustacheLib.render(view, {metaPlayerStatArray: metaPlayerStatArray});
     return {
         body: body,
         pageContributions: {

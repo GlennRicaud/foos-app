@@ -13,6 +13,9 @@
                     </div>
                     <div class="foos-cell-stat">
                         <select id="foos-stats-junkie-select">
+                            {{#metaPlayerStatArray}}
+                            <option value="{{propName}}">{{name}}</option>
+                            {{/metaPlayerStatArray}}
                         </select>
                     </div>
                 </div>

@@ -53,15 +53,25 @@ exports.toArray = function (object) {
         return object;
     }
     return [object];
-}
+};
+
+exports.propertyArray = function (object) {
+    var propertyArray = [];
+    for (var propertyName in object) {
+        var property = object[propertyName];
+        property.propName = propertyName;
+        propertyArray.push(property);
+    }
+    return propertyArray;
+};
 
 exports.concat = function (object1, object2) {
     return exports.toArray(object1).concat(exports.toArray(object2));
-}
+};
 
 exports.toRatio = function (numerator, denominator) {
     return numerator / (denominator > 0 ? denominator : 1);
-}
+};
 
 exports.toPercentageRatio = function (numerator, denominator) {
     return numerator * 100 / (denominator > 0 ? denominator : 1);
@@ -69,5 +79,5 @@ exports.toPercentageRatio = function (numerator, denominator) {
 
 exports.log = function (message, object) {
     log.info(message + (object ? ": " + JSON.stringify(object, null, 2) : ""));
-}
+};
 

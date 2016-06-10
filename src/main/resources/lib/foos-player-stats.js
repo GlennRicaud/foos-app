@@ -60,15 +60,11 @@ exports.generatePlayerStats = function (player) {
 
 function doGeneratePlayerStats(player) {
 
-
-    var games = foosRetrievalLib.getGamesByPlayerId(player._id);
-
     var metaPlayerStats = exports.getMetaPlayerStats();
 
     var stats = {};
     for (var metaPlayerStatName in metaPlayerStats) {
         stats[metaPlayerStatName] = {
-            name: metaPlayerStats[metaPlayerStatName].name,
             solo: metaPlayerStats[metaPlayerStatName].solo ? 0 : "N/A",
             team: 0,
             total: metaPlayerStats[metaPlayerStatName].solo ? (metaPlayerStats[metaPlayerStatName].customTotal ? 0 : undefined) : "N/A"
@@ -83,6 +79,7 @@ function doGeneratePlayerStats(player) {
         }
     };
 
+    var games = foosRetrievalLib.getGamesByPlayerId(player._id);
     games.forEach(function (game) {
         var playerResult = foosUtilLib.getPlayerResult(game, player._id);
         var isWinner = foosUtilLib.isWinner(game, player._id);
@@ -221,7 +218,7 @@ function doGeneratePlayerStats(player) {
         }
     });
 
-//Scores
+    //Scores
     stats.goalKeepingScore.team =
         stats.nbStatGames.team == 0 ? "N/A" : 100 - foosUtilLib.toPercentageRatio(stats.nbDefenderOpponentGoals.team,
             stats.defenderDividend.team);
@@ -239,7 +236,7 @@ function doGeneratePlayerStats(player) {
         stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbDefenderTeammateGoals.team,
             stats.attackerDividend.team);
 
-//Computes the sum for each
+    //Computes the sum for each
     for (var statName in stats) {
         var stat = stats[statName];
         if (!stat.total) {
@@ -247,7 +244,7 @@ function doGeneratePlayerStats(player) {
         }
     }
 
-//Ratios
+    //Ratios
     ["solo", "team", "total"].forEach(function (attrName) {
         stats.ratioWonGames[attrName] = foosUtilLib.toPercentageRatio(stats.nbWonGames[attrName], stats.nbGames[attrName]);
         stats.ratioWonGamesWithExtraTime[attrName] =

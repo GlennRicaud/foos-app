@@ -10,11 +10,14 @@ exports.get = function (req) {
 
     var player = portalLib.getContent();
     var playerStats = foosPlayerStatsLib.generatePlayerStats(player);
+    var metaPlayerStats = foosPlayerStatsLib.getMetaPlayerStats();
 
     var playerStatsArray = [];
     var even = false;
     for (var statName in playerStats) {
         var playerStat = playerStats[statName];
+        var metaPlayerStat = metaPlayerStats[statName];
+
         for (var subStatName in playerStat) {
             var subStat = playerStat[subStatName];
             if (!isNaN(subStat)) {
@@ -22,6 +25,7 @@ exports.get = function (req) {
             }
         }
         playerStat.even = even;
+        playerStat.name = metaPlayerStat.name;
         even = !even;
         playerStatsArray.push(playerStat);
     }

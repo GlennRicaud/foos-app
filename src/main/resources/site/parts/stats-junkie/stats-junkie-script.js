@@ -1,19 +1,15 @@
 var playerStats;
 var currentStatName = "attackScore";
 
+$("#foos-stats-junkie-select").val(currentStatName);
+$("#foos-stats-junkie-select").change(function () {
+    currentStatName = $("#foos-stats-junkie-select").val();
+    refreshFoosStatsJunkieTable();
+});
+
 $.ajax("{{playerStatsServiceUrl}}").done(function (data) {
     playerStats = data;
 
-    var firstPlayer = playerStats[0];
-    for (var statName in firstPlayer) {
-        $("#foos-stats-junkie-select").append("<option value='" + statName + "'>" + firstPlayer[statName].name + "</option>");
-    }
-
-    $("#foos-stats-junkie-select").val(currentStatName);
-    $("#foos-stats-junkie-select").change(function () {
-        currentStatName = $("#foos-stats-junkie-select").val();
-        refreshFoosStatsJunkieTable();
-    });
     refreshFoosStatsJunkieTable();
     $("#foos-stats-junkie-tmp-message").remove();
 });
