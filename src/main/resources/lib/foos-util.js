@@ -70,11 +70,11 @@ exports.concat = function (object1, object2) {
 };
 
 exports.toRatio = function (numerator, denominator) {
-    return numerator / (denominator > 0 ? denominator : 1);
+    return denominator <= 0 ? "N/A" : (numerator / denominator);
 };
 
 exports.toPercentageRatio = function (numerator, denominator) {
-    return numerator * 100 / (denominator > 0 ? denominator : 1);
+    return denominator <= 0 ? "N/A" : (numerator * 100 / denominator);
 }
 
 exports.log = function (message, object) {

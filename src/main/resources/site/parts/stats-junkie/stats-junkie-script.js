@@ -25,10 +25,10 @@ function refreshFoosStatsJunkieTable() {
         var playerStatValue2 = playerStats2[currentStatName].team;
         
         if ("N/A" == playerStatValue1) {
-            return ascSort ? -1 : 1;
+            return 1;
         }
         if ("N/A" == playerStatValue2) {
-            return ascSort ? 1 : -1;
+            return -1;
         }
         return ascSort ? (playerStatValue1 - playerStatValue2) : (playerStatValue2 - playerStatValue1);
     });
