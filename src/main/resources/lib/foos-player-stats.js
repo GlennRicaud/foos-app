@@ -227,11 +227,10 @@ function doGeneratePlayerStats(player) {
                                                                                  stats.attackerDividend.team);
     stats.defenseScore.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
     stats.longshotsScore.team = foosUtilLib.toPercentageRatio(stats.nbDefenderGoals.team, stats.defenderDividend.team);
-    stats.strikerScore.team =foosUtilLib.toPercentageRatio(stats.nbAttackerGoals.team, stats.attackerDividend.team);
+    stats.strikerScore.team = foosUtilLib.toPercentageRatio(stats.nbAttackerGoals.team, stats.attackerDividend.team);
     stats.attackScore.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.longshotsScore.team + stats.strikerScore.team) / 2;
     stats.score.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.defenseScore.team + stats.attackScore.team) / 2;
-    stats.supportScore.team =
-        stats.nbStatGames.team == foosUtilLib.toPercentageRatio(stats.nbDefenderTeammateGoals.team, stats.attackerDividend.team);
+    stats.supportScore.team = foosUtilLib.toPercentageRatio(stats.nbDefenderTeammateGoals.team, stats.attackerDividend.team);
 
     //Computes the sum for each
     for (var statName in stats) {
