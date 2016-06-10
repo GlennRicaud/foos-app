@@ -255,8 +255,12 @@ function doGeneratePlayerStats(player) {
         stats.ratioTeamPoints[attrName] = foosUtilLib.toRatio(stats.nbTeamPoints[attrName], stats.nbGames[attrName]);
         stats.ratioOpponentGoals[attrName] = foosUtilLib.toRatio(stats.nbOpponentGoals[attrName], stats.nbGames[attrName]);
         stats.ratioOpponentPoints[attrName] = foosUtilLib.toRatio(stats.nbOpponentPoints[attrName], stats.nbGames[attrName]);
-        
     });
+
+    stats.ratioAttackerGames.team = stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbAttackerGames.team, stats.nbStatGames.team);
+    stats.ratioDefenderGames.team = stats.nbStatGames.team == 0 ? "N/A" : foosUtilLib.toPercentageRatio(stats.nbDefenderGames.team, stats.nbStatGames.team);
+    
+    
 
     ["solo", "team", "total"].forEach(function (attrName) {
         stats.avgDeltaTimeGoals[attrName] =
@@ -358,9 +362,19 @@ exports.getMetaPlayerStats = function () {
             name: "# Games as attacker (2nd half & extra time)",
             solo: false
         },
+        ratioAttackerGames: {
+            name: "% Games as attacker (2nd half & extra time)",
+            solo: false,
+            order: "DESC"
+        },
         nbDefenderGames: {
             name: "# Games as defender (2nd half & extra time)",
             solo: false
+        },
+        ratioDefenderGames: {
+            name: "% Games as defender (2nd half & extra time)",
+            solo: false,
+            order: "DESC"
         },
         nbStatGoals: {
             name: "# Player goals w/ temporal stats (used for below stats)",
