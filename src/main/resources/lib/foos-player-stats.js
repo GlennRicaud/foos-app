@@ -250,6 +250,8 @@ function doGeneratePlayerStats(player) {
         stats.ratioWonGamesWithExtraTime[attrName] =
             foosUtilLib.toPercentageRatio(stats.nbWonGamesWithExtraTime[attrName], stats.nbGamesWithExtraTime[attrName]);
         stats.ratioPlayerGoals[attrName] = foosUtilLib.toRatio(stats.nbPlayerGoals[attrName], stats.nbGames[attrName]);
+        stats.ratioPlayersGoalsAgainst[attrName] = foosUtilLib.toRatio(stats.nbPlayersGoalsAgainst[attrName], stats.nbGames[attrName]);
+        
     });
 
     ["solo", "team", "total"].forEach(function (attrName) {
@@ -274,7 +276,8 @@ exports.getMetaPlayerStats = function () {
         },
         ratioWonGames: {
             name: "% Won games",
-            solo: true
+            solo: true,
+            order: "DESC"
         },
         nbGamesWithExtraTime: {
             name: "# Games w/ extra time",
@@ -286,7 +289,8 @@ exports.getMetaPlayerStats = function () {
         },
         ratioWonGamesWithExtraTime: {
             name: "% Won games w/ extra time",
-            solo: true
+            solo: true,
+            order: "DESC"
         },
         nbPlayerGoals: {
             name: "# Player goals",
@@ -294,11 +298,17 @@ exports.getMetaPlayerStats = function () {
         },
         ratioPlayerGoals: {
             name: "# Player goals / game",
-            solo: true
+            solo: true,
+            order: "DESC"
         },
         nbPlayersGoalsAgainst: {
             name: "# Player goals against",
             solo: true
+        },
+        ratioPlayersGoalsAgainst: {
+            name: "# Player goals against / game",
+            solo: true,
+            order: "ASC"
         },
         nbTeamGoals: {
             name: "# Team goals",
