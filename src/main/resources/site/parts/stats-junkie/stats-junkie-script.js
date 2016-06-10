@@ -18,14 +18,19 @@ $.ajax("{{playerStatsServiceUrl}}").done(function (data) {
 function refreshFoosStatsJunkieTable() {
     $("#foos-stats-junkie-table .foos-body").remove();
 
+    var ascSort = metaPlayerStats[currentStatName].order == "ASC";
     playerStats.sort(function (playerStats1, playerStats2) {
-        if ("N/A" == playerStats1[currentStatName].team) {
-            return 1;
+
+        var playerStatValue1 = playerStats1[currentStatName].team;
+        var playerStatValue2 = playerStats2[currentStatName].team;
+        
+        if ("N/A" == playerStatValue1) {
+            return ascSort ? -1 : 1;
         }
-        if ("N/A" == playerStats2[currentStatName].team) {
-            return -1;
+        if ("N/A" == playerStatValue2) {
+            return ascSort ? 1 : -1;
         }
-        return playerStats2[currentStatName].team - playerStats1[currentStatName].team
+        return ascSort ? (playerStatValue1 - playerStatValue2) : (playerStatValue2 - playerStatValue1);
     });
 
     var template = '{{{playerStatsRowTemplate}}}';

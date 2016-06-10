@@ -13,10 +13,13 @@ exports.get = function (req) {
     var playerStatsServiceUrl = portalLib.serviceUrl({service: "player-stats"});
 
     var metaPlayerStats = foosPlayerStatsLib.getMetaPlayerStats();
-    var metaPlayerStatArray = foosUtilLib.propertyArray(metaPlayerStats);
+    var metaPlayerStatsScript = 'var metaPlayerStats = ' + JSON.stringify(metaPlayerStats) + ';';
+    
+    var metaPlayerStatArray = foosUtilLib.propertyArray(metaPlayerStats).filter(function(metaPlayerStat) {
+        return metaPlayerStat.order;
+    });
 
     var scriptView = resolve('stats-junkie-script.js');
-
     var script = mustacheLib.render(scriptView, {
         playerStatsServiceUrl: playerStatsServiceUrl,
         playerStatsRowTemplate: thymeleafLib.render(resolve('player-stats-row-template.html'), {})
@@ -28,7 +31,7 @@ exports.get = function (req) {
         body: body,
         pageContributions: {
             headEnd: '<script src="' + jqueryUrl + '""/></script>' + '<script src="' + mustacheUrl + '""/></script>',
-            bodyEnd: '<script>' + script + '</script>'
+            bodyEnd: '<script>' + metaPlayerStatsScript + script + '</script>'
         }
     }
 };

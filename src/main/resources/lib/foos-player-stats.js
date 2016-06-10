@@ -403,35 +403,43 @@ exports.getMetaPlayerStats = function () {
         },
         goalKeepingScore: {
             name: "Goalkeeping score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         },
         midfieldBlockingScore: {
             name: "Midfield blocking score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         },
         defenseScore: {
             name: "Defense score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         },
         longshotsScore: {
             name: "Longshots score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         },
         strikerScore: {
             name: "Striker score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         },
         attackScore: {
             name: "Attack score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         },
         score: {
             name: "Score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         },
         supportScore: {
             name: "Support score (Explanations coming...)",
-            solo: false
+            solo: false,
+            order: "DESC"
         }
     };
 }
