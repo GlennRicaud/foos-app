@@ -4,11 +4,11 @@ var authLib = require('/lib/xp/auth');
 var contextLib = require('/lib/xp/context');
 var foosUtilLib = require('/lib/foos-util');
 
-exports.handle403 = function (req) {
+exports.handle401 = function (req) {
     var body = generateLoginPage();
 
     return {
-        status: 403,
+        status: 401,
         contentType: 'text/html',
         body: body
     };
@@ -23,7 +23,7 @@ exports.login = function (req) {
     };
 };
 
-exports.authFilter = function (req) {
+exports.autoLogin = function (req) {
     var idProviderConfig = authLib.getIdProviderConfig();
 
     var allowedIps = foosUtilLib.toArray(idProviderConfig.allowedIps);
@@ -33,7 +33,7 @@ exports.authFilter = function (req) {
         var result = authLib.login({
             user: "local-user",
             password: authLib.getIdProviderConfig().password, //TODO Temp fix
-            userStore: authLib.getUserStore().key
+            userStore: portalLib.getUserStoreKey()
         });
     }
 };
@@ -48,11 +48,11 @@ function initLocalUser() {
 }
 
 function doInitLocalUser() {
-    var localUserKey = "user:" + authLib.getUserStore().key + ":local-user";
+    var localUserKey = "user:" + portalLib.getUserStoreKey() + ":local-user";
     var localUser = authLib.getPrincipal(localUserKey);
     if (!localUser) {
         localUser = authLib.createUser({
-            userStore: authLib.getUserStore().key,
+            userStore: portalLib.getUserStoreKey(),
             name: 'local-user',
             displayName: 'Local User',
             email: 'local-user@foos.es'
@@ -78,7 +78,7 @@ exports.logout = function (req) {
 };
 
 function generateLoginPage(redirectUrl) {
-    var userStoreKey = authLib.getUserStore().key;
+    var userStoreKey = portalLib.getUserStoreKey();
 
     var jQueryUrl = portalLib.assetUrl({path: "js/jquery-2.2.4.min.js"});
     var loginScriptUrl = portalLib.assetUrl({path: "js/login.js"});
