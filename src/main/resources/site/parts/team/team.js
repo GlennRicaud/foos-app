@@ -14,7 +14,7 @@ exports.get = function (req) {
     //Generates its stats
     foosTeamStatsLib.generateTeamStats(team);
     team.gen.nbGames = team.gen.nbGames.toFixed(0);
-    team.gen.ratioGamesWon = team.gen.ratioGamesWon.toFixed(0) + "%";
+    team.gen.ratioGamesWon = team.gen.ratioGamesWon + "%";
 
     //Retrieve the team players
     var playersIds = foosUtilLib.toArray(team.data.playerIds);
