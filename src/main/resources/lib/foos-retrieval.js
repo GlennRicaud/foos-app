@@ -188,6 +188,20 @@ exports.getGamesByTeam = function (team, won) {
     }).hits;
 };
 
+exports.getGamesSince = function (date) {
+    if (!date.match(/^(\d{4})-(\d{2})-(\d{2})$/)) {
+        throw "Invalid date format (YYYY-MM-DD: " + date;
+    }
+
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        query: "data.date > instant('" + date + "T00:00:00Z')",
+        contentTypes: [app.name + ":game"],
+        sort: "data.date ASC"
+    }).hits;
+};
+
 exports.getTeamGames = function () {
     return exports.getGames().filter(function (game) {
         return game.data.winners.length > 1;

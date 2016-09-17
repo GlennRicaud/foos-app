@@ -14,7 +14,7 @@ exports.get = function (req) {
     //Generates its stats
     foosTeamStatsLib.generateTeamStats(team);
     team.gen.nbGames = team.gen.nbGames.toFixed(0);
-    team.gen.ratioGamesWon = team.gen.ratioGamesWon + "%";
+    team.gen.ratioGamesWon = Math.floor(team.gen.ratioGamesWon) + "%";
 
     //Retrieve the team players
     var playersIds = foosUtilLib.toArray(team.data.playerIds);
@@ -25,6 +25,8 @@ exports.get = function (req) {
         foosUrlLib.generatePictureUrl(player);
         foosUrlLib.generatePageUrl(player);
     });
+
+    team.gen.rating = (players[0].data.rating + players[1].data.rating).toFixed(0);
 
     //Retrieves the games played
     var games = foosRetrievalLib.getGamesByTeam(team);

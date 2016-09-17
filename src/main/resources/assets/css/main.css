@@ -260,6 +260,10 @@ select {
     margin-top: 10px;
 }
 
+.foos-part:last-child {
+    margin-bottom: 30px;
+}
+
 .foos-end-page-link {
     margin-bottom: 10px;
 }

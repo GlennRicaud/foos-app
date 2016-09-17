@@ -81,3 +81,19 @@ exports.log = function (message, object) {
     log.info(message + (object ? ": " + JSON.stringify(object, null, 2) : ""));
 };
 
+
+exports.ordinal = function (value) {
+    if (!value) {
+        return '';
+    }
+    switch (value) {
+    case 1:
+        return '1st';
+    case 2:
+        return '2nd';
+    case 3:
+        return '3rd';
+    default:
+        return value + 'th';
+    }
+};

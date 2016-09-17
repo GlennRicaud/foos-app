@@ -6,6 +6,7 @@ var contextLib = require('/lib/xp/context');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 var httpClient = require('/lib/xp/http-client');
+var foosRatingLib = require('/lib/foos-rating');
 
 exports.get = function (req) {
     if (req.params.d) {
@@ -254,7 +255,7 @@ var saveGame = function (req) {
     var weekContent = ensureWeekContent();
     var gameNumber = getNextGame();
 
-    var createResult = contentLib.create({
+    var gameContent = contentLib.create({
         name: 'game' + gameNumber,
         parentPath: weekContent._path,
         displayName: 'Game' + gameNumber,
@@ -269,15 +270,17 @@ var saveGame = function (req) {
         }
     });
 
+    foosRatingLib.calculateGameRatings(gameContent);
+
     var result = contentLib.publish({
-        keys: [createResult._id],
+        keys: [gameContent._id],
         sourceBranch: 'draft',
         targetBranch: 'master',
         includeChildren: true,
         includeDependencies: true
     });
 
-    return createResult;
+    return gameContent;
 };
 
 var getData = function () {

@@ -7,6 +7,8 @@ var applicationDeploymentTime = new Date().toISOString();
 
 
 exports.generatePlayerStats = function (player) {
+    player.data.rating = player.data.rating || 0;
+    player.data.rankingText = foosUtilLib.ordinal(player.data.ranking);
 
     var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
     var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
@@ -223,7 +225,8 @@ function doGeneratePlayerStats(player) {
         stats.nbStatGames.team == 0 ? "N/A" : 100 - foosUtilLib.toPercentageRatio(stats.nbDefenderOpponentGoals.team,
             stats.defenderDividend.team);
     stats.midfieldBlockingScore.team = stats.nbStatGames.team == 0 ? "N/A" : 100 -
-                                                                             foosUtilLib.toPercentageRatio(stats.nbAttackerOpponentGoals.team,
+                                                                             foosUtilLib.toPercentageRatio(
+                                                                                 stats.nbAttackerOpponentGoals.team,
                                                                                  stats.attackerDividend.team);
     stats.defenseScore.team = stats.nbStatGames.team == 0 ? "N/A" : (stats.goalKeepingScore.team + stats.midfieldBlockingScore.team) / 2;
     stats.longshotsScore.team = foosUtilLib.toPercentageRatio(stats.nbDefenderGoals.team, stats.defenderDividend.team);
@@ -243,7 +246,8 @@ function doGeneratePlayerStats(player) {
     //Ratios
     ["solo", "team", "total"].forEach(function (attrName) {
         stats.ratioWonGames[attrName] = foosUtilLib.toPercentageRatio(stats.nbWonGames[attrName], stats.nbGames[attrName]);
-        stats.ratioWonGamesWithExtraTime[attrName] = foosUtilLib.toPercentageRatio(stats.nbWonGamesWithExtraTime[attrName], stats.nbGamesWithExtraTime[attrName]);
+        stats.ratioWonGamesWithExtraTime[attrName] =
+            foosUtilLib.toPercentageRatio(stats.nbWonGamesWithExtraTime[attrName], stats.nbGamesWithExtraTime[attrName]);
         stats.ratioPlayerGoals[attrName] = foosUtilLib.toRatio(stats.nbPlayerGoals[attrName], stats.nbGames[attrName]);
         stats.ratioPlayersGoalsAgainst[attrName] = foosUtilLib.toRatio(stats.nbPlayersGoalsAgainst[attrName], stats.nbGames[attrName]);
         stats.ratioTeamGoals[attrName] = foosUtilLib.toRatio(stats.nbTeamGoals[attrName], stats.nbGames[attrName]);
@@ -254,8 +258,7 @@ function doGeneratePlayerStats(player) {
 
     stats.ratioAttackerGames.team = foosUtilLib.toPercentageRatio(stats.nbAttackerGames.team, stats.nbStatGames.team);
     stats.ratioDefenderGames.team = foosUtilLib.toPercentageRatio(stats.nbDefenderGames.team, stats.nbStatGames.team);
-    
-    
+
 
     ["solo", "team", "total"].forEach(function (attrName) {
         stats.avgDeltaTimeGoals[attrName] =
@@ -486,4 +489,4 @@ exports.getMetaPlayerStats = function () {
             order: "DESC"
         }
     };
-}
+};

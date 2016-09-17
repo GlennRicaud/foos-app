@@ -26,6 +26,11 @@
           <label># Goals against</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
+        <input type="Long" name="ratingDiff">
+          <label>Rating change</label>
+          <occurrences minimum="0" maximum="1"/>
+          <default>0</default>
+        </input>
       </items>
       <occurrences minimum="1" maximum="2"/>
     </item-set>
@@ -48,6 +53,11 @@
         <input type="Long" name="against">
           <label># Goals against</label>
           <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="Long" name="ratingDiff">
+          <label>Rating change</label>
+          <occurrences minimum="0" maximum="1"/>
+          <default>0</default>
         </input>
       </items>
       <occurrences minimum="1" maximum="2"/>
