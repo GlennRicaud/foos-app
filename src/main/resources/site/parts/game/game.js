@@ -11,16 +11,67 @@ var view = resolve('game.html');
 exports.get = function (req) {
     var game = portalLib.getContent();
 
+    var gameDetails = generateGameDetails(game);
     var body = mustacheLib.render(view, {
         gamesWidget: gamesWidgetLib.render([game], false),
-        gameDetails: generateGameDetails(game),
+        gameDetails: gameDetails,
         tableImgUrl: portalLib.assetUrl({path: "img/table.png"})
-
     });
+
+    var chartData = getChartData(game);
+
+    var jqueryUrl = portalLib.assetUrl({path: "js/jquery-2.2.4.min.js"});
+    var chartUrl = portalLib.assetUrl({path: "js/Chart.bundle.min.js"});
+    var gameJsUrl = portalLib.assetUrl({path: "js/game.js"});
     return {
-        body: body
+        body: body,
+        pageContributions: {
+            bodyEnd: [
+                '<script src="' + jqueryUrl + '""></script>',
+                '<script src="' + chartUrl + '""></script>',
+                '<script>var GOALS = ' + JSON.stringify(chartData, null, 2) + ';\r\nvar WDN ="' + gameDetails.winnersDisplayName +
+                '"\r\nvar LDN ="' + gameDetails.losersDisplayName + '"</script>',
+                '<script src="' + gameJsUrl + '""></script>'
+            ]
+        }
     }
 };
+
+function getChartData(game) {
+    var players = {};
+
+    var winners = [].concat(game.data.winners);
+    var losers = [].concat(game.data.losers);
+    winners.forEach(function (p) {
+        players[p.playerId] = {
+            name: p.gen.name,
+            winner: true
+        }
+    });
+    losers.forEach(function (p) {
+        players[p.playerId] = {
+            name: p.gen.name,
+            winner: false
+        }
+    });
+
+    var goalData = game.data.goals;
+    var chartData = [], chartPoint, team;
+    goalData.forEach(function (goal) {
+        if (goal.against) {
+            team = players[goal.playerId].winner ? 'loser' : 'winner';
+        } else {
+            team = players[goal.playerId].winner ? 'winner' : 'loser';
+        }
+        chartPoint = {
+            time: goal.time,
+            player: players[goal.playerId].name,
+            teamScore: team
+        };
+        chartData.push(chartPoint);
+    });
+    return chartData;
+}
 
 function generateGameDetails(game) {
 
