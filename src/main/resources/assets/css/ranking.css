@@ -1,0 +1,40 @@
+table.foos-ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/*table.foos-ranking-table td {*/
+    /*padding: 0.5em 1em;*/
+/*}*/
+
+table.foos-ranking-table th {
+    padding: 0.5em 1em;
+}
+
+table.foos-ranking-table thead > tr > th  {
+    background-color: #3d9241;
+    color: #ffffff;
+}
+
+table.foos-ranking-table thead > tr > td  {
+    padding: 0;
+}
+
+table.foos-ranking-table tr:nth-child(even) {
+    background-color: #C8E6C9;
+}
+
+table.foos-ranking-table .ranking-img {
+    width: 5%;
+}
+
+table.foos-ranking-table .ranking-number {
+    width: 15%;
+    text-align: center;
+}
+
+table.foos-ranking-table .ranking-player {
+    /*width: 55%;*/
+    text-align: center;
+}
+

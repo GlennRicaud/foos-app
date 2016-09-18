@@ -30,16 +30,17 @@ exports.generatePageUrl = function (contents) {
             path: content._path
         });
     });
-}
+};
 
-exports.generatePictureUrl = function (content, size) {
+exports.generatePictureUrl = function (content, size, filter) {
     size = size || 60;
+    filter = filter == null ? 'rounded(' + (size / 2).toFixed(0) + ');sharpen()' : filter;
     if (content.data.picture) {
         content.gen = content.gen || {};
         content.gen.pictureUrl = portalLib.imageUrl({
             id: content.data.picture,
             scale: 'square(' + size + ')',
-            filter: 'rounded(' + (size / 2).toFixed(0) + ');sharpen()'
+            filter: filter
         });
     }
 };

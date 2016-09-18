@@ -1,0 +1,35 @@
+<div id="foos-main-container">
+    <div class="foos-part">
+        <div class="foos-part-title">
+            <span>Ranking</span>
+        </div>
+        <div class="foos-part-body foos-part-body-table">
+            <table class="foos-ranking-table">
+                <thead>
+                <tr>
+                    <th class="ranking-img"></th>
+                    <th class="ranking-number">Rank</th>
+                    <th class="ranking-number">Rating</th>
+                    <th class="ranking-player">Player</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#players}}
+                <tr>
+                    <td class="ranking-img">
+                        <a class="foos-player-link" href="{{gen.pageUrl}}">
+                            <img src="{{gen.pictureUrl}}"/>
+                        </a>
+                    </td>
+                    <td class="ranking-number">{{data.rankingText}}</td>
+                    <td class="ranking-number">{{data.rating}}</td>
+                    <td class="ranking-player">{{displayName}}</td>
+                </tr>
+                {{/players}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
