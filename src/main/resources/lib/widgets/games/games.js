@@ -17,7 +17,16 @@ exports.render = function (games, detailsButton) {
             foosUtilLib.isTeamGame(game) ? foosRetrievalLib.getTeamByGame(game, false, true).displayName : game.data.losers.gen.name;
         game.gen.score.winners = game.gen.score.winners.toFixed();
         game.gen.score.losers = game.gen.score.losers.toFixed();
-        foosUtilLib.toArray(game.data.winners).
+        if (game.data.winners.length == 2) {
+            game.data.winners[0].ratingDiff = formatPlusMinus(game.data.winners[0].ratingDiff);
+            game.data.winners[1].ratingDiff = formatPlusMinus(game.data.winners[1].ratingDiff);
+            game.data.losers[0].ratingDiff = formatPlusMinus(game.data.losers[0].ratingDiff);
+            game.data.losers[1].ratingDiff = formatPlusMinus(game.data.losers[1].ratingDiff);
+        } else {
+            game.data.winners.ratingDiff = formatPlusMinus(game.data.winners.ratingDiff);
+            game.data.losers.ratingDiff = formatPlusMinus(game.data.losers.ratingDiff);
+        }
+         foosUtilLib.toArray(game.data.winners).
             concat(foosUtilLib.toArray(game.data.losers)).
             forEach(function (playerResult) {
                 playerResult.against = playerResult.against > 0 ? playerResult.against : undefined;
@@ -37,3 +46,7 @@ exports.render = function (games, detailsButton) {
         games: games
     });
 };
+
+function formatPlusMinus(value) {
+    return value <= 0 ? value + "" : "+" + value;
+}

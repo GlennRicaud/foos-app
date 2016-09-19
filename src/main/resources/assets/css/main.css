@@ -354,8 +354,26 @@ select {
     align-items: center;
 }
 
+/* Game ratings */
+.foos-game-winner-rating, .foos-game-loser-rating {
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
 
+.foos-game-winner-rating {
+    justify-content: flex-start;
+}
 
+.foos-game-loser-rating {
+    justify-content: flex-end;
+}
 
+.foos-game-winner-rating > span {
+    color: #3d9241;
+}
 
-
+.foos-game-loser-rating > span {
+    color: #a3251c;
+}
