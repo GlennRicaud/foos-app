@@ -57,19 +57,21 @@ function getChartData(game) {
 
     var goalData = game.data.goals;
     var chartData = [], chartPoint, team;
-    goalData.forEach(function (goal) {
-        if (goal.against) {
-            team = players[goal.playerId].winner ? 'loser' : 'winner';
-        } else {
-            team = players[goal.playerId].winner ? 'winner' : 'loser';
-        }
-        chartPoint = {
-            time: goal.time,
-            player: players[goal.playerId].name,
-            teamScore: team
-        };
-        chartData.push(chartPoint);
-    });
+    if (goalData) {
+        goalData.forEach(function (goal) {
+            if (goal.against) {
+                team = players[goal.playerId].winner ? 'loser' : 'winner';
+            } else {
+                team = players[goal.playerId].winner ? 'winner' : 'loser';
+            }
+            chartPoint = {
+                time: goal.time,
+                player: players[goal.playerId].name,
+                teamScore: team
+            };
+            chartData.push(chartPoint);
+        });
+    }
     return chartData;
 }
 

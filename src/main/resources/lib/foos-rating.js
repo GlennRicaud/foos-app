@@ -171,14 +171,21 @@ var calcGameTeamRatings1p = function (game, winners, losers) {
     var wRating = winners[0].data.rating;
     var lRating = losers[0].data.rating;
 
+    log.info("Winner score: " + game.winnerScore);
+    log.info("Loser score: " + game.loserScore);
+
     var newWRating = newRating(wRating, lRating, game.winnerScore);
     var newLRating = newRating(lRating, wRating, game.loserScore);
 
     var wRatingDiff = newWRating - (wRating);
     var lRatingDiff = newLRating - (lRating);
+    log.info("Rating diffs: " + lRatingDiff + "," + wRatingDiff);
 
     winners[0].data.rating += wRatingDiff;
     losers[0].data.rating += lRatingDiff;
+
+    log.info("Winners: " + JSON.stringify(winners, null, 4));
+    log.info("Losers: " + JSON.stringify(losers, null, 4));
 
     game.winners.ratingDiff = wRatingDiff;
     game.losers.ratingDiff = lRatingDiff;
@@ -202,12 +209,14 @@ var calcGameTeamRatings2p = function (game, winners, losers) {
     var wRatingDiff = newWRating - (wAvgRating);
     var lRatingDiff = newLRating - (lAvgRating);
     log.info("Rating diffs: " + lRatingDiff + "," + wRatingDiff);
+
     winners[0].data.rating += wRatingDiff;
     winners[1].data.rating += wRatingDiff;
     losers[0].data.rating += lRatingDiff;
     losers[1].data.rating += lRatingDiff;
     log.info("Winners: " + JSON.stringify(winners, null, 4));
     log.info("Losers: " + JSON.stringify(losers, null, 4));
+
     game.winners[0].ratingDiff = wRatingDiff;
     game.winners[1].ratingDiff = wRatingDiff;
     game.losers[0].ratingDiff = lRatingDiff;
