@@ -21,9 +21,9 @@
                             <img src="{{gen.pictureUrl}}"/>
                         </a>
                     </td>
-                    <td class="ranking-number">{{data.rankingText}}</td>
-                    <td class="ranking-number">{{data.rating}}</td>
-                    <td class="ranking-player">{{displayName}}</td>
+                    <td class="ranking-number"><a class="foos-player-link" href="{{gen.pageUrl}}">{{data.rankingText}}</a></td>
+                    <td class="ranking-number"><a class="foos-player-link" href="{{gen.pageUrl}}">{{data.rating}}</a></td>
+                    <td class="ranking-player"><a class="foos-player-link" href="{{gen.pageUrl}}">{{displayName}}</a></td>
                 </tr>
                 {{/players}}
                 </tbody>
