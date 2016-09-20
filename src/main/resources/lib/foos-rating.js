@@ -256,7 +256,7 @@ var calculateExpectedScore = function (rating, opponentRating) {
  * @returns {number} Player's new rating.
  */
 var calculateNewRating = function (rating, score, expectedScore, kFactor) {
-    return rating + parseInt(Math.round(kFactor * (score - expectedScore)), 10);
+    return rating + parseInt(Math.ceil(kFactor * (score - expectedScore)), 10);
 };
 
 var calcGameScore = function (game) {
