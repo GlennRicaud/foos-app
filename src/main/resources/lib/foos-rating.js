@@ -256,12 +256,15 @@ var calculateExpectedScore = function (rating, opponentRating) {
  * @returns {number} Player's new rating.
  */
 var calculateNewRating = function (rating, score, expectedScore, kFactor) {
-    var newRating = kFactor * (score - expectedScore);
-    newRating = Math.sign(rating) * Math.ceil(Math.abs(newRating)); // rounding taking sign into account
-    return rating + parseInt(newRating, 10); // as int
+    return rating + parseInt(roundWithSign(kFactor * (score - expectedScore)), 10);
 };
 
 var calcGameScore = function (game) {
     game.winnerScore = ((game.winnerGoals - game.loserGoals) + 10) / 20;
     game.loserScore = ((game.loserGoals - game.winnerGoals ) + 10) / 20;
+};
+
+var roundWithSign = function (value) {
+    var rounded = Math.ceil(Math.abs(value));
+    return value >= 0 ? rounded : -rounded;
 };
