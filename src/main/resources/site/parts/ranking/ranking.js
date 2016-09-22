@@ -8,7 +8,7 @@ exports.get = function (req) {
     var players = foosRetrievalLib.getPlayers();
 
     players.forEach(function (player) {
-        foosUrlLib.generatePictureUrl(player, 32, 'rounded(8)');
+        foosUrlLib.generatePictureUrl(player, 32, 'rounded(16)');
         foosUrlLib.generatePageUrl(player);
         player.data.rankingText = foosUtilLib.ordinal(player.data.ranking);
     });

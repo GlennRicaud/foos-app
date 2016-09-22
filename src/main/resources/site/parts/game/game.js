@@ -23,16 +23,22 @@ exports.get = function (req) {
     var jqueryUrl = portalLib.assetUrl({path: "js/jquery-2.2.4.min.js"});
     var chartUrl = portalLib.assetUrl({path: "js/Chart.bundle.min.js"});
     var gameJsUrl = portalLib.assetUrl({path: "js/game.js"});
+
+    var contribScripts = [];
+    if (gameDetails != null) {
+        contribScripts = [
+            '<script src="' + jqueryUrl + '""></script>',
+            '<script src="' + chartUrl + '""></script>',
+            '<script>var GOALS = ' + JSON.stringify(chartData, null, 2) + ';\r\nvar WDN ="' + gameDetails.winnersDisplayName +
+            '"\r\nvar LDN ="' + gameDetails.losersDisplayName + '"</script>',
+            '<script src="' + gameJsUrl + '""></script>'
+        ];
+    }
+
     return {
         body: body,
         pageContributions: {
-            bodyEnd: [
-                '<script src="' + jqueryUrl + '""></script>',
-                '<script src="' + chartUrl + '""></script>',
-                '<script>var GOALS = ' + JSON.stringify(chartData, null, 2) + ';\r\nvar WDN ="' + gameDetails.winnersDisplayName +
-                '"\r\nvar LDN ="' + gameDetails.losersDisplayName + '"</script>',
-                '<script src="' + gameJsUrl + '""></script>'
-            ]
+            bodyEnd: contribScripts
         }
     }
 };
