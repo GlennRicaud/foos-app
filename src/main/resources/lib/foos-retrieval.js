@@ -188,17 +188,18 @@ exports.getGamesByTeam = function (team, won) {
     }).hits;
 };
 
-exports.getGamesSince = function (date) {
+exports.getGamesSince = function (date, orderBy) {
     if (!date.match(/^(\d{4})-(\d{2})-(\d{2})$/)) {
         throw "Invalid date format (YYYY-MM-DD: " + date;
     }
+    orderBy = orderBy || 'data.date ASC';
 
     return contentLib.query({
         start: 0,
         count: -1,
         query: "data.date > instant('" + date + "T00:00:00Z')",
         contentTypes: [app.name + ":game"],
-        sort: "data.date ASC"
+        sort: orderBy
     }).hits;
 };
 
