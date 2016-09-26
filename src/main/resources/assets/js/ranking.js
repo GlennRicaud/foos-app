@@ -38,7 +38,7 @@ function showSparklines(players) {
     }
 }
 
-function loadData(period) {
+function loadData(days) {
     if (chart) {
         chart.destroy();
     }
@@ -48,16 +48,16 @@ function loadData(period) {
         contentType: 'application/json',
         data: {
             p: 'chartData',
-            period: period
+            period: days
         }
     }).done(function (data) {
-        showChart(data.players, data.count, data.baseTime);
+        showChart(data.players, data.count, data.baseTime, days);
     }).fail(function (jqXHR, textStatus) {
         //
     });
 }
 
-function showChart(players, count, baseTime) {
+function showChart(players, count, baseTime, days) {
     var ctx = $('#ratingChart');
 
     var datasets = [], player, dataset, playerRankings, point, colors, color, i = 0;
@@ -99,12 +99,12 @@ function showChart(players, count, baseTime) {
     chart = new Chart(ctx, {
         type: 'line',
         data: {
-            datasets: datasets,
+            datasets: datasets
         },
         options: {
             title: {
                 display: true,
-                text: 'Ranking points - Last 90 days'
+                text: 'Ranking points - Last ' + days + ' days'
             },
             hover: {
                 mode: 'single'
