@@ -45,3 +45,7 @@ table.foos-ranking-table .ranking-player {
 table.foos-ranking-table .ranking-player > a {
     display: block;
 }
+
+table.foos-ranking-table .ranking-history {
+    width: 45%;
+}

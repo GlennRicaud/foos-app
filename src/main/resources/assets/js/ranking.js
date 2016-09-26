@@ -1,19 +1,61 @@
+var chart;
+
 $(function () {
 
+    $("#foosRankingPeriod").val(30);
+    $('#foosRankingPeriod').on('change', function () {
+        var period = $(this).val();
+        loadData(period);
+        $(this).blur();
+    });
+    loadSparklines();
+    loadData(30)
+
+});
+
+function loadSparklines() {
     $.ajax({
         url: dataUrl,
         method: "GET",
         contentType: 'application/json',
         data: {
-            p: 'chartData'
+            p: 'sparkline'
         }
     }).done(function (data) {
-        //console.log(data);
+        showSparklines(data.players);
+    }).fail(function (jqXHR, textStatus) {
+        //
+    });
+}
+
+function showSparklines(players) {
+    var player, i;
+    for (i = 0; i < players.length; i++) {
+        player = players[i];
+        var target = $('table.foos-ranking-table').find('[data-player-id="' + player.name + '"]');
+        console.log(target);
+        target.sparkline(player.points, {type: 'bar', barColor: '#0000d0 ', negBarColor: '#d02020'});
+    }
+}
+
+function loadData(period) {
+    if (chart) {
+        chart.destroy();
+    }
+    $.ajax({
+        url: dataUrl,
+        method: "GET",
+        contentType: 'application/json',
+        data: {
+            p: 'chartData',
+            period: period
+        }
+    }).done(function (data) {
         showChart(data.players, data.count, data.baseTime);
     }).fail(function (jqXHR, textStatus) {
         //
     });
-});
+}
 
 function showChart(players, count, baseTime) {
     var ctx = $('#ratingChart');
@@ -54,7 +96,7 @@ function showChart(players, count, baseTime) {
         i++;
     }
 
-    var chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
         type: 'line',
         data: {
             datasets: datasets,
@@ -63,6 +105,9 @@ function showChart(players, count, baseTime) {
             title: {
                 display: true,
                 text: 'Ranking points - Last 90 days'
+            },
+            hover: {
+                mode: 'single'
             },
             scales: {
                 xAxes: [{
@@ -77,9 +122,9 @@ function showChart(players, count, baseTime) {
                 }],
                 yAxes: [{
                     /*ticks: {
-                        min: 0,
-                        stepSize: 1
-                    }*/
+                     min: 0,
+                     stepSize: 1
+                     }*/
                 }]
             }
         }
