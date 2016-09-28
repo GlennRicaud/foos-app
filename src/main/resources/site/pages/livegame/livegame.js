@@ -293,6 +293,7 @@ var getData = function () {
         player.id = p._id;
         player.name = p._name;
         player.displayName = p.displayName;
+        player.rating = p.data.rating;
 
         players.push(player);
     });

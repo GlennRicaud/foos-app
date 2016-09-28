@@ -374,6 +374,7 @@ var GAME = (function () {
         var div = $('#teamPlayer' + (pid + 1));
         div.addClass('selected');
         div.find('img').attr('src', pSelected.pictureUrl);
+        div.find('figcaption').text(pSelected.rating);
 
         gamePlayers[pid] = playerIdx;
 
@@ -381,7 +382,7 @@ var GAME = (function () {
             $('.players').hide();
             $('.gameActions').show();
             $('#playerSelection').addClass('playerSelectionDone');
-            $('.gameActionShuffle').toggle(!singlesGame);
+            $('.gameActionShuffle,.gameActionEqualize').toggle(!singlesGame);
         }
     };
 
@@ -393,6 +394,73 @@ var GAME = (function () {
             array[j] = temp;
         }
         return array;
+    };
+
+    equalizeArray = function (array) {
+        var pairPermutations = [
+            [array[0], array[1], array[2], array[3]],
+            [array[0], array[2], array[1], array[3]],
+            [array[0], array[3], array[1], array[2]]
+        ];
+        // find combinations with lowest ranking difference
+        var permutationDiff = [], perm, minDiff = Number.MAX_VALUE, diff;
+        for (var i = 0; i < pairPermutations.length; i++) {
+            perm = pairPermutations[i];
+            diff = Math.abs((players[perm[0]].rating + players[perm[1]].rating) - (players[perm[2]].rating + players[perm[3]].rating));
+            minDiff = diff < minDiff ? diff : minDiff;
+            permutationDiff[i] = diff;
+        }
+
+        pairPermutations = pairPermutations.filter(function (p, idx) {
+            return permutationDiff[idx] === minDiff;
+        });
+
+        // select random item from the minimum diff ranking combinations (if more than one)
+        var randomPair = pairPermutations[Math.floor(Math.random() * pairPermutations.length)];
+
+        // randomize player order in team, and team order
+        var swapTeam1 = Math.random() >= 0.5;
+        var swapTeam2 = Math.random() >= 0.5;
+        var swapTeams = Math.random() >= 0.5;
+        var tmp, tmp2;
+        if (swapTeam1) {
+            tmp = randomPair[0];
+            randomPair[0] = randomPair[1];
+            randomPair[1] = tmp;
+        }
+        if (swapTeam2) {
+            tmp = randomPair[2];
+            randomPair[2] = randomPair[3];
+            randomPair[3] = tmp;
+        }
+        if (swapTeams) {
+            tmp = randomPair[0];
+            tmp2 = randomPair[1];
+            randomPair[0] = randomPair[2];
+            randomPair[1] = randomPair[3];
+            randomPair[2] = tmp;
+            randomPair[3] = tmp2;
+        }
+
+        array[0] = randomPair[0];
+        array[1] = randomPair[1];
+        array[2] = randomPair[2];
+        array[3] = randomPair[3];
+
+        return randomPair;
+    };
+
+    calculateExpectedScore = function (rating, opponentRating) {
+        return 1.0 / (1.0 + Math.pow(10.0, (opponentRating - rating) / 400.0));
+    };
+
+    scoreToGoals = function (score) {
+        var diff = (score * 20) - 10;
+        if (diff > 0) {
+            return "10 - " + (10 - diff).toFixed(1);
+        } else {
+            return (10 + diff).toFixed(1) + " - 10";
+        }
     };
 
     gameSelectionStartClick = function (data) {
@@ -412,9 +480,15 @@ var GAME = (function () {
     };
 
     gameSelectionShuffleClick = function () {
-        $('.gameActionStart,.gameActionShuffle').css('visibility', 'hidden');
+        $('.gameActionStart,.gameActionShuffle,.gameActionEqualize').css('visibility', 'hidden');
         shuffleCountDown = 20;
         doShuffle();
+    };
+
+    gameSelectionEqualizeClick = function () {
+        $('.gameActionStart,.gameActionShuffle,.gameActionEqualize').css('visibility', 'hidden');
+        shuffleCountDown = 20;
+        doEqualize();
     };
 
     teamPlayerClick = function () {
@@ -431,10 +505,22 @@ var GAME = (function () {
 
         shuffleCountDown--;
         if (shuffleCountDown === 0) {
-            $('.gameActionStart,.gameActionShuffle').css('visibility', 'visible');
+            $('.gameActionStart,.gameActionShuffle,.gameActionEqualize').css('visibility', 'visible');
             return;
         }
         setTimeout(doShuffle, 50);
+    };
+
+    doEqualize = function () {
+        equalizeArray(gamePlayers);
+        showTeamSelectionPlayers();
+
+        shuffleCountDown--;
+        if (shuffleCountDown === 0) {
+            $('.gameActionStart,.gameActionShuffle,.gameActionEqualize').css('visibility', 'visible');
+            return;
+        }
+        setTimeout(doEqualize, 50);
     };
 
     showTeamSelectionPlayers = function () {
@@ -443,7 +529,12 @@ var GAME = (function () {
             var player = players[gamePlayers[playerIdx]];
             div.addClass('selected');
             div.find('img').attr('src', player.pictureUrl);
+            div.find('figcaption').text(player.rating);
         }
+        var ratingTeam1 = players[gamePlayers[0]].rating + players[gamePlayers[1]].rating;
+        var ratingTeam2 = players[gamePlayers[2]].rating + players[gamePlayers[3]].rating;
+
+        $('#expectedScore').text('Expected score: ' + scoreToGoals(calculateExpectedScore(ratingTeam1, ratingTeam2)));
     };
 
     doInitializeTeamSelection = function (data) {
@@ -469,6 +560,7 @@ var GAME = (function () {
 
         $('.gameActionStart').on('click', gameSelectionStartClick);
         $('.gameActionShuffle').on('click', gameSelectionShuffleClick);
+        $('.gameActionEqualize').on('click', gameSelectionEqualizeClick);
         $('.team-player').on('click', teamPlayerClick);
     };
 

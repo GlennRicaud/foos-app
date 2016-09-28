@@ -466,10 +466,17 @@ body {
 
 #teamSelection .team-player {
     flex: 1;
+    text-align: center;
 }
 
-#teamSelection .team-player > img {
+#teamSelection .team-player > figure {
     width: 80%;
+    display: block;
+    margin: auto;
+}
+
+#teamSelection .team-player > figure > img {
+    width: 100%;
     display: block;
     margin: auto;
 }
@@ -495,6 +502,13 @@ body {
     100% {
         -webkit-transform: rotate(360deg);
     }
+}
+
+.team-player figcaption.player-rating {
+    display: block;
+    font-size: 3vw;
+    padding-top: 6px;
+    color: indigo;
 }
 
 #playerSelection {
@@ -537,14 +551,13 @@ body {
 .gameActions {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: flex-end;
 
     font-size: 7vw;
 }
 
 .gameActionStart {
-    width: 100%;
     text-align: center;
     font-family: "OpenSans", Arial, sans-serif;
 
@@ -552,11 +565,17 @@ body {
 }
 
 .gameActionShuffle {
-    width: 100%;
     text-align: center;
     font-family: "OpenSans", Arial, sans-serif;
 
     animation: randomize-pulse 2s ease-in-out infinite;
+}
+
+.gameActionEqualize {
+    text-align: center;
+    font-family: "OpenSans", Arial, sans-serif;
+
+    animation: equalize-pulse 2s ease-in-out infinite;
 }
 
 @keyframes play-pulse {
@@ -593,4 +612,28 @@ body {
     100% {
         color: #51a8fa;
     }
+}
+
+@keyframes equalize-pulse {
+    0% {
+        color: darkblue;
+    }
+    25% {
+        color: #51a8fa;
+    }
+    50% {
+        color: darkblue;
+    }
+    75% {
+        color: #51a8fa;
+    }
+    100% {
+        color: darkblue;
+    }
+}
+
+#expectedScore {
+    display: block;
+    margin-top: 10px;
+    font-size: 3vw;
 }

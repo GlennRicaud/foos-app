@@ -6,7 +6,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="green"/>
     <meta name="apple-mobile-web-app-title" content="foos.es/foos"/>
     <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
     <title>New Game</title>
     <link rel="stylesheet" id="style-css" data-th-href="${portal.assetUrl({'_path=css/livegame.css'})}"
           href="../../../assets/css/livegame.css"
@@ -17,15 +18,36 @@
 <audio id="gameAudio"></audio>
 <div style="height:10px"></div>
 <div id="gameSelection">
+    <span id="expectedScore"></span>
     <div id="teamSelection">
         <div class="team team-left">
-            <div class="team-player team-left-p1" id="teamPlayer1"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-red.svg'})}"/></div>
-            <div class="team-player team-left-p2" id="teamPlayer2"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-red.svg'})}"/></div>
+            <div class="team-player team-left-p1" id="teamPlayer1">
+                <figure>
+                    <img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-red.svg'})}"/>
+                    <figcaption class="player-rating"></figcaption>
+                </figure>
+            </div>
+            <div class="team-player team-left-p2" id="teamPlayer2">
+                <figure>
+                    <img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-red.svg'})}"/>
+                    <figcaption class="player-rating"></figcaption>
+                </figure>
+            </div>
         </div>
         <span class="teamvs">VS</span>
         <div class="team team-right">
-            <div class="team-player team-right-p1" id="teamPlayer3"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-blue.svg'})}"/></div>
-            <div class="team-player team-right-p2" id="teamPlayer4"><img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-blue.svg'})}"/></div>
+            <div class="team-player team-right-p1" id="teamPlayer3">
+                <figure>
+                    <img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-blue.svg'})}"/>
+                    <figcaption class="player-rating"></figcaption>
+                </figure>
+            </div>
+            <div class="team-player team-right-p2" id="teamPlayer4">
+                <figure>
+                    <img src="" data-th-src="${portal.assetUrl({'_path=img/Soccerball-blue.svg'})}"/>
+                    <figcaption class="player-rating"></figcaption>
+                </figure>
+            </div>
         </div>
     </div>
     <div id="playerSelection">
@@ -34,6 +56,7 @@
         <div class="gameActions" style="display: none;">
             <div class="gameActionStart start-ready">Play</div>
             <div class="gameActionShuffle start-ready">Shuffle</div>
+            <div class="gameActionEqualize start-ready">Equalize</div>
         </div>
     </div>
 </div>
