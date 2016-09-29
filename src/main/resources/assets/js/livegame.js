@@ -383,6 +383,17 @@ var GAME = (function () {
             $('.gameActions').show();
             $('#playerSelection').addClass('playerSelectionDone');
             $('.gameActionShuffle,.gameActionEqualize').toggle(!singlesGame);
+
+            var ratingTeam1, ratingTeam2;
+            if (singlesGame) {
+                ratingTeam1 = players[gamePlayers[0]].rating;
+                ratingTeam2 = players[gamePlayers[3]].rating;
+            } else {
+                ratingTeam1 = players[gamePlayers[0]].rating + players[gamePlayers[1]].rating;
+                ratingTeam2 = players[gamePlayers[2]].rating + players[gamePlayers[3]].rating;
+            }
+
+            $('#expectedScore').text('Expected score: ' + scoreToGoals(calculateExpectedScore(ratingTeam1, ratingTeam2)));
         }
     };
 
