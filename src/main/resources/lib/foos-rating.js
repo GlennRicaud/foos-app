@@ -260,8 +260,8 @@ var calculateNewRating = function (rating, score, expectedScore, kFactor) {
 };
 
 var calcGameScore = function (game) {
-    game.winnerScore = ((game.winnerGoals - game.loserGoals) + 10) / 20;
-    game.loserScore = ((game.loserGoals - game.winnerGoals ) + 10) / 20;
+    game.winnerScore = ((game.winnerGoals - game.loserGoals) / game.winnerGoals) * 0.5 + 0.5;
+    game.loserScore = ((game.loserGoals - game.winnerGoals) / game.winnerGoals) * 0.5 + 0.5;
 };
 
 var roundWithSign = function (value) {
