@@ -16,6 +16,8 @@ select {
     -moz-appearance: none;
     appearance: none;
     border-radius: 0;
+    background: url(../img/arrow-204-16.png) no-repeat right 10px center #ddd;
+    min-width: 160px;
 }
 
 /* Document values */

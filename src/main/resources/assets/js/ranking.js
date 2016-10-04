@@ -33,7 +33,6 @@ function showSparklines(players) {
     for (i = 0; i < players.length; i++) {
         player = players[i];
         var target = $('table.foos-ranking-table').find('[data-player-id="' + player.name + '"]');
-        console.log(target);
         target.sparkline(player.points, {type: 'bar', barColor: '#0000d0 ', negBarColor: '#d02020'});
     }
 }
