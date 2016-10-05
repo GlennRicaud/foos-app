@@ -12,15 +12,39 @@ exports.get = function (req) {
     }
     var players = foosRetrievalLib.getPlayers();
 
-    players.forEach(function (player) {
-        foosUrlLib.generatePictureUrl(player, 32, 'rounded(16)');
-        foosUrlLib.generatePageUrl(player);
-        player.data.rankingText = foosUtilLib.ordinal(player.data.ranking);
-    });
+    var upImg = portalLib.assetUrl({path: "img/trend-up.svg"});
+    var downImg = portalLib.assetUrl({path: "img/trend-down.svg"});
+    var rightImg = portalLib.assetUrl({path: "img/trend-right.svg"});
+    var firstImg = portalLib.assetUrl({path: "img/trophy.svg"});
+    var levelUpfImg = portalLib.assetUrl({path: "img/level-up.svg"});
+    var levelDownImg = portalLib.assetUrl({path: "img/level-down.svg"});
 
     players.sort(function (p1, p2) {
         return p1.data.ranking - p2.data.ranking;
     });
+
+    players.forEach(function (player, idx) {
+        foosUrlLib.generatePictureUrl(player, 32, 'rounded(16)');
+        foosUrlLib.generatePageUrl(player);
+        player.data.rankingText = foosUtilLib.ordinal(player.data.ranking);
+        if (player.data.rating < player.data.previousRating) {
+            player.gen.trendImg = downImg;
+        } else if (player.data.rating > player.data.previousRating) {
+            player.gen.trendImg = upImg;
+        } else {
+            player.gen.trendImg = rightImg;
+        }
+
+        if (idx == 0) {
+            player.gen.icon = firstImg;
+        } else if (player.data.ranking > player.data.previousRanking) {
+            player.gen.icon = levelDownImg;
+        } else if (player.data.ranking < player.data.previousRanking) {
+            player.gen.icon = levelUpfImg;
+        }
+    });
+
+    players[0].data.first = true;
 
     var view = resolve('ranking.html');
     var body = mustacheLib.render(view, {

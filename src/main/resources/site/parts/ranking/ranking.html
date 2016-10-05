@@ -9,7 +9,8 @@
                 <tr>
                     <th class="ranking-img"></th>
                     <th class="ranking-number">Rank</th>
-                    <th class="ranking-number">Rating</th>
+                    <th class="ranking-icon"></th>
+                    <th class="ranking-number">Points</th>
                     <th class="ranking-player">Player</th>
                     <th class="ranking-history">Latest games</th>
                 </tr>
@@ -23,7 +24,16 @@
                         </a>
                     </td>
                     <td class="ranking-number"><a class="foos-player-link" href="{{gen.pageUrl}}">{{data.rankingText}}</a></td>
-                    <td class="ranking-number"><a class="foos-player-link" href="{{gen.pageUrl}}">{{data.rating}}</a></td>
+                    <td class="ranking-icon">
+                        {{#gen.icon}}
+                        <img src="{{gen.icon}}" style="width:32px;height:32px;"/>
+                        {{/gen.icon}}
+                    </td>
+                    <td class="ranking-number">
+                        <a class="foos-player-link" href="{{gen.pageUrl}}"><span>{{data.rating}}</span>
+                            <img src="{{gen.trendImg}}" style="width:12px;height:12px;"/>
+                        </a>
+                    </td>
                     <td class="ranking-player"><a class="foos-player-link" href="{{gen.pageUrl}}">{{displayName}}</a></td>
                     <td class="ranking-history" data-player-id="{{displayName}}"></td>
                 </tr>

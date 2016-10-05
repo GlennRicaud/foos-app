@@ -29,7 +29,7 @@ table.foos-ranking-table .ranking-img {
 }
 
 table.foos-ranking-table .ranking-number {
-    width: 15%;
+    width: 5%;
     text-align: center;
 }
 
@@ -48,4 +48,25 @@ table.foos-ranking-table .ranking-player > a {
 
 table.foos-ranking-table .ranking-history {
     width: 45%;
+}
+
+table.foos-ranking-table .ranking-icon {
+    width: 1%;
+    padding: 0;
+}
+
+table.foos-ranking-table .ranking-icon img {
+    padding:0;
+}
+
+table.foos-ranking-table .ranking-number img {
+    padding:0;
+}
+
+table.foos-ranking-table .ranking-number span {
+    padding:0;
+}
+
+table.foos-ranking-table td.ranking-icon {
+    vertical-align: bottom;
 }

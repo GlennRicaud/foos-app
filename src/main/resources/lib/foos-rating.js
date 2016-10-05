@@ -1,5 +1,6 @@
 var contentLib = require('/lib/xp/content');
 var contextLib = require('/lib/xp/context');
+var repoLib = require('/lib/xp/repo');
 var foosRetrievalLib = require('/lib/foos-retrieval');
 var foosUtilLib = require('/lib/foos-util');
 
@@ -50,8 +51,10 @@ exports.calculateGameRatings = function (game) {
         contentIdsUpdated.push(player._id);
     });
 
+    repoLib.refresh({mode: 'all', repo: 'cms-repo'});
     publishPlayers(contentIdsUpdated);
 
+    repoLib.refresh({mode: 'all', repo: 'cms-repo'});
     exports.updateRankings();
 };
 
@@ -65,6 +68,8 @@ exports.resetRatings = function () {
             editor: function (c) {
                 c.data.rating = INITIAL_RATING;
                 c.data.ranking = 1;
+                c.data.previousRating = INITIAL_RATING;
+                c.data.previousRanking = 1;
                 delete c.data.name; // old data format in player content type
                 return c;
             }
@@ -97,10 +102,12 @@ exports.updateRankings = function () {
         contentLib.modify({
             key: player._id,
             editor: function (c) {
+                c.data.previousRanking = c.data.ranking;
                 c.data.ranking = rank;
                 return c;
             }
         });
+        playerIds.push(player._id);
     });
 
     publishPlayers(playerIds);
@@ -119,19 +126,24 @@ var publishPlayers = function (playerIds) {
 };
 
 var doPublishPlayers = function (playerIds) {
-    contentLib.publish({
+    var publishResult = contentLib.publish({
         keys: playerIds,
         sourceBranch: 'draft',
         targetBranch: 'master',
         includeChildren: false,
         includeDependencies: true
     });
+    if (publishResult) {
+        log.info("Publish ids: " + JSON.stringify(playerIds));
+        log.info("Publish result: " + JSON.stringify(publishResult));
+    }
 };
 
 var setPlayerRating = function (playerId, newRating) {
     contentLib.modify({
         key: playerId,
         editor: function (c) {
+            c.data.previousRating = c.data.rating;
             c.data.rating = newRating;
             return c;
         }
