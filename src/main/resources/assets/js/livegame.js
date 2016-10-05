@@ -389,8 +389,8 @@ var GAME = (function () {
                 ratingTeam1 = players[gamePlayers[0]].rating;
                 ratingTeam2 = players[gamePlayers[3]].rating;
             } else {
-                ratingTeam1 = players[gamePlayers[0]].rating + players[gamePlayers[1]].rating;
-                ratingTeam2 = players[gamePlayers[2]].rating + players[gamePlayers[3]].rating;
+                ratingTeam1 = (players[gamePlayers[0]].rating + players[gamePlayers[1]].rating) / 2;
+                ratingTeam2 = (players[gamePlayers[2]].rating + players[gamePlayers[3]].rating) / 2;
             }
 
             $('#expectedScore').text('Expected score: ' + scoreToGoals(calculateExpectedScore(ratingTeam1, ratingTeam2)));
@@ -542,8 +542,8 @@ var GAME = (function () {
             div.find('img').attr('src', player.pictureUrl);
             div.find('figcaption').text(player.rating);
         }
-        var ratingTeam1 = players[gamePlayers[0]].rating + players[gamePlayers[1]].rating;
-        var ratingTeam2 = players[gamePlayers[2]].rating + players[gamePlayers[3]].rating;
+        var ratingTeam1 = (players[gamePlayers[0]].rating + players[gamePlayers[1]].rating) / 2;
+        var ratingTeam2 = (players[gamePlayers[2]].rating + players[gamePlayers[3]].rating) / 2;
 
         $('#expectedScore').text('Expected score: ' + scoreToGoals(calculateExpectedScore(ratingTeam1, ratingTeam2)));
     };
