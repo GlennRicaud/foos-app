@@ -19,12 +19,18 @@ exports.render = function (games, detailsButton) {
         game.gen.score.losers = game.gen.score.losers.toFixed();
         if (game.data.winners.length == 2) {
             game.data.winners[0].ratingDiff = formatPlusMinus(game.data.winners[0].ratingDiff);
+            game.data.winners[0].ratingSign = game.data.winners[0].ratingDiff >= 0 ? 'foos-game-rating-plus' : 'foos-game-rating-minus';
             game.data.winners[1].ratingDiff = formatPlusMinus(game.data.winners[1].ratingDiff);
+            game.data.winners[1].ratingSign = game.data.winners[1].ratingDiff >= 0 ? 'foos-game-rating-plus' : 'foos-game-rating-minus';
             game.data.losers[0].ratingDiff = formatPlusMinus(game.data.losers[0].ratingDiff);
+            game.data.losers[0].ratingSign = game.data.losers[0].ratingDiff >= 0 ? 'foos-game-rating-plus' : 'foos-game-rating-minus';
             game.data.losers[1].ratingDiff = formatPlusMinus(game.data.losers[1].ratingDiff);
+            game.data.losers[1].ratingSign = game.data.losers[1].ratingDiff >= 0 ? 'foos-game-rating-plus' : 'foos-game-rating-minus';
         } else {
             game.data.winners.ratingDiff = formatPlusMinus(game.data.winners.ratingDiff);
+            game.data.winners.ratingSign = game.data.winners.ratingDiff >= 0 ? 'foos-game-rating-plus' : 'foos-game-rating-minus';
             game.data.losers.ratingDiff = formatPlusMinus(game.data.losers.ratingDiff);
+            game.data.losers.ratingSign = game.data.losers.ratingDiff >= 0 ? 'foos-game-rating-plus' : 'foos-game-rating-minus';
         }
          foosUtilLib.toArray(game.data.winners).
             concat(foosUtilLib.toArray(game.data.losers)).

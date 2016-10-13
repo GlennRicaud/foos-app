@@ -358,7 +358,7 @@ select {
 
 /* Game ratings */
 .foos-game-winner-rating, .foos-game-loser-rating {
-    font-size: 0.8em;
+    font-size: 1em;
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -372,10 +372,10 @@ select {
     justify-content: flex-end;
 }
 
-.foos-game-winner-rating > span {
+.foos-game-rating-plus > span {
     color: #3d9241;
 }
 
-.foos-game-loser-rating > span {
+.foos-game-rating-minus > span {
     color: #a3251c;
 }

@@ -16,7 +16,7 @@
                 <div class="foos-game-sub-details-players">
                     {{#data.winners}}
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
-                        <div class="foos-game-rating foos-game-winner-rating">
+                        <div class="foos-game-rating foos-game-winner-rating {{ratingSign}}">
                             <span>{{ratingDiff}}</span>
                         </div>
                         <span>{{gen.name}}: {{score}} goals {{#against}}(+{{against}} against){{/against}}</span>
@@ -37,7 +37,7 @@
                     <a class="foos-player-link" href="{{gen.pageUrl}}">
                         <img src="{{gen.pictureUrl}}"/>
                         <span>{{gen.name}}: {{score}} goals {{#against}}(+{{against}} against){{/against}}</span>
-                        <div class="foos-game-rating foos-game-loser-rating">
+                        <div class="foos-game-rating foos-game-loser-rating {{ratingSign}}">
                             <span>{{ratingDiff}}</span>
                         </div>
                     </a>
