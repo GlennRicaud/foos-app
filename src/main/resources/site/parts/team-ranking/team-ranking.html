@@ -1,0 +1,63 @@
+<div id="foos-main-container">
+    <div class="foos-part">
+        <div class="foos-part-title">
+            <span>Teams</span>
+        </div>
+        <div class="foos-part-body foos-part-body-table">
+            <table class="foos-ranking-table">
+                <thead>
+                <tr>
+                    <th class="ranking-img"></th>
+                    <th class="ranking-number">Rank</th>
+                    <th class="ranking-icon"></th>
+                    <th class="ranking-number">Points</th>
+                    <th class="ranking-player">Team</th>
+                    <th class="ranking-history">Latest games</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#teams}}
+                <tr>
+                    <td class="ranking-img">
+                        <a class="foos-player-link" href="{{gen.pageUrl}}">
+                            <img src="{{gen.pictureUrl}}"/>
+                        </a>
+                    </td>
+                    <td class="ranking-number"><a class="foos-player-link" href="{{gen.pageUrl}}">{{data.rankingText}}</a></td>
+                    <td class="ranking-icon">
+                        {{#gen.icon}}
+                        <img src="{{gen.icon}}" style="width:32px;height:32px;"/>
+                        {{/gen.icon}}
+                    </td>
+                    <td class="ranking-number">
+                        <a class="foos-player-link" href="{{gen.pageUrl}}"><span>{{data.rating}}</span>
+                            <img src="{{gen.trendImg}}" style="width:12px;height:12px;"/>
+                        </a>
+                    </td>
+                    <td class="ranking-player"><a class="foos-player-link" href="{{gen.pageUrl}}">{{displayName}}</a></td>
+                    <td class="ranking-history" data-player-id="{{displayName}}"></td>
+                </tr>
+                {{/teams}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="foos-part">
+        <div class="foos-part-title">
+            <div class="foos-row foos-header">
+                <div class="foos-cell-stat">
+                    <select id="foosRankingPeriod">
+                        <option value="1">Today</option>
+                        <option value="7">Last week</option>
+                        <option value="30">Last month</option>
+                        <option value="90">Last 3 months</option>
+                        <option value="183">Last 6 months</option>
+                        <option value="365">Last year</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <canvas id="ratingChart" height="400"></canvas>
+    </div>
+</div>
