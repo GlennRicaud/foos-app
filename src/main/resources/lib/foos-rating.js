@@ -58,6 +58,45 @@ exports.calculateGameRatings = function (game) {
     exports.updateRankings();
 };
 
+exports.calculateGameTeamRatings = function (game) {
+    if (game.data.winners.length !== 2) {
+        return;
+    }
+    var winner = foosRetrievalLib.getTeamByGame(game, true, false);
+    var loser = foosRetrievalLib.getTeamByGame(game, false, false);
+    if (!winner || !loser) {
+        return;
+    }
+
+    calcTeamResultGame(game.data, winner, loser);
+
+    log.info("GAME: " + JSON.stringify(game, null, 4));
+    log.info("Winner team: " + JSON.stringify(winner, null, 4));
+    log.info("Loser team: " + JSON.stringify(loser, null, 4));
+
+    contentLib.modify({
+        key: game._id,
+        editor: function (gameContent) {
+            gameContent.data.winnerTeamRatingDiff = game.data.winnerTeamRatingDiff;
+            gameContent.data.loserTeamRatingDiff = game.data.loserTeamRatingDiff;
+            return gameContent;
+        }
+    });
+    var contentIdsUpdated = [];
+    contentIdsUpdated.push(game._id);
+
+    var teams = [winner, loser];
+    teams.forEach(function (team) {
+        setTeamRating(team._id, team.data.rating);
+        contentIdsUpdated.push(team._id);
+    });
+
+    repoLib.refresh({mode: 'all', repo: 'cms-repo'});
+    publishTeams(contentIdsUpdated);
+
+    repoLib.refresh({mode: 'all', repo: 'cms-repo'});
+    exports.updateTeamRankings();
+};
 
 exports.resetRatings = function () {
     var players = foosRetrievalLib.getPlayers();
@@ -78,6 +117,26 @@ exports.resetRatings = function () {
     });
 
     publishPlayers(playerIds);
+};
+
+exports.resetTeamRatings = function () {
+    var teams = foosRetrievalLib.getTeams();
+    var teamIds = [];
+    teams.forEach(function (team) {
+        contentLib.modify({
+            key: team._id,
+            editor: function (c) {
+                c.data.rating = INITIAL_RATING;
+                c.data.ranking = 1;
+                c.data.previousRating = INITIAL_RATING;
+                c.data.previousRanking = 1;
+                return c;
+            }
+        });
+        teamIds.push(team._id);
+    });
+
+    publishTeams(teamIds);
 };
 
 exports.updateRankings = function () {
@@ -139,9 +198,79 @@ var doPublishPlayers = function (playerIds) {
     }
 };
 
+exports.updateTeamRankings = function () {
+    var teams = foosRetrievalLib.getTeams();
+    var teamIds = [];
+
+    teams.forEach(function (p) {
+        p.data.rating = p.data.rating || INITIAL_RATING;
+        p.data.rating = p.data.rating < 0 ? 0 : p.data.rating;
+    });
+    teams.sort(function (p1, p2) {
+        return p2.data.rating - p1.data.rating;
+    });
+
+    var rank = 0, prevRating = 0;
+    teams.forEach(function (team) {
+        if (team.data.rating !== prevRating) {
+            rank = rank + 1;
+            prevRating = team.data.rating;
+        }
+        log.info('Updating ranking for team: ' + team.displayName + ' - ' + foosUtilLib.ordinal(rank) + ' (' + prevRating + ')');
+        contentLib.modify({
+            key: team._id,
+            editor: function (c) {
+                c.data.previousRanking = c.data.ranking;
+                c.data.ranking = rank;
+                return c;
+            }
+        });
+        teamIds.push(team._id);
+    });
+
+    publishTeams(teamIds);
+};
+
+var publishTeams = function (teamIds) {
+    contextLib.run({
+            user: {
+                login: 'su',
+                userStore: 'system'
+            }
+        },
+        function () {
+            doPublishTeams(teamIds);
+        });
+};
+
+var doPublishTeams = function (teamIds) {
+    var publishResult = contentLib.publish({
+        keys: teamIds,
+        sourceBranch: 'draft',
+        targetBranch: 'master',
+        includeChildren: false,
+        includeDependencies: true
+    });
+    if (publishResult) {
+        log.info("Publish ids: " + JSON.stringify(teamIds));
+        log.info("Publish result: " + JSON.stringify(publishResult));
+    }
+};
+
 var setPlayerRating = function (playerId, newRating) {
     contentLib.modify({
         key: playerId,
+        editor: function (c) {
+            c.data.previousRating = c.data.rating;
+            c.data.rating = newRating;
+            return c;
+        }
+    });
+};
+
+var setTeamRating = function (teamId, newRating) {
+    contentLib.modify({
+        key: teamId,
         editor: function (c) {
             c.data.previousRating = c.data.rating;
             c.data.rating = newRating;
@@ -169,6 +298,14 @@ var calcResultGame = function (game, winners, losers) {
     calcGameScore(game);
     calcGameTeamRatings(game, winners, losers);
 
+};
+
+var calcTeamResultGame = function (gameData, winner, loser) {
+    gameData.winnerGoals = gameData.winners[0].score + gameData.winners[1].score + (gameData.losers[0].against || 0) + (gameData.losers[1].against || 0);
+    gameData.loserGoals = gameData.losers[0].score + gameData.losers[1].score + (gameData.winners[0].against || 0) + (gameData.winners[1].against || 0);
+
+    calcGameScore(gameData);
+    calcTeamGameRatings(gameData, winner, loser);
 };
 
 var calcGameTeamRatings = function (game, winners, losers) {
@@ -233,6 +370,29 @@ var calcGameTeamRatings2p = function (game, winners, losers) {
     game.winners[1].ratingDiff = wRatingDiff;
     game.losers[0].ratingDiff = lRatingDiff;
     game.losers[1].ratingDiff = lRatingDiff;
+};
+
+var calcTeamGameRatings = function (gameData, winner, loser) {
+    var wRating = winner.data.rating;
+    var lRating = loser.data.rating;
+    log.info("Team ratings: " + wRating + "," + lRating);
+    log.info("Winner score: " + gameData.winnerScore);
+    log.info("Loser score: " + gameData.loserScore);
+
+    var newWRating = newRating(wRating, lRating, gameData.winnerScore);
+    var newLRating = newRating(lRating, wRating, gameData.loserScore);
+
+    var wRatingDiff = newWRating - (wRating);
+    var lRatingDiff = newLRating - (lRating);
+    log.info("Rating diffs: " + lRatingDiff + "," + wRatingDiff);
+
+    winner.data.rating += wRatingDiff;
+    loser.data.rating += lRatingDiff;
+    log.info("Winner: " + JSON.stringify(winner, null, 4));
+    log.info("Loser: " + JSON.stringify(loser, null, 4));
+
+    gameData.winnerTeamRatingDiff = wRatingDiff;
+    gameData.loserTeamRatingDiff = lRatingDiff;
 };
 
 /**

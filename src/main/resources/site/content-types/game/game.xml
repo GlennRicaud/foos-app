@@ -86,5 +86,15 @@
       </items>
       <occurrences minimum="0" maximum="0"/>
     </item-set>
+    <input type="Long" name="winnerTeamRatingDiff">
+      <label>Rating change for the winning team</label>
+      <occurrences minimum="0" maximum="1"/>
+      <default>0</default>
+    </input>
+    <input type="Long" name="loserTeamRatingDiff">
+      <label>Rating change for the losing team</label>
+      <occurrences minimum="0" maximum="1"/>
+      <default>0</default>
+    </input>
   </form>
 </content-type>

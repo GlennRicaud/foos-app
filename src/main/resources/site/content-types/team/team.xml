@@ -20,5 +20,25 @@
       <label>Description</label>
       <occurrences minimum="0" maximum="1"/>
     </input>
+    <input type="Long" name="ranking">
+      <label>Ranking</label>
+      <occurrences minimum="1" maximum="1"/>
+      <default>0</default>
+    </input>
+    <input type="Long" name="rating">
+      <label>Rating</label>
+      <occurrences minimum="1" maximum="1"/>
+      <default>1500</default>
+    </input>
+    <input type="Long" name="previousRanking">
+      <label>Previous Ranking</label>
+      <occurrences minimum="1" maximum="1"/>
+      <default>0</default>
+    </input>
+    <input type="Long" name="previousRating">
+      <label>Previous Rating</label>
+      <occurrences minimum="1" maximum="1"/>
+      <default>1500</default>
+    </input>
   </form>
 </content-type>
