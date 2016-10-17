@@ -271,6 +271,7 @@ var saveGame = function (req) {
     });
 
     foosRatingLib.calculateGameRatings(gameContent);
+    foosRatingLib.calculateGameTeamRatings(gameContent);
 
     var result = contentLib.publish({
         keys: [gameContent._id],

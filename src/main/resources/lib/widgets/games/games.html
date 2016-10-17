@@ -9,6 +9,9 @@
         <div class="foos-game-details">
             <div class="foos-game-details-winners">
                 <div class="foos-game-score-winners">
+                    <div class="foos-game-rating foos-game-winner-rating {{data.winnerTeamRatingSign}}">
+                        <span>{{data.winnerTeamRatingDiff}}</span>
+                    </div>
                     <span class="foos-game-team">{{gen.winners}}</span>
                     <span class="foos-game-score">{{gen.score.winners}}</span>
                 </div>
@@ -30,6 +33,9 @@
                 <div class="foos-game-score-losers">
                     <span class="foos-game-score">{{gen.score.losers}}</span>
                     <span>{{gen.losers}}</span>
+                    <div class="foos-game-rating foos-game-loser-rating {{data.loserTeamRatingSign}}">
+                        <span>{{data.loserTeamRatingDiff}}</span>
+                    </div>
                 </div>
 
                 <div class="foos-game-sub-details-players">
