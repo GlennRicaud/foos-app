@@ -13,8 +13,8 @@ exports.render = function (games, detailsButton) {
 
         game.data.winnerTeamRatingSign = '';
         game.data.loserTeamRatingSign = '';
-        game.data.winnerTeamRatingDiff = game.data.winnerTeamRatingDiff == null ? '' : formatPlusMinus(game.data.winnerTeamRatingDiff);
-        game.data.loserTeamRatingDiff = game.data.loserTeamRatingDiff == null ? '' : formatPlusMinus(game.data.loserTeamRatingDiff);
+        game.data.winnerTeamRatingDiff = !game.data.winnerTeamRatingDiff ? '' : formatPlusMinus(game.data.winnerTeamRatingDiff);
+        game.data.loserTeamRatingDiff = !game.data.loserTeamRatingDiff ? '' : formatPlusMinus(game.data.loserTeamRatingDiff);
 
         game.gen.winners =
             foosUtilLib.isTeamGame(game) ? foosRetrievalLib.getTeamByGame(game, true, true).displayName : game.data.winners.gen.name;
@@ -32,7 +32,7 @@ exports.render = function (games, detailsButton) {
             game.data.losers[1].ratingDiff = formatPlusMinus(game.data.losers[1].ratingDiff);
             game.data.losers[1].ratingSign = game.data.losers[1].ratingDiff >= 0 ? 'foos-game-rating-plus' : 'foos-game-rating-minus';
 
-            if (game.data.winnerTeamRatingDiff != undefined) {
+            if (game.data.winnerTeamRatingDiff) {
                 game.data.winnerTeamRatingSign =game.data.winnerTeamRatingDiff>=0? 'foos-game-rating-plus' : 'foos-game-rating-minus';
                 game.data.loserTeamRatingSign =game.data.loserTeamRatingDiff>=0? 'foos-game-rating-plus' : 'foos-game-rating-minus';
             }
