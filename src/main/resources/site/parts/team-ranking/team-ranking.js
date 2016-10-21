@@ -92,7 +92,7 @@ var getChartData = function (req) {
 
     var baseTime = 0, t = 0;
     games.forEach(function (g) {
-        if (g.data.winners.length !== 2) {
+        if (g.data.winners.length !== 2 || g.data.losers.length !== 2) {
             return;
         }
         t = parseInt(new Date(g.createdTime).getTime() / 1000, 10);
@@ -106,17 +106,19 @@ var getChartData = function (req) {
         var winnerTeam = teams[winnerTeamId];
         var loserTeam = teams[loserTeamId];
 
-        if (g.data.winnerTeamRatingDiff != null) {
-            winnerTeam.points.push({
-                t: t,
-                v: g.data.winnerTeamRatingDiff
-            });
-        }
-        if (g.data.loserTeamRatingDiff != null) {
-            loserTeam.points.push({
-                t: t,
-                v: g.data.loserTeamRatingDiff
-            });
+        if (winnerTeam && loserTeam) {
+            if (g.data.winnerTeamRatingDiff != null) {
+                winnerTeam.points.push({
+                    t: t,
+                    v: g.data.winnerTeamRatingDiff
+                });
+            }
+            if (g.data.loserTeamRatingDiff != null) {
+                loserTeam.points.push({
+                    t: t,
+                    v: g.data.loserTeamRatingDiff
+                });
+            }
         }
     });
 
