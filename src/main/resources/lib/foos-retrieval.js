@@ -29,6 +29,9 @@ exports.getPlayers = function () {
     }).hits;
 };
 
+exports.getPlayer = function (playerId) {
+    return contentLib.get({key: playerId});
+};
 
 exports.getPlayersByGame = function (game, winners) {
 

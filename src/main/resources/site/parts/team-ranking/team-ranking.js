@@ -24,6 +24,18 @@ exports.get = function (req) {
     });
 
     teams.forEach(function (team, idx) {
+        var p1 = foosRetrievalLib.getPlayer(team.data.playerIds[0]);
+        var p2 = foosRetrievalLib.getPlayer(team.data.playerIds[1]);
+        team.gen = team.gen || {};
+        foosUrlLib.generatePictureUrl(p1, 24, 'rounded(12)');
+        team.gen.pictureP1Url = p1.gen.pictureUrl;
+        team.gen.pictureP1Name = p1.displayName;
+        team.gen.p1Url = portalLib.pageUrl({id: p1._id});
+        foosUrlLib.generatePictureUrl(p2, 24, 'rounded(12)');
+        team.gen.pictureP2Url = p2.gen.pictureUrl;
+        team.gen.pictureP2Name = p2.displayName;
+        team.gen.p2Url = portalLib.pageUrl({id: p2._id});
+
         foosUrlLib.generatePictureUrl(team, 32, 'rounded(16)');
         foosUrlLib.generatePageUrl(team);
         team.data.rankingText = foosUtilLib.ordinal(team.data.ranking);

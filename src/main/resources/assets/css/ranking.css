@@ -3,10 +3,6 @@ table.foos-ranking-table {
     border-collapse: collapse;
 }
 
-/*table.foos-ranking-table td {*/
-/*padding: 0.5em 1em;*/
-/*}*/
-
 table.foos-ranking-table th {
     padding: 0.5em 1em;
 }
@@ -56,17 +52,79 @@ table.foos-ranking-table .ranking-icon {
 }
 
 table.foos-ranking-table .ranking-icon img {
-    padding:0;
+    padding: 0;
 }
 
 table.foos-ranking-table .ranking-number img {
-    padding:0;
+    padding: 0;
 }
 
 table.foos-ranking-table .ranking-number span {
-    padding:0;
+    padding: 0;
 }
 
 table.foos-ranking-table td.ranking-icon {
+    vertical-align: bottom;
+}
+
+/*ranking team*/
+table.foos-ranking-table .ranking-team-img {
+    width: 5%;
+}
+
+table.foos-ranking-table .ranking-team-number {
+    width: 5%;
+    text-align: center;
+}
+
+table.foos-ranking-table .ranking-team-number > a {
+    display: block;
+}
+
+table.foos-ranking-table .ranking-team-name {
+    text-align: center;
+}
+
+table.foos-ranking-table .ranking-team-name > a {
+    display: block;
+}
+
+table.foos-ranking-table .ranking-team-players {
+    text-align: center;
+}
+
+table.foos-ranking-table .ranking-team-players > div {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-around;
+}
+
+table.foos-ranking-table .ranking-team-players img {
+    padding: 0;
+}
+
+table.foos-ranking-table .ranking-team-history {
+    width: 35%;
+}
+
+table.foos-ranking-table .ranking-team-icon {
+    width: 1%;
+    padding: 0;
+}
+
+table.foos-ranking-table .ranking-team-icon img {
+    padding: 0;
+}
+
+table.foos-ranking-table .ranking-team-number img {
+    padding: 0;
+}
+
+table.foos-ranking-table .ranking-team-number span {
+    padding: 0;
+}
+
+table.foos-ranking-table td.ranking-team-icon {
     vertical-align: bottom;
 }
