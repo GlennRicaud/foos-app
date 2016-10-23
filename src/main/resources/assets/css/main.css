@@ -405,10 +405,39 @@ select {
     justify-content: center;
 }
 
+/*Foos Game Details*/
 .foos-game-title a {
-    color:#fff;
+    color: #fff;
 }
 
 .foos-game-details-link .foos-game-details-date {
     align-self: center;
+}
+
+/*Foos Player Details*/
+
+.foos-player-details {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.foos-player-details-stats {
+    margin-left: 20px;
+}
+
+.foos-player-details-stats img {
+    padding: 0;
+}
+
+.foos-player-teams {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 33%;
+
+    flex-flow: wrap;
+}
+
+.foos-player-teams img {
+    padding: 5px;
 }

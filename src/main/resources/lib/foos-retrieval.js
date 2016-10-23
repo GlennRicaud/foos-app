@@ -58,6 +58,16 @@ exports.getTeams = function () {
     }).hits;
 };
 
+exports.getPlayerTeams = function (playerId) {
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        query: "data.playerIds = '" + playerId + "'",
+        contentTypes: [app.name + ":team"],
+        sort: "displayName ASC"
+    }).hits;
+};
+
 exports.getTeamByPlayerIds = function (playerIds, createDummy) {
     var team = contentLib.query({
         start: 0,

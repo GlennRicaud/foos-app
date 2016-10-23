@@ -1,33 +1,31 @@
 <div id="foos-main-container">
     <div class="foos-part">
         <div class="foos-part-title">
-            <span>{{player.displayName}} analysis</span>
+            <span>{{player.displayName}}</span>
         </div>
-        <div class="foos-part-body">
-            <ul>
-                <li>Ranking: {{player.data.rankingText}}</li>
-                <li>Rating: {{player.data.rating}}</li>
-                <li>Positive: {{player.data.positive}}</li>
-                <li>Negative: {{player.data.negative}}</li>
-                <li>Special trick: {{player.data.special}}</li>
-                {{#player.data.handedness}}
-                <li>Handedness: {{player.data.handedness}}</li>
-                {{/player.data.handedness}}
-                {{#player.data.description}}
-                <li>Description: {{player.data.description}}</li>
-                {{/player.data.description}}
-            </ul>
-        </div>
-    </div>
-
-    <div class="foos-part">
-        <div class="foos-part-title">
-            <span>{{player.displayName}} profile</span>
-        </div>
-        <div class="foos-part-body">
-            <ul>
-                <li>Coming soon... (twss)</li>
-            </ul>
+        <div class="foos-player-details">
+            <div class="foos-player-details-stats">
+                <ul>
+                    <li>Ranking: {{player.data.rankingText}} {{#player.gen.leader}}<img src="{{leaderImage}}" width="16"/>{{/player.gen.leader}}
+                    </li>
+                    <li>Rating: {{player.data.rating}}</li>
+                    <li>Winning Percentage: {{player.gen.ratioGamesWon}}%</li>
+                    <li>Games won: {{player.gen.nbGamesWon}}</li>
+                    <li>Games played: {{player.gen.nbGames}}</li>
+                </ul>
+            </div>
+            <div class="foos-player-teams">
+                {{#teams}}
+                <div>
+                    <a href="{{gen.pageUrl}}"><img src="{{gen.pictureUrl}}"/></a>
+                </div>
+                {{/teams}}
+            </div>
+            <div>
+                <div>
+                    <img src="{{player.gen.pictureUrl}}"/>
+                </div>
+            </div>
         </div>
     </div>
 
