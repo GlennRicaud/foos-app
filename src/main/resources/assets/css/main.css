@@ -379,3 +379,36 @@ select {
 .foos-game-rating-minus > span {
     color: #a3251c;
 }
+
+/*Foos Team Details*/
+.foos-team-details {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.foos-team-details-players {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.foos-team-details-stats {
+    margin-left: 20px;
+}
+
+.foos-team-details-stats img {
+    padding: 0;
+}
+
+.foos-game-title {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.foos-game-title a {
+    color:#fff;
+}
+
+.foos-game-details-link .foos-game-details-date {
+    align-self: center;
+}

@@ -15,6 +15,9 @@ exports.get = function (req) {
     foosTeamStatsLib.generateTeamStats(team);
     team.gen.nbGames = team.gen.nbGames.toFixed(0);
     team.gen.ratioGamesWon = Math.floor(team.gen.ratioGamesWon) + "%";
+    foosUrlLib.generatePictureUrl(team, 120);
+    team.data.rankingText = foosUtilLib.ordinal(team.data.ranking);
+    team.gen.leader = team.data.ranking === 1;
 
     //Retrieve the team players
     var playersIds = foosUtilLib.toArray(team.data.playerIds);
@@ -35,7 +38,8 @@ exports.get = function (req) {
     var body = mustacheLib.render(view, {
         team: team,
         players: players,
-        wonGamesWidget: gamesWidgetLib.render(games, true)
+        wonGamesWidget: gamesWidgetLib.render(games, true),
+        leaderImage : portalLib.assetUrl({path: "img/trophy.svg"})
     });
     return {
         body: body

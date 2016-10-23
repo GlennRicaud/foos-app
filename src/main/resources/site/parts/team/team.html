@@ -1,26 +1,35 @@
 <div id="foos-main-container">
-    <div id="foos-team" class="foos-part">
-        <div class="foos-part-title">
-            <span>{{team.displayName}} players</span>
-        </div>
-        <div class="foos-part-body">
-            {{#players}}
-            <a class="foos-player-link" href="{{gen.pageUrl}}">
-                <img src="{{gen.pictureUrl}}"/>
-                <span>{{displayName}}</span>
-            </a>
-            {{/players}}
-        </div>
-    </div>
     <div class="foos-part">
         <div class="foos-part-title">
-            <span>{{team.displayName}} stats</span>
+            <span>{{team.displayName}}</span>
         </div>
-        <div class="foos-part-body">
-            <ul>
-                <li>Games won: {{team.gen.ratioGamesWon}} ({{team.gen.nbGamesWon}} / {{team.gen.nbGames}})</li>
-                <li>Combined rating: {{team.gen.rating}}</li>
-            </ul>
+        <div class="foos-team-details">
+            <div class="foos-team-details-stats">
+                <ul>
+                    <li>Ranking: {{team.data.rankingText}} {{#team.gen.leader}}<img src="{{leaderImage}}" width="16"/>{{/team.gen.leader}}</li>
+                    <li>Rating: {{team.data.rating}}</li>
+                    <li>Winning Percentage: {{team.gen.ratioGamesWon}}</li>
+                    <li>Games won: {{team.gen.nbGamesWon}}</li>
+                    <li>Games played: {{team.gen.nbGames}}</li>
+                </ul>
+            </div>
+            <div class="foos-part-body_">
+                {{#players}}
+                <div class="foos-team-details-players">
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <img src="{{gen.pictureUrl}}"/>
+                    </a>
+                    <a class="foos-player-link" href="{{gen.pageUrl}}">
+                        <span>{{displayName}}</span>
+                    </a>
+                </div>
+                {{/players}}
+            </div>
+            <div class="foos-part-body_">
+                <div>
+                    <img src="{{team.gen.pictureUrl}}"/>
+                </div>
+            </div>
         </div>
     </div>
     {{{wonGamesWidget}}}

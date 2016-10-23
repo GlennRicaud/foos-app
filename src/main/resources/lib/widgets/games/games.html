@@ -1,8 +1,15 @@
 {{#games}}
 <div class="foos-part">
-    <div class="foos-part-title">
+    <div class="foos-part-title foos-game-title">
+        {{#gen.pageUrl}}
+        <span><a href="{{gen.pageUrl}}">{{displayName}}</a></span>
+        <span class="foos-game-details-date"><a href="{{gen.pageUrl}}">{{data.date}}</a></span>
+        </a>
+        {{/gen.pageUrl}}
+        {{^gen.pageUrl}}
         <span>{{displayName}}</span>
         <span class="foos-game-details-date">{{data.date}}</span>
+        {{/gen.pageUrl}}
     </div>
     <div class="foos-part-body">
 
