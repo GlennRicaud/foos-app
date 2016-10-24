@@ -35,7 +35,7 @@ exports.get = function (req) {
             player.gen.trendImg = rightImg;
         }
 
-        if (idx == 0) {
+        if (player.data.ranking === 1) {
             player.gen.icon = firstImg;
         } else if (player.data.ranking > player.data.previousRanking) {
             player.gen.icon = levelDownImg;

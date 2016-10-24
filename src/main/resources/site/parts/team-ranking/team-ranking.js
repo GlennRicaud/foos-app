@@ -47,7 +47,7 @@ exports.get = function (req) {
             team.gen.trendImg = rightImg;
         }
 
-        if (idx == 0) {
+        if (team.data.ranking === 1) {
             team.gen.icon = firstImg;
         } else if (team.data.ranking > team.data.previousRanking) {
             team.gen.icon = levelDownImg;
