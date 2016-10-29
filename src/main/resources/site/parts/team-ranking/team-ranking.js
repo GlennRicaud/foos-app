@@ -10,7 +10,7 @@ exports.get = function (req) {
     } else if (req.params.p == 'sparkline') {
         return getSparklinesData(req);
     }
-    var teams = foosRetrievalLib.getTeams();
+    var teams = foosRetrievalLib.getTeams({skipRetired: true});
 
     var upImg = portalLib.assetUrl({path: "img/trend-up.svg"});
     var downImg = portalLib.assetUrl({path: "img/trend-down.svg"});
@@ -85,7 +85,7 @@ exports.get = function (req) {
 
 var getChartData = function (req) {
     var dayCount = req.params.period || 30;
-    var teamsData = foosRetrievalLib.getTeams();
+    var teamsData = foosRetrievalLib.getTeams({skipRetired: true});
     var since = new Date();
     since.setDate(since.getDate() - dayCount);
     var sinceDate = since.toISOString().slice(0, 10);
@@ -178,7 +178,7 @@ var getGameLoserTeamPlayersId = function (game) {
 };
 
 var getSparklinesData = function (req) {
-    var teamsData = foosRetrievalLib.getTeams();
+    var teamsData = foosRetrievalLib.getTeams({skipRetired: true});
 
     var teams = [], team;
     teamsData.forEach(function (t) {

@@ -65,5 +65,11 @@
       <occurrences minimum="1" maximum="1"/>
       <default>1500</default>
     </input>
+    <input type="Checkbox" name="retired">
+      <label>Player has retired</label>
+      <help-text>Retired players will not appear in the ranking or be selectable for a new game. Ranking points resulting from games played against a retired player are kept in the system.</help-text>
+      <occurrences minimum="1" maximum="1"/>
+      <default>false</default>
+    </input>
   </form>
 </content-type>

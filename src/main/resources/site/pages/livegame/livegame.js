@@ -285,7 +285,7 @@ var saveGame = function (req) {
 };
 
 var getData = function () {
-    var plist = foosRetrievalLib.getPlayers();
+    var plist = foosRetrievalLib.getPlayers({skipRetired: true});
     var players = [];
 
     plist.forEach(function (p) {

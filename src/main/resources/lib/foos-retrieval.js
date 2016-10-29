@@ -20,11 +20,17 @@ exports.getChildrenByParentKey = function (key) {
     }).hits;
 };
 
-exports.getPlayers = function () {
+exports.getPlayers = function (options) {
+    options = options || {};
+    var query;
+    if (options.skipRetired) {
+        query = "data.retired != 'true'";
+    }
     return contentLib.query({
         start: 0,
         count: -1,
         contentTypes: [app.name + ":player"],
+        query: query,
         sort: "displayName ASC"
     }).hits;
 };
@@ -49,11 +55,17 @@ exports.getPlayersByGame = function (game, winners) {
     });
 };
 
-exports.getTeams = function () {
+exports.getTeams = function (options) {
+    options = options || {};
+    var query;
+    if (options.skipRetired) {
+        query = "data.retired != 'true'";
+    }
     return contentLib.query({
         start: 0,
         count: -1,
         contentTypes: [app.name + ":team"],
+        query: query,
         sort: "displayName ASC"
     }).hits;
 };

@@ -6,6 +6,7 @@ var foosUtilLib = require('/lib/foos-util');
 
 var INITIAL_RATING = 1500;
 var K_FACTOR = 40;
+var RANKING_RETIRED = 10000;
 
 exports.calculateGameRatings = function (game) {
     var winners, losers, winner, loser;
@@ -24,8 +25,8 @@ exports.calculateGameRatings = function (game) {
     calcResultGame(game.data, winners, losers);
 
     log.info("GAME: " + JSON.stringify(game, null, 4));
-    log.info("Winners: " + JSON.stringify(winners, null, 4));
-    log.info("Losers: " + JSON.stringify(losers, null, 4));
+    //log.info("Winners: " + JSON.stringify(winners, null, 4));
+    //log.info("Losers: " + JSON.stringify(losers, null, 4));
 
     contentLib.modify({
         key: game._id,
@@ -71,8 +72,8 @@ exports.calculateGameTeamRatings = function (game) {
     calcTeamResultGame(game.data, winner, loser);
 
     log.info("GAME: " + JSON.stringify(game, null, 4));
-    log.info("Winner team: " + JSON.stringify(winner, null, 4));
-    log.info("Loser team: " + JSON.stringify(loser, null, 4));
+    //log.info("Winner team: " + JSON.stringify(winner, null, 4));
+    //log.info("Loser team: " + JSON.stringify(loser, null, 4));
 
     contentLib.modify({
         key: game._id,
@@ -105,6 +106,14 @@ exports.resetRatings = function () {
         contentLib.modify({
             key: player._id,
             editor: function (c) {
+                if (c.data.retired == undefined) {
+                    c.data.retired = false;
+                }
+                if (c.data.retired) {
+                    c.data.ranking = RANKING_RETIRED;
+                    c.data.previousRanking = RANKING_RETIRED;
+                    return c;
+                }
                 c.data.rating = INITIAL_RATING;
                 c.data.ranking = 1;
                 c.data.previousRating = INITIAL_RATING;
@@ -126,6 +135,14 @@ exports.resetTeamRatings = function () {
         contentLib.modify({
             key: team._id,
             editor: function (c) {
+                if (c.data.retired == undefined) {
+                    c.data.retired = false;
+                }
+                if (c.data.retired) {
+                    c.data.ranking = RANKING_RETIRED;
+                    c.data.previousRanking = RANKING_RETIRED;
+                    return c;
+                }
                 c.data.rating = INITIAL_RATING;
                 c.data.ranking = 1;
                 c.data.previousRating = INITIAL_RATING;
@@ -144,9 +161,19 @@ exports.updateRankings = function () {
     var playerIds = [];
 
     players.forEach(function (p) {
-        p.data.rating = p.data.rating || INITIAL_RATING;
-        p.data.rating = p.data.rating < 0 ? 0 : p.data.rating;
+        if (p.data.retired) {
+            p.data.ranking = RANKING_RETIRED;
+            p.data.previousRanking = RANKING_RETIRED;
+            playerIds.push(p._id);
+        } else {
+            p.data.rating = p.data.rating || INITIAL_RATING;
+            p.data.rating = p.data.rating < 0 ? 0 : p.data.rating;
+        }
     });
+    players = players.filter(function (p) {
+        return !p.data.retired;
+    });
+
     players.sort(function (p1, p2) {
         return p2.data.rating - p1.data.rating;
     });
@@ -207,9 +234,18 @@ exports.updateTeamRankings = function () {
     var teams = foosRetrievalLib.getTeams();
     var teamIds = [];
 
-    teams.forEach(function (p) {
-        p.data.rating = p.data.rating || INITIAL_RATING;
-        p.data.rating = p.data.rating < 0 ? 0 : p.data.rating;
+    teams.forEach(function (t) {
+        if (t.data.retired) {
+            t.data.ranking = RANKING_RETIRED;
+            t.data.previousRanking = RANKING_RETIRED;
+            teamIds.push(t._id);
+        } else {
+            t.data.rating = t.data.rating || INITIAL_RATING;
+            t.data.rating = t.data.rating < 0 ? 0 : t.data.rating;
+        }
+    });
+    teams = teams.filter(function (t) {
+        return !t.data.retired;
     });
     teams.sort(function (p1, p2) {
         return p2.data.rating - p1.data.rating;

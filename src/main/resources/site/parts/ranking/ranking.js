@@ -10,7 +10,7 @@ exports.get = function (req) {
     } else if (req.params.p == 'sparkline') {
         return getSparklinesData(req);
     }
-    var players = foosRetrievalLib.getPlayers();
+    var players = foosRetrievalLib.getPlayers({skipRetired: true});
 
     var upImg = portalLib.assetUrl({path: "img/trend-up.svg"});
     var downImg = portalLib.assetUrl({path: "img/trend-down.svg"});
@@ -44,8 +44,6 @@ exports.get = function (req) {
         }
     });
 
-    players[0].data.first = true;
-
     var view = resolve('ranking.html');
     var body = mustacheLib.render(view, {
         players: players
@@ -73,7 +71,7 @@ exports.get = function (req) {
 
 var getChartData = function (req) {
     var dayCount = req.params.period || 30;
-    var playersData = foosRetrievalLib.getPlayers();
+    var playersData = foosRetrievalLib.getPlayers({skipRetired: true});
     var since = new Date();
     since.setDate(since.getDate() - dayCount);
     var sinceDate = since.toISOString().slice(0, 10);
@@ -138,7 +136,7 @@ var getChartData = function (req) {
 };
 
 var getSparklinesData = function (req) {
-    var playersData = foosRetrievalLib.getPlayers();
+    var playersData = foosRetrievalLib.getPlayers({skipRetired: true});
 
     var players = [], player;
     playersData.forEach(function (p) {
