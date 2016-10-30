@@ -16,7 +16,7 @@ exports.get = function (req) {
     team.gen.nbGames = team.gen.nbGames.toFixed(0);
     team.gen.ratioGamesWon = Math.floor(team.gen.ratioGamesWon) + "%";
     foosUrlLib.generatePictureUrl(team, 120);
-    team.data.rankingText = foosUtilLib.ordinal(team.data.ranking);
+    team.data.rankingText = team.data.retired ? 'N/A' : foosUtilLib.ordinal(team.data.ranking);
     team.gen.leader = team.data.ranking === 1;
 
     //Retrieve the team players

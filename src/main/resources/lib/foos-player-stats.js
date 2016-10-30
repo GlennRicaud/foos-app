@@ -8,7 +8,7 @@ var applicationDeploymentTime = new Date().toISOString();
 
 exports.generatePlayerStats = function (player) {
     player.data.rating = player.data.rating || 0;
-    player.data.rankingText = foosUtilLib.ordinal(player.data.ranking);
+    player.data.rankingText = player.data.retired ? 'N/A' : foosUtilLib.ordinal(player.data.ranking);
 
     var playerStatsFolder = foosRetrievalLib.getPlayerStatsFolder();
     var playerStatsContent = foosRetrievalLib.getContentByKey(playerStatsFolder._path + '/' + player._name);
