@@ -101,7 +101,7 @@ var getChartData = function (req) {
 
         gamePlayers.forEach(function (p) {
             var gamePlayer = players[p.playerId];
-            if (p.ratingDiff != null) {
+            if (gamePlayer && p.ratingDiff != null) {
                 gamePlayer.points.push({
                     t: t,
                     v: p.ratingDiff
