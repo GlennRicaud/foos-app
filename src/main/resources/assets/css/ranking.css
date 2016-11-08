@@ -8,8 +8,8 @@ table.foos-ranking-table th {
 }
 
 table.foos-ranking-table thead > tr > th {
-    background-color: #3d9241;
-    color: #ffffff;
+    background-color: #EAE9DE;
+    color: #5D5765;
 }
 
 table.foos-ranking-table thead > tr > td {
@@ -17,7 +17,13 @@ table.foos-ranking-table thead > tr > td {
 }
 
 table.foos-ranking-table tr:nth-child(even) {
-    background-color: #C8E6C9;
+    background-color: #D6D5C9;
+    color: #2F2B3D;
+}
+
+table.foos-ranking-table tr:nth-child(odd) {
+    background-color: #CDCCC1;
+    color: #2F2B3D;
 }
 
 table.foos-ranking-table .ranking-img {
