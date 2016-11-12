@@ -158,7 +158,7 @@ function generateGoalsDetails(game, firstHalf, secondHalf) {
         }
 
         var comment = playersById[goal.playerId].displayName + " scores! (" + formatTime(goal.time) +
-                      ")" + (goal.against ? " ... against himself" : "");
+                      ")" + (goal.against ? " ... an own goal" : "");
         var winner = winnerScored ? comment : "";
         var loser = winnerScored ? "" : comment;
 
@@ -180,4 +180,4 @@ function formatTime(time) {
     var min = Math.floor(time / 60);
     var sec = time % 60;
     return (min < 10 ? "0" : "") + min + "′" + (sec < 10 ? "0" : "") + sec + "′′";
-};
+}
