@@ -9,6 +9,7 @@ exports.get = function (req) {
     var mainRegion = content.page.regions["main"];
     var siteUrl = foosUrlLib.getFoosSiteUrl();
     var mainCssUrl = portalLib.assetUrl({path: "css/main.css"});
+    var fontCssUrl = portalLib.assetUrl({path: "css/font-awesome.min.css"});
     var favIconUrl = portalLib.assetUrl({path: "img/foosball.png"});
 
     if (content.data.picture) {
@@ -24,6 +25,7 @@ exports.get = function (req) {
         mainRegion: mainRegion,
         siteUrl: siteUrl,
         mainCssUrl: mainCssUrl,
+        fontCssUrl: fontCssUrl,
         favIconUrl: favIconUrl,
         title: content.displayName + (content.data.nickname ? " aka " + content.data.nickname : "" ),
         pictureUrl: pictureUrl

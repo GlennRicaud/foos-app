@@ -350,3 +350,70 @@ img {
 .foos-player-teams img {
     padding: 5px;
 }
+
+/*Games*/
+.foos-games-calendar {
+    flex-direction: column;
+    align-items: center;
+}
+
+.foos-games-calendar-control {
+    padding-top: 10px;
+    padding-left: 20px;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.foos-games-calendar-control button {
+    margin-right: 5px;
+}
+
+.foos-calendar-games {
+    flex-direction: column;
+}
+
+.foos-calendar-nogames {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+}
+
+.foos-calendar-nogames span {
+    padding: 0;
+}
+
+.foos-calendar-nogames h4 {
+    color: #003b85;
+}
+
+.games-btn {
+    display: inline-block;
+    padding: 4px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #333333;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    background-repeat: repeat-x;
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border: 1px solid #cccccc;
+    border-bottom-color: #b3b3b3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+}

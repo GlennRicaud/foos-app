@@ -1,12 +1,18 @@
 <div id="foos-main-container">
     <div id="foos-weeks" class="foos-part">
-        <div class="foos-part-title">
-            <span>Weeks</span>
+        <div class="foos-games-calendar">
+            <div class="foos-games-calendar-control">
+                <button id="calendarSelPrev" class="games-btn"><i class="fa fa-chevron-left"></i></button>
+                <button id="calendarSelNext" class="games-btn"><i class="fa fa-chevron-right"></i></button>
+            </div>
+            <div class="foos-calendar-select" data-games-url="{{dataUrl}}"></div>
         </div>
-        <div class="foos-part-body">
-            {{#weeks}}
-            <a class="foos-week" href="{{gen.pageUrl}}"><span>{{displayName}}</span></a>
-            {{/weeks}}
-        </div>
+    </div>
+    <div class="foos-part foos-calendar-nogames">
+        <h4>No games found <span>today</span>.</h4>
+    </div>
+
+    <div class="foos-calendar-games">
+        {{{gamesWidget}}}
     </div>
 </div>

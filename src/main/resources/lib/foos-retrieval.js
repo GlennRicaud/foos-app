@@ -178,6 +178,20 @@ exports.getGamesByWeekPath = function (weekPath) {
     }).hits;
 };
 
+exports.getGamesByDate = function (day) {
+    var zeroPad = function (v) {
+        return v < 10 ? '0' + v : v;
+    };
+    var d = day.getFullYear() + '-' + zeroPad(day.getMonth() + 1) + '-' + zeroPad(day.getDate());
+    return contentLib.query({
+        start: 0,
+        count: -1,
+        query: "data.date >= instant('" + d + "T00:00:00Z') AND data.date <= instant('" + d + "T23:59:59Z')",
+        contentTypes: [app.name + ":game"],
+        sort: "data.date DESC, displayName DESC"
+    }).hits;
+};
+
 exports.getGamesByPlayerId = function (playerId, count) {
     return contentLib.query({
         start: 0,
