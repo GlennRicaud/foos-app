@@ -291,6 +291,11 @@ img {
     justify-content: flex-start;
     align-items: center;
 }
+
+img.foos-table-img {
+    border-radius: 0;
+}
+
 /* Game ratings */
 .foos-game-winner-rating, .foos-game-loser-rating {
     font-size: 1em;
