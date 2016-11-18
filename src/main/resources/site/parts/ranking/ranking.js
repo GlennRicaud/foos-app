@@ -49,7 +49,6 @@ exports.get = function (req) {
         players: players
     });
 
-    var jqueryUrl = portalLib.assetUrl({path: "js/jquery-2.2.4.min.js"});
     var sparklineUrl = portalLib.assetUrl({path: "js/jquery.sparkline.min.js"});
     var chartUrl = portalLib.assetUrl({path: "js/Chart.bundle.min.js"});
     var gameJsUrl = portalLib.assetUrl({path: "js/ranking.js"});
@@ -59,7 +58,6 @@ exports.get = function (req) {
         pageContributions: {
             headEnd: '<link rel="stylesheet" href="' + portalLib.assetUrl({path: 'css/ranking.css'}) + '" type="text/css" />',
             bodyEnd: [
-                '<script src="' + jqueryUrl + '""></script>',
                 '<script src="' + sparklineUrl + '""></script>',
                 '<script src="' + chartUrl + '""></script>',
                 '<script>var dataUrl = "' + portalLib.componentUrl({}) + '";</script>',

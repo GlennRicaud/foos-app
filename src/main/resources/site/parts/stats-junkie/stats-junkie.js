@@ -8,14 +8,13 @@ var foosUtilLib = require('/lib/foos-util');
 
 // Handle the GET request
 exports.get = function (req) {
-    var jqueryUrl = portalLib.assetUrl({path: "js/jquery-2.2.4.min.js"});
     var mustacheUrl = portalLib.assetUrl({path: "js/mustache-2.2.1.min.js"});
     var playerStatsServiceUrl = portalLib.serviceUrl({service: "player-stats"});
 
     var metaPlayerStats = foosPlayerStatsLib.getMetaPlayerStats();
     var metaPlayerStatsScript = 'var metaPlayerStats = ' + JSON.stringify(metaPlayerStats) + ';';
-    
-    var metaPlayerStatArray = foosUtilLib.propertyArray(metaPlayerStats).filter(function(metaPlayerStat) {
+
+    var metaPlayerStatArray = foosUtilLib.propertyArray(metaPlayerStats).filter(function (metaPlayerStat) {
         return metaPlayerStat.order;
     });
 
@@ -30,7 +29,7 @@ exports.get = function (req) {
     return {
         body: body,
         pageContributions: {
-            headEnd: '<script src="' + jqueryUrl + '""/></script>' + '<script src="' + mustacheUrl + '""/></script>',
+            headEnd: '<script src="' + mustacheUrl + '""/></script>',
             bodyEnd: '<script>' + metaPlayerStatsScript + script + '</script>'
         }
     }

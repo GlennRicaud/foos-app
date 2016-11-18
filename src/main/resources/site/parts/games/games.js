@@ -23,7 +23,6 @@ exports.get = function (req) {
     var d3Url = portalLib.assetUrl({path: "js/d3.min.js"});
     var momentUrl = portalLib.assetUrl({path: "js/moment.min.js"});
     var heatMapUrl = portalLib.assetUrl({path: "js/cal-heatmap.min.js"});
-    var jQueryUrl = portalLib.assetUrl({path: "js/jquery-2.2.4.min.js"});
     var gamesJsUrl = portalLib.assetUrl({path: "js/games.js"});
     return {
         body: body,
@@ -33,7 +32,6 @@ exports.get = function (req) {
                 '<script src="' + momentUrl + '"></script>',
                 '<script src="' + d3Url + '"></script>',
                 '<script src="' + heatMapUrl + '"></script>',
-                '<script src="' + jQueryUrl + '"></script>',
                 '<script src="' + gamesJsUrl + '"></script>'
             ]
         }

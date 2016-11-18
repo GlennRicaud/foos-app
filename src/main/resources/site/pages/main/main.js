@@ -10,27 +10,14 @@ exports.get = function (req) {
 
     var mainRegion = content.page.regions["main"];
     var siteUrl = foosUrlLib.getFoosSiteUrl();
-    var mainCssUrl = portalLib.assetUrl({path: "css/main.css"});
-    var fontCssUrl = portalLib.assetUrl({path: "css/font-awesome.min.css"});
-    var favIconUrl = portalLib.assetUrl({path: "img/foosball.png"});
-
-    if (content.data.picture) {
-        var pictureUrl = portalLib.imageUrl({
-            id: content.data.picture,
-            scale: 'square(60)',
-            filter: 'rounded(30);sharpen()'
-        });
-    }
+    var assetsUrl = portalLib.assetUrl({path: ""});
 
     var view = resolve('main.html');
     var body = mustacheLib.render(view, {
         mainRegion: mainRegion,
         siteUrl: siteUrl,
-        mainCssUrl: mainCssUrl,
-        fontCssUrl: fontCssUrl,
-        favIconUrl: favIconUrl,
-        title: content.displayName + (content.data.nickname ? " aka " + content.data.nickname : "" ),
-        pictureUrl: pictureUrl,
+        assetsUrl: assetsUrl,
+        title: content.displayName,
         logInUrl: !user && portalLib.loginUrl({
             redirect: siteUrl,
             type: 'absolute'
