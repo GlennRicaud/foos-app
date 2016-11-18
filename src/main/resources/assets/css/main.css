@@ -53,9 +53,10 @@ select {
 }
 
 select:hover,
-#foos-nav > *:hover,
+header .foos-menu-item:hover,
 .foos-game-details-link:hover,
 .foos-end-page-link:hover {
+    cursor: pointer;
     background-color: rgba(122, 181, 138, 1);
     color: white;
 }
@@ -131,16 +132,23 @@ header {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     flex-shrink: 0;
     justify-content: space-between;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
     width: 100%;
     z-index: 1;
 }
 
-header a {
+.foos-menu-item {
+    background-color: #5B8872;
     color: #fff;
     display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#foos-menu-item-logout {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    position: absolute;
+    z-index: 1;
 }
 
 .foos-row-even, .foos-game-comment {
