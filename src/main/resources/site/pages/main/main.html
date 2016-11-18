@@ -11,17 +11,17 @@
 <body id="foos-body">
 <header>
     <nav id="foos-nav">
-        <a class="foos-text" href="{{siteUrl}}">News</a>
-        <a class="foos-text" href="{{siteUrl}}/teams">Teams</a>
-        <a class="foos-text" href="{{siteUrl}}/players">Players</a>
-        <a class="foos-text" href="{{siteUrl}}/games">Games</a>
-        <a class="foos-text" href="{{siteUrl}}/live-game">New Game</a>
+        <a class="foos-text foos-menu-item" href="{{siteUrl}}">News</a>
+        <a class="foos-text foos-menu-item" href="{{siteUrl}}/teams">Teams</a>
+        <a class="foos-text foos-menu-item" href="{{siteUrl}}/players">Players</a>
+        <a class="foos-text foos-menu-item" href="{{siteUrl}}/games">Games</a>
+        <a class="foos-text foos-menu-item" href="{{siteUrl}}/live-game">New Game</a>
     </nav>
     {{#logInUrl}}
-    <a class="foos-text" href="{{logInUrl}}">Log in</a>
+    <a class="foos-text foos-menu-item" href="{{logInUrl}}">Log in</a>
     {{/logInUrl}}
     {{#logOutUrl}}
-    <a class="foos-text" href="{{logOutUrl}}">{{userName}}</a>
+    <a id="foos-menu-item-user" class="foos-text foos-menu-item">{{userName}}</a>
     {{/logOutUrl}}
 </header>
 <main id="foos-main" data-portal-region="main">
@@ -29,6 +29,12 @@
     <!--# COMPONENT {{path}} -->
     {{/mainRegion.components}}
 </main>
+
+
+{{#logOutUrl}}
+<a id="foos-menu-item-logout" class="foos-text foos-menu-item hidden" href="{{logOutUrl}}">Log out</a>
+{{/logOutUrl}}
+<script src="{{assetsUrl}}/js/main.js"></script>
 
 </body>
 
