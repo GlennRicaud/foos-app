@@ -2,34 +2,40 @@
     font-family: "OpenSans";
     src: url("../font/OpenSans-Regular.ttf");
 }
+
 @font-face {
     font-family: "OpenSans";
     font-weight: bold;
     src: url("../font/OpenSans-Bold.ttf");
 }
+
 @font-face {
     font-family: 'Tagesschrift';
     src: url('../font/ds-digi.ttf');
 }
+
 html, body {
     background: #7ab58a;
     background: -moz-linear-gradient(top, #7ab58a 0%, #558c69 100%);
-    background: -webkit-linear-gradient(top, #7ab58a 0%,#558c69 100%);
-    background: linear-gradient(to bottom, #7ab58a 0%,#558c69 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ab58a', endColorstr='#558c69',GradientType=0 );
+    background: -webkit-linear-gradient(top, #7ab58a 0%, #558c69 100%);
+    background: linear-gradient(to bottom, #7ab58a 0%, #558c69 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ab58a', endColorstr='#558c69', GradientType=0);
     font-family: "OpenSans", Arial, sans-serif;
     height: 100%;
     margin: 0;
 }
+
 a {
     color: #000;
     display: flex;
     text-decoration: none;
 }
+
 ul {
     margin: 0;
     padding: 0.5em 1em;
 }
+
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -38,26 +44,30 @@ select {
     border-style: none;
     background: url(../img/arrow-204-16.png) no-repeat right 10px center #ddd;
     min-width: 160px;
-    background-color: rgba(122,181,138, 1);
+    background-color: rgba(122, 181, 138, 1);
     color: #ffffff;
     padding: 0.5em 1em;
     font-family: "OpenSans", Arial, sans-serif;
     font-size: 16px;
     cursor: pointer;
 }
+
 select:hover,
 #foos-nav > *:hover,
 .foos-game-details-link:hover,
 .foos-end-page-link:hover {
-    background-color: rgba(122,181,138,1);
+    background-color: rgba(122, 181, 138, 1);
     color: white;
 }
+
 body,
+header,
 nav,
 main,
-div{
+div {
     display: flex;
 }
+
 #foos-body,
 #foos-main-container,
 .foos-part,
@@ -73,9 +83,10 @@ div{
 
 #foos-players .foos-part-body,
 #foos-teams .foos-part-body,
-#foos-team .foos-part-body,{
+#foos-team .foos-part-body, {
     flex-direction: row;
 }
+
 /* Flex centered items on main axis */
 #foos-main,
 #foos-players .foos-player-link,
@@ -84,6 +95,7 @@ div{
 .foos-game-replay-display-team {
     justify-content: center;
 }
+
 /* Flex centered items on cross axis */
 #foos-body,
 .foos-player-link,
@@ -92,76 +104,90 @@ div{
 .foos-game-replay-goal {
     align-items: center;
 }
+
 /* Flex unshrinkable */
-.foos-part{
+.foos-part {
     flex-shrink: 0;
 }
+
 /* Flex growing */
 #foos-main {
     flex-grow: 1;
     width: 100%;
     overflow-y: auto;
 }
+
 #foos-players .foos-part-body,
-#foos-teams .foos-part-body{
+#foos-teams .foos-part-body {
     flex-wrap: wrap;
     flex-direction: row
 }
+
 /***************************************************
 ** Color settings
 ****************************************************/
-#foos-nav {
+header {
     background-color: #5B8872;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     flex-shrink: 0;
+    justify-content: space-between;
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     width: 100%;
     z-index: 1;
 }
-#foos-nav > a {
+
+header a {
     color: #fff;
     display: inline-block;
 }
+
 .foos-row-even, .foos-game-comment {
     background-color: #CDCBC0;
 }
+
 .foos-part {
     background-color: #EAE9DE;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     margin-top: 15px;
-    margin-bottom:30px;
+    margin-bottom: 30px;
 }
+
 .foos-end-page-link {
     background-color: #EAE9DE;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     margin-top: 15px;
-    margin-bottom:30px;
+    margin-bottom: 30px;
     justify-content: center;
     flex-shrink: 0;
 }
+
 .foos-game-details-link {
     align-self: center;
     /*background-color: #7ab58a;*/
-    background-color: rgba(194,192,181,0.9);
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+    background-color: rgba(194, 192, 181, 0.9);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     color: white;
     justify-content: center;
     margin: 10px;
     padding: 20px:
 }
+
 .foos-header {
     background-color: #95C6A0;
 }
+
 .foos-text,
-span{
+span {
     padding: 0.5em 1em;
 }
+
 img {
     padding: 0.5em 1em;
     border-radius: 50%;
 }
+
 .foos-part-title {
     align-items: center;
     background-color: #95C6A0;
@@ -172,6 +198,7 @@ img {
     flex-shrink: 0;
 
 }
+
 .foos-week {
     font-size: 20px;
     font-weight: bold;
@@ -191,7 +218,7 @@ img {
 .foos-game-replay-goal-score,
 .foos-game-score {
     margin: 10px;
-    background-color: rgba(28,116,128,0.9);
+    background-color: rgba(28, 116, 128, 0.9);
     border: 1px color #1C7480;
     border-radius: 3px;
     color: white;
@@ -199,6 +226,7 @@ img {
     font-weight: bold;
     font-size: 40px;
 }
+
 #foos-main-container {
     width: 800px;
 }
@@ -218,29 +246,36 @@ img {
 #foos-players .foos-player-link {
     flex: 0 0 25%;
 }
+
 #foos-weeks .foos-week {
     flex: 0 0 20%;
 }
+
 #foos-weeks .foos-part-body {
     flex-direction: row;
     flex-wrap: wrap;
 }
+
 .foos-part-body-table {
     padding-top: 0;
     padding-left: 0;
     padding-right: 0;
 }
+
 .foos-game-details {
     width: 100%;
 }
+
 .foos-game-details-winners,
 .foos-game-details-losers {
     flex: 0 0 50%;
 }
+
 .foos-game-comment {
     margin: 0.5em 1em;
     border-radius: 0.5em;
 }
+
 /***************************************************
 ** Foos league table
 ****************************************************/
@@ -249,16 +284,20 @@ img {
     flex: 0 0;
     min-width: 3em;
 }
+
 .foos-cell-text {
     flex: 1 0;
     min-width: 10em;
 }
+
 .foos-cell-3-numbers {
     min-width: 5em;
 }
+
 .foos-cell-stat {
     flex: 1 0;
 }
+
 /***************************************************
 ** Game replay
 ****************************************************/
@@ -267,27 +306,33 @@ img {
     flex-direction: row;
     justify-content: center;
 }
+
 .foos-game-title a {
     color: #fff;
 }
+
 .foos-game-details-date {
     align-self: center;
 }
+
 .foos-game-replay-title-team,
 .foos-game-replay-goal-side,
 .foos-game-replay-display-team {
     flex: 1 0 0;
 }
+
 .foos-game-details-winners a {
     justify-content: flex-end;
 }
+
 .foos-game-score-winners {
-    background-color: rgba(141,190,184, 0.5);
+    background-color: rgba(141, 190, 184, 0.5);
     justify-content: flex-end;
     align-items: center;
 }
+
 .foos-game-score-losers {
-    background-color: rgba(141,190,184, 0.5);
+    background-color: rgba(141, 190, 184, 0.5);
     justify-content: flex-start;
     align-items: center;
 }
@@ -303,48 +348,60 @@ img.foos-table-img {
     flex-direction: row;
     flex: 1;
 }
+
 .foos-game-winner-rating {
     justify-content: flex-start;
 }
+
 .foos-game-loser-rating {
     justify-content: flex-end;
 }
+
 .foos-game-rating-plus > span {
     color: #16a085;
     font-weight: bold;
 }
+
 .foos-game-rating-minus > span {
     color: #c0392b;
     font-weight: bold;
 }
+
 /*Foos Team Details*/
 .foos-team-details {
     flex-direction: row;
     justify-content: space-between;
 }
+
 .foos-team-details-players {
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
 .foos-team-details-stats {
     margin-left: 20px;
 }
+
 .foos-team-details-stats img {
     padding: 0;
 }
+
 /*Foos Player Details*/
 .foos-player-details {
     flex-direction: row;
     justify-content: space-between;
     flex-flow: wrap;
 }
+
 .foos-player-details-stats {
     margin-left: 20px;
 }
+
 .foos-player-details-stats img {
     padding: 0;
 }
+
 .foos-player-teams {
     flex-direction: row;
     align-items: center;
@@ -352,6 +409,7 @@ img.foos-table-img {
     width: 33%;
     flex-flow: wrap;
 }
+
 .foos-player-teams img {
     padding: 5px;
 }
@@ -382,7 +440,7 @@ img.foos-table-img {
     display: none;
     flex-direction: column;
     justify-content: center;
-    align-items:center;
+    align-items: center;
 }
 
 .foos-calendar-nogames span {

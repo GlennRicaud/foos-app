@@ -6,7 +6,6 @@ var foosUtilLib = require('/lib/foos-util');
 
 exports.handle401 = function (req) {
     var body = generateLoginPage();
-
     return {
         status: 401,
         contentType: 'text/html',
@@ -16,7 +15,6 @@ exports.handle401 = function (req) {
 
 exports.login = function (req) {
     var body = generateLoginPage(req.params.redirect);
-
     return {
         contentType: 'text/html',
         body: body
@@ -24,50 +22,19 @@ exports.login = function (req) {
 };
 
 exports.autoLogin = function (req) {
-    var idProviderConfig = authLib.getIdProviderConfig();
-
-    var allowedIps = foosUtilLib.toArray(idProviderConfig.allowedIps);
-    if (allowedIps.indexOf(req.remoteAddress) != -1) {
-
-        initLocalUser();
-        var result = authLib.login({
-            user: "local-user",
-            password: authLib.getIdProviderConfig().password, //TODO Temp fix
-            userStore: portalLib.getUserStoreKey()
-        });
+    var user = authLib.getUser();
+    if (!user) {
+        var idProviderConfig = authLib.getIdProviderConfig();
+        var allowedIps = foosUtilLib.toArray(idProviderConfig.allowedIps);
+        if (allowedIps.indexOf(req.remoteAddress) != -1) {
+            var result = authLib.login({
+                user: "local-user",
+                password: authLib.getIdProviderConfig().password, //TODO Temp fix
+                userStore: portalLib.getUserStoreKey()
+            });
+        }
     }
 };
-
-function initLocalUser() {
-    contextLib.run({
-        user: {
-            login: 'gri',
-            userStore: 'system'
-        }
-    }, doInitLocalUser);
-}
-
-function doInitLocalUser() {
-    var localUserKey = "user:" + portalLib.getUserStoreKey() + ":local-user";
-    var localUser = authLib.getPrincipal(localUserKey);
-    if (!localUser) {
-        localUser = authLib.createUser({
-            userStore: portalLib.getUserStoreKey(),
-            name: 'local-user',
-            displayName: 'Local User',
-            email: 'local-user@foos.es'
-        });
-
-        //TODO Temp fix
-        authLib.changePassword({
-            userKey: localUser.key,
-            password: authLib.getIdProviderConfig().password
-        });
-
-        authLib.addMembers('role:system.admin.login', [localUserKey]);
-        authLib.addMembers('role:cms.cm.app', [localUserKey]);
-    }
-}
 
 exports.logout = function (req) {
     authLib.logout();

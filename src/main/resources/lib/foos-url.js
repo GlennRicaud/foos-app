@@ -7,7 +7,8 @@ var foosUtilLib = require('/lib/foos-util');
 
 exports.getFoosSiteUrl = function () {
     return portalLib.pageUrl({
-        path: portalLib.getSite()._path
+        path: portalLib.getSite()._path,
+        type: 'absolute'
     });
 };
 

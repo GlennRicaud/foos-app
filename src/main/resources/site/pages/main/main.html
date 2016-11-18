@@ -8,14 +8,22 @@
     <link rel="icon" type="image/png" href="{{favIconUrl}}"/>
 </head>
 <body id="foos-body">
-<nav id="foos-nav">
-    <a class="foos-text" href="{{siteUrl}}">News</a>
-    <a class="foos-text" href="{{siteUrl}}/teams">Teams</a>
-    <a class="foos-text" href="{{siteUrl}}/players">Players</a>
-    <a class="foos-text" href="{{siteUrl}}/games">Games</a>
-    <a class="foos-text" href="{{siteUrl}}/stats-junkie">Stats Junkie</a>
-    <a class="foos-text" href="{{siteUrl}}/live-game">New Game</a>
-</nav>
+<header>
+    <nav id="foos-nav">
+        <a class="foos-text" href="{{siteUrl}}">News</a>
+        <a class="foos-text" href="{{siteUrl}}/teams">Teams</a>
+        <a class="foos-text" href="{{siteUrl}}/players">Players</a>
+        <a class="foos-text" href="{{siteUrl}}/games">Games</a>
+        <a class="foos-text" href="{{siteUrl}}/stats-junkie">Stats Junkie</a>
+        <a class="foos-text" href="{{siteUrl}}/live-game">New Game</a>
+    </nav>
+    {{#logInUrl}}
+    <a class="foos-text" href="{{logInUrl}}">Log in</a>
+    {{/logInUrl}}
+    {{#logOutUrl}}
+    <a class="foos-text" href="{{logOutUrl}}">{{userName}}</a>
+    {{/logOutUrl}}
+</header>
 <main id="foos-main" data-portal-region="main">
     {{#mainRegion.components}}
     <!--# COMPONENT {{path}} -->
