@@ -573,6 +573,16 @@ var GAME = (function () {
         $('.gameActionShuffle').on('click', gameSelectionShuffleClick);
         $('.gameActionEqualize').on('click', gameSelectionEqualizeClick);
         $('.team-player').on('click', teamPlayerClick);
+
+        window.addEventListener('resize', function (e) {
+            var width = $('body').width() - 20;
+            var photoWidth = Math.floor(width / lineSize);
+            photoWidth = Math.floor(photoWidth / 10) * 10;
+
+            $('img.player-photo').css('width', photoWidth + 'px');
+            $('.players').width((photoWidth) * lineSize);
+            $('.gameActions').width((photoWidth) * lineSize);
+        });
     };
 
     return {
