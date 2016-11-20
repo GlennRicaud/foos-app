@@ -59,6 +59,7 @@ table.foos-ranking-table .ranking-icon {
 
 table.foos-ranking-table .ranking-icon img {
     padding: 0;
+    border-radius: 0;
 }
 
 table.foos-ranking-table .ranking-number img {
@@ -121,6 +122,7 @@ table.foos-ranking-table .ranking-team-icon {
 
 table.foos-ranking-table .ranking-team-icon img {
     padding: 0;
+    border-radius: 0;
 }
 
 table.foos-ranking-table .ranking-team-number img {
