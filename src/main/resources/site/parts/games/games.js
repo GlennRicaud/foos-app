@@ -12,7 +12,11 @@ exports.get = function (req) {
     if (req.params.date) {
         return getGamesHtmlForDate(req);
     }
-    var games = foosRetrievalLib.getGamesByDate(new Date());
+    var date = new Date();
+    if (req.params.d) {
+        date = new Date(req.params.d);
+    }
+    var games = foosRetrievalLib.getGamesByDate(date);
 
     var view = resolve('games.html');
     var body = mustacheLib.render(view, {
