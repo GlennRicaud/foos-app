@@ -637,3 +637,72 @@ body {
     margin-top: 10px;
     font-size: 3vw;
 }
+
+/* Pause - Undo - Redo */
+
+.game-controls {
+    display: none;
+    width: 280px;
+    height: 80px;
+    position: absolute;
+    top: calc(50% - 30px);
+    left: calc(50% - 140px);
+}
+
+.pause-icon {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.undo-icon {
+    width: 80px;
+    height: 80px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.redo-icon {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.redo-icon.control-disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+.undo-icon.control-disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+.pause-blink {
+    animation: pause-blink-animation 1s steps(2, start) infinite;
+    -webkit-animation: pause-blink-animation 1s steps(2, start) infinite;
+}
+
+@keyframes pause-blink-animation {
+    0% {
+        visibility: visible;
+    }
+    50% {
+        visibility: hidden;
+    }
+    100% {
+        visibility: visible;
+    }
+}
+
+@-webkit-keyframes pause-blink-animation {
+    0% {
+        visibility: visible;
+    }
+    50% {
+        visibility: hidden;
+    }
+    100% {
+        visibility: visible;
+    }
+}

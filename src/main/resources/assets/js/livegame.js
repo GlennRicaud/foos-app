@@ -27,7 +27,7 @@ var GAME = (function () {
     var playerSelected = -1;
     var gameSavedUrl;
     var singlesGame = false;
-    var goals = [];
+    var goals = [], undoGoals, undoIndex = -1;
     var team1Streak = 0;
     var team2Streak = 0;
     var firstGoal = false;
@@ -65,19 +65,28 @@ var GAME = (function () {
         $('#goal-left').on('click', onSelectGoal);
         $('#goal-right').on('click', onSelectGoal);
         $('#mainRegion').on('click', onFieldClick);
-        $('.circle').on('click', onCircleClick);
+        $('.circle,img.pause-icon').on('click', onPauseClick);
+        $('img.undo-icon').on('click', onUndoClick);
+        $('img.redo-icon').on('click', onRedoClick);
 
         toggleMiddle(false);
         $('#title span').text('Play');
         toggleStart(true);
     };
 
-    onCircleClick = function () {
+    onPauseClick = function () {
         paused = !paused;
-        $('.circle,#field').toggleClass('paused-game', paused);
-        $('.ball').toggleClass('paused-game-alt', paused);
+        $('#field').toggleClass('paused-game', paused);
+        $('.pause-icon').toggleClass('pause-blink', paused);
+        $('.circle,.middle,.ball').toggle(!paused);
+        $('.game-controls').toggle(paused);
         if (paused) {
             pauseTime = new Date();
+            undoGoals = $.extend(true, [], goals);
+            undoIndex = goals.length;
+            $('img.undo-icon').toggleClass('control-disabled', undoIndex <= 0);
+            $('img.redo-icon').toggleClass('control-disabled', undoIndex >= undoGoals.length);
+
         } else {
             var now = new Date();
             var pausedTime = now.getTime() - pauseTime.getTime();
@@ -85,6 +94,8 @@ var GAME = (function () {
             // console.log('lastTime: ' + lastTime);
             lastTime = new Date(lastTime.getTime() + pausedTime);
             // console.log('new lastTime: ' + lastTime);
+            undoGoals = [];
+            undoIndex = -1;
         }
     };
 
@@ -101,6 +112,118 @@ var GAME = (function () {
         totalTimeSec += offsetSeconds;
         var goalInfo = {playerId: player.id, time: totalTimeSec, against: against};
         goals.push(goalInfo);
+    };
+
+    onUndoClick = function (e) {
+        e.preventDefault();
+        $(this).blur();
+        if ($(this).hasClass('control-disabled')) {
+            return;
+        }
+        goals = $.extend(true, [], undoGoals);
+        undoIndex--;
+        goals = goals.slice(0, undoIndex);
+
+        undoRedoRefresh();
+    };
+
+    onRedoClick = function (e) {
+        e.preventDefault();
+        $(this).blur();
+        if ($(this).hasClass('control-disabled')) {
+            return;
+        }
+        goals = $.extend(true, [], undoGoals);
+        undoIndex++;
+        goals = goals.slice(0, undoIndex);
+
+        undoRedoRefresh();
+    };
+
+    undoRedoRefresh = function () {
+        resetHistory();
+        replayHistory();
+        showScore();
+        showPlayers();
+
+        $('img.undo-icon').toggleClass('control-disabled', undoIndex <= 0);
+        $('img.redo-icon').toggleClass('control-disabled', undoIndex >= undoGoals.length);
+    };
+
+    getPlayerById = function (id) {
+        return players.filter(function (p) {
+            return p.id === id;
+        })[0];
+    };
+
+    getPlayerTeam = function (player) {
+        var idx = -1;
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].id === player.id) {
+                idx = i;
+                break;
+            }
+        }
+        if (gamePlayers[PLAYER1] === idx || gamePlayers[PLAYER2] === idx) {
+            return TEAM1;
+        }
+        return TEAM2;
+    };
+
+    resetHistory = function () {
+        teams[TEAM1].score = 0;
+        teams[TEAM2].score = 0;
+        team1Streak = 0;
+        team2Streak = 0;
+
+        if (singlesGame) {
+            players[gamePlayers[PLAYER1]].goals = 0;
+            players[gamePlayers[PLAYER1]].against = 0;
+            players[gamePlayers[PLAYER3]].goals = 0;
+            players[gamePlayers[PLAYER3]].against = 0;
+        } else {
+            players[gamePlayers[PLAYER1]].goals = 0;
+            players[gamePlayers[PLAYER1]].against = 0;
+            players[gamePlayers[PLAYER2]].goals = 0;
+            players[gamePlayers[PLAYER2]].against = 0;
+            players[gamePlayers[PLAYER3]].goals = 0;
+            players[gamePlayers[PLAYER3]].against = 0;
+            players[gamePlayers[PLAYER4]].goals = 0;
+            players[gamePlayers[PLAYER4]].against = 0;
+        }
+    };
+
+    replayHistory = function () {
+        var pl, goal, tid;
+        for (var g = 0; g < goals.length; g++) {
+            goal = goals[g];
+            pl = getPlayerById(goal.playerId);
+            tid = getPlayerTeam(pl);
+
+            if (goal.against) {
+                pl.against++;
+            } else {
+                pl.goals++;
+            }
+
+            if (tid === TEAM1) {
+                if (goal.against) {
+                    teams[TEAM2].score += 1;
+                } else {
+                    teams[TEAM1].score += 1;
+                    team1Streak++;
+                    team2Streak = 0;
+                }
+            } else {
+                if (goal.against) {
+                    teams[TEAM1].score += 1;
+                } else {
+                    teams[TEAM2].score += 1;
+                    team2Streak++;
+                    team1Streak = 0;
+                }
+            }
+        }
     };
 
     showPlayers = function () {
