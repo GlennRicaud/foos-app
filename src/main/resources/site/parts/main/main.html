@@ -1,56 +1,10 @@
 <div id="foos-main-container">
     <div class="foos-part">
         <div class="foos-part-title">
-            <span>What's new ?</span>
+            <span>Foos es Foos</span>
         </div>
-        <div class="foos-part-body">
-            {{#releases}}
-            <div class="foos-release">
-                <div class="foos-release-date">
-                    <span>{{data.date}}</span>
-                </div>
-                <div class="foos-release-body">
-                    <ul>
-                        {{#data.features}}
-                        <li>{{description}}
-                            {{#gen.hasDetails}}
-                            <ul>
-                                {{#details}}
-                                <li>{{.}}</li>
-                                {{/details}}
-                            </ul>
-                            {{/gen.hasDetails}}
-                        </li>
-                        {{/data.features}}
-
-                    </ul>
-                </div>
-            </div>
-            {{/releases}}
-        </div>
-    </div>
-    <div class="foos-part">
-        <div class="foos-part-title">
-            <span>Coming soon...</span>
-        </div>
-        <div class="foos-part-body">
-            <span>Features</span>
-            <ol>
-                <li>Player profile (Human readable stats/scores, radar graph, picture, ...)</li>
-                <li>Add Comment button (Waiting for Enonic XP 6.6.0)</li>
-                <li>League: Best keeper, Best striker and Best player</li>
-                <li>Refactored news page with articles etc</li>
-                <li>Team profile (Human readable stats/scores, picture, ...)</li>
-                <li>Game stats</li>
-                <li>Player/Team comparison</li>
-                <li>Stats Junkie page</li>
-                <li>Tournaments/Cups page</li>
-            </ol>
-            <span>Technical US</span>
-            <ol>
-                <li>Refactor to use Sass/Less</li>
-            </ol>
-            <span>If you have any request/idea, please let me know</span>
+        <div class="foos-part-body foos-main-banner">
+            <img src="{{logoImg}}" width="200">
         </div>
     </div>
 </div>

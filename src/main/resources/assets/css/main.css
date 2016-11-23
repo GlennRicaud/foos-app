@@ -492,3 +492,9 @@ img.foos-table-img {
 .hidden {
     display: none;
 }
+
+.foos-main-banner img {
+    padding: 0;
+    border-radius: 0;
+    align-self: center;
+}
