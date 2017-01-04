@@ -33,6 +33,8 @@ dependencies {
     include "com.enonic.xp:lib-mustache:${xpVersion}"
     include "com.enonic.xp:lib-http-client:${xpVersion}"
     include "com.enonic.xp:lib-repo:${xpVersion}"
+    include "com.enonic.xp:lib-event:${xpVersion}"
+    include "com.enonic.xp:lib-websocket:${xpVersion}"
 }
 
 repositories {

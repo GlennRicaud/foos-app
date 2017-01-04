@@ -1,0 +1,71 @@
+.foos-main-container-broadcast {
+    justify-content: center;
+}
+
+.foos-game-details-time {
+    font-size: 20px;
+}
+
+.foos-game-score-victory {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1, 1);
+        background-color: rgba(28, 116, 128, 0.9);
+    }
+    25% {
+        transform: scale(1.03, 1.03);
+    }
+    50% {
+        transform: scale(1.05, 1.05);
+        background-color: rgba(28, 116, 128, 1);
+    }
+    75% {
+        transform: scale(1.03, 1.03);
+    }
+    100% {
+        transform: scale(1, 1);
+        background-color: rgba(28, 116, 128, 0.9);
+    }
+}
+
+@-webkit-keyframes fadeAndScale {
+    0% {
+        transform: scale(1, 1);
+        background-color: rgba(28, 116, 128, 0.9);
+    }
+    25% {
+        transform: scale(1.03, 1.03);
+    }
+    50% {
+        transform: scale(1.05, 1.05);
+        background-color: rgba(28, 116, 128, 1);
+    }
+    75% {
+        transform: scale(1.03, 1.03);
+    }
+    100% {
+        transform: scale(1, 1);
+        background-color: rgba(28, 116, 128, 0.9);
+    }
+}
+
+.foos-broadcast-nogames {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.foos-broadcast-nogames span {
+    padding: 0;
+}
+
+.foos-broadcast-nogames h1 {
+    color: #003b85;
+}
+
+.foos-broadcast-nogames h3 {
+    color: #003b85;
+}

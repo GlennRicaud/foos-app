@@ -1,0 +1,75 @@
+<div id="foos-main-container" class="foos-main-container-broadcast">
+    <div class="foos-part foos-broadcast-nogames" style="display: none;">
+        <h1>There is no game currently in progress.</h1>
+        <h3>Please come back later.</h3>
+    </div>
+
+    <div class="foos-part" id="gameStatsContainer" style="display: none;">
+        <div class="foos-part-title foos-game-title" style="display: none;">
+            <span><a href="#" id="broadcastGameTitle">Live Game</a></span>
+            <span class="foos-game-details-time"><a href="#" id="elapsedTime">00:00</a></span>
+            </a>
+        </div>
+        <div class="foos-part-body">
+            <div class="foos-game-details" style="display: none;">
+
+                <div class="foos-game-details-winners">
+                    <div class="foos-game-score-winners">
+                        <div class="foos-game-rating foos-game-winner-rating data.winnerTeamRatingSign">
+                            <span id="winnerTeamRatingDiff">_</span>
+                        </div>
+                        <span class="foos-game-team" id="winnersDisplayName">_</span>
+                        <span class="foos-game-score" id="winnersScore">_</span>
+                    </div>
+
+                    <div class="foos-game-sub-details-players">
+                        <a class="foos-player-link" href="#">
+                            <div class="foos-game-rating foos-game-winner-rating ratingSign">
+                                <span id="winnerRating1">_</span>
+                            </div>
+                            <span id="winner1">_</span>
+                            <img id="winnerImageUrl1" src=""/>
+                        </a>
+                        <a class="foos-player-link" href="#">
+                            <div class="foos-game-rating foos-game-winner-rating ratingSign">
+                                <span id="winnerRating2">_</span>
+                            </div>
+                            <span id="winner2">_</span>
+                            <img id="winnerImageUrl2" src=""/>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="foos-game-details-losers">
+                    <div class="foos-game-score-losers">
+                        <span class="foos-game-score" id="losersScore">_</span>
+                        <span id="losersDisplayName">_</span>
+                        <div class="foos-game-rating foos-game-loser-rating data.loserTeamRatingSign">
+                            <span id="loserTeamRatingDiff">_</span>
+                        </div>
+                    </div>
+
+                    <div class="foos-game-sub-details-players">
+                        <a class="foos-player-link" href="#">
+                            <img id="loserImageUrl1" src=""/>
+                            <span id="loser1">_</span>
+                            <div class="foos-game-rating foos-game-loser-rating ratingSign">
+                                <span id="loserRating1">_</span>
+                            </div>
+                        </a>
+                        <a class="foos-player-link" href="#">
+                            <img id="loserImageUrl2" src=""/>
+                            <span id="loser2">_</span>
+                            <div class="foos-game-rating foos-game-loser-rating ratingSign">
+                                <span id="loserRating2">_</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="foos-part" id="gameChartContainer" style="display: none;">
+        <canvas id="gameChart" width="790" height="300"></canvas>
+    </div>
+</div>

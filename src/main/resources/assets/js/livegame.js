@@ -16,7 +16,7 @@ var GAME = (function () {
         }
     ];
 
-    var postUrl;
+    var postUrl, broadcastGameUrl;
     var audioUrl, firstGoalAudio, goal3Audio, goal5Audio, goal7Audio, goal8Audio;
     var players = [];
     var gamePlayers = [-1, -1, -1, -1];
@@ -96,6 +96,8 @@ var GAME = (function () {
             // console.log('new lastTime: ' + lastTime);
             undoGoals = [];
             undoIndex = -1;
+
+            sendCurrentGameState();
         }
     };
 
@@ -249,6 +251,20 @@ var GAME = (function () {
         $('#scoreright').text(teams[TEAM2].score);
     };
 
+    sendCurrentGameState = function () {
+        var data = createGameData();
+        $.ajax({
+            url: broadcastGameUrl,
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function () {
+                // console.log('Game broadcast update sent');
+            },
+            data: JSON.stringify(data)
+        });
+    };
+
     onSelectPlayer = function (e) {
         if (gameEnded || paused) {
             return;
@@ -319,6 +335,7 @@ var GAME = (function () {
             }
         }
         addGoal(player, against);
+        sendCurrentGameState();
 
         showPlayer(playerSelected);
         showScore();
@@ -366,6 +383,8 @@ var GAME = (function () {
         gameStarted = true;
         lastTime = new Date();
         totalTimeSec = 0;
+
+        sendCurrentGameState();
     };
 
     checkEndGame = function () {
@@ -411,7 +430,7 @@ var GAME = (function () {
         audioElement.trigger("play");
     }
 
-    sendGameData = function () {
+    createGameData = function () {
         var data = {}, winners = [], losers = [];
         var score1 = teams[TEAM1].score;
         var score2 = teams[TEAM2].score;
@@ -438,6 +457,14 @@ var GAME = (function () {
         data.losers = losers;
         data.goals = goals;
 
+        var offsetSeconds = Math.abs((new Date().getTime() - lastTime.getTime()) / 1000);
+        data.elapsedTime = totalTimeSec + offsetSeconds;
+
+        return data;
+    };
+
+    sendGameData = function () {
+        var data = createGameData();
         $.ajax({
             url: postUrl,
             type: 'post',
@@ -467,6 +494,7 @@ var GAME = (function () {
         goal5Audio = data.goal5Audio;
         goal7Audio = data.goal7Audio;
         goal8Audio = data.goal8Audio;
+        broadcastGameUrl = data.broadcastGameUrl;
         initPlayerSelection();
     };
 

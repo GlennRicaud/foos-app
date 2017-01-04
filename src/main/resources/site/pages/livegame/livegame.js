@@ -72,7 +72,7 @@ var sendHipchatNotification = function (game) {
     };
 
     try {
-        response = httpClient.request({
+        var response = httpClient.request({
             url: url,
             method: 'POST',
             contentType: 'application/json',
@@ -306,7 +306,8 @@ var getData = function () {
         goal3Audio: getAudioUrl('goal3Audio'),
         goal5Audio: getAudioUrl('goal5Audio'),
         goal7Audio: getAudioUrl('goal7Audio'),
-        goal8Audio: getAudioUrl('goal8Audio')
+        goal8Audio: getAudioUrl('goal8Audio'),
+        broadcastGameUrl: portalLib.serviceUrl({service: "broadcast"})
     };
 
     return {

@@ -29,6 +29,13 @@
             <option value="random">Random</option>
           </config>
         </input>
+        <input type="ContentSelector" name="broadcastPage">
+          <label>Broadcast Page</label>
+          <occurrences minimum="0" maximum="1"/>
+          <config>
+            <allowContentType>page</allowContentType>
+          </config>
+        </input>
       </items>
     </field-set>
     <field-set name="audio">
