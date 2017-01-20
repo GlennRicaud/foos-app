@@ -402,7 +402,7 @@ var formatIsoDate = function (date) {
 var getNextGame = function () {
     var gamesResult = contentLib.query({
         start: 0,
-        count: 10000,
+        count: 10,
         sort: "modifiedTime DESC",
         branch: 'master',
         contentTypes: [

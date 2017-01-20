@@ -473,9 +473,10 @@ var GAME = (function () {
             success: function (data) {
                 gameSavedUrl = data.gameUrl;
                 $('#field').addClass('game-over');
+                var redirectDelay = audioUrl ? 30000 : 5000;
                 setTimeout(function () {
                     window.location.href = gameSavedUrl;
-                }, 30000);
+                }, redirectDelay);
             },
             data: JSON.stringify(data)
         });
