@@ -202,7 +202,7 @@ exports.getGamesByPlayerId = function (playerId, count) {
     }).hits;
 };
 
-exports.getGamesByTeam = function (team, won) {
+exports.getGamesByTeam = function (team, won, count) {
     var winnersQuery = "data.winners.playerId = '" + team.data.playerIds[0] + "' AND data.winners.playerId = '" + team.data.playerIds[1] +
                        "'";
     var losersQuery = "data.losers.playerId = '" + team.data.playerIds[0] + "' AND data.losers.playerId = '" + team.data.playerIds[1] + "'";
@@ -220,7 +220,7 @@ exports.getGamesByTeam = function (team, won) {
 
     return contentLib.query({
         start: 0,
-        count: -1,
+        count: count || -1,
         query: query,
         contentTypes: [app.name + ":game"],
         sort: "data.date DESC, displayName DESC"

@@ -180,7 +180,7 @@ var getSparklinesData = function (req) {
 
     var teams = [], team;
     teamsData.forEach(function (t) {
-        var games = foosRetrievalLib.getGamesByTeam(t);
+        var games = foosRetrievalLib.getGamesByTeam(t, undefined, 60);
         team = {
             name: t.displayName,
             points: []
