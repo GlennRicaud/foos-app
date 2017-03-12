@@ -227,6 +227,18 @@ var sendHipchatNotification = function (gameState) {
 };
 
 var generateHipchatMessage = function (pageId, gameState) {
+    var singlesGame = gameState.winners.length === 1;
+    var ratingTeam1, ratingTeam2;
+    if (singlesGame) {
+        ratingTeam1 = gameState.winners[0].rating;
+        ratingTeam2 = gameState.losers[0].rating;
+    } else {
+        ratingTeam1 = (gameState.winners[0].rating + gameState.winners[1].rating) / 2;
+        ratingTeam2 = (gameState.losers[0].rating + gameState.losers[1].rating) / 2;
+    }
+
+    var expectedScore = scoreToGoals(calculateExpectedScore(ratingTeam1, ratingTeam2));
+
     var gameUrl = portalLib.pageUrl({
         id: pageId,
         type: 'absolute'
@@ -234,7 +246,21 @@ var generateHipchatMessage = function (pageId, gameState) {
     var teamA = gameState.teamWinner.displayName;
     var teamB = gameState.teamLoser.displayName;
     var html = 'A new game has started: <strong>' + teamA + '</strong> - vs - <strong>' + teamB + '</strong>' +
+               '<br/><br/><i>Expected score according to players ranking: ' + expectedScore + '</i>' +
                '<br/><br/>' +
                '<a href="' + gameUrl + '">Follow it Live in foos.es/foos</a>';
     return html;
+};
+
+var calculateExpectedScore = function (rating, opponentRating) {
+    return 1.0 / (1.0 + Math.pow(10.0, (opponentRating - rating) / 400.0));
+};
+
+var scoreToGoals = function (score) {
+    var diff = (score * 20) - 10;
+    if (diff > 0) {
+        return "10  -  " + (10 - diff).toFixed(1);
+    } else {
+        return (10 + diff).toFixed(1) + " - 10";
+    }
 };

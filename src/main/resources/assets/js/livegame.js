@@ -446,6 +446,7 @@ var GAME = (function () {
             playerResult.playerId = player.id;
             playerResult.score = player.goals;
             playerResult.against = player.against;
+            playerResult.rating = player.rating;
             var playerTeam = (pid / 2) >> 0;
             if (playerTeam === winner) {
                 winners.push(playerResult);

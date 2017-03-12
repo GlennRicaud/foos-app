@@ -255,7 +255,10 @@
                         type: 'linear',
                         position: 'bottom',
                         ticks: {
-                            min: 0
+                            min: 0,
+                            callback: function (label, index, labels) {
+                                return formatSeconds(parseInt(label, 10));
+                            }
                         }
                     }],
                     yAxes: [{
@@ -268,6 +271,19 @@
                 }
             }
         });
-    }
+    };
+
+    var formatSeconds = function (s) {
+        if (s <= 0) {
+            return '';
+        }
+        var date = new Date(null);
+        date.setSeconds(s);
+        if (s < 3600) {
+            return date.toISOString().substr(14, 5)
+        } else {
+            return date.toISOString().substr(11, 8);
+        }
+    };
 
 }($, SVC_URL));
