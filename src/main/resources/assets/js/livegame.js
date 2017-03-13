@@ -252,7 +252,7 @@ var GAME = (function () {
     };
 
     sendCurrentGameState = function () {
-        var data = createGameData();
+        var data = createGameData(true);
         $.ajax({
             url: broadcastGameUrl,
             type: 'post',
@@ -430,7 +430,7 @@ var GAME = (function () {
         audioElement.trigger("play");
     }
 
-    createGameData = function () {
+    createGameData = function (includeRating) {
         var data = {}, winners = [], losers = [];
         var score1 = teams[TEAM1].score;
         var score2 = teams[TEAM2].score;
@@ -446,7 +446,9 @@ var GAME = (function () {
             playerResult.playerId = player.id;
             playerResult.score = player.goals;
             playerResult.against = player.against;
-            playerResult.rating = player.rating;
+            if (includeRating) {
+                playerResult.rating = player.rating;
+            }
             var playerTeam = (pid / 2) >> 0;
             if (playerTeam === winner) {
                 winners.push(playerResult);
@@ -465,7 +467,7 @@ var GAME = (function () {
     };
 
     sendGameData = function () {
-        var data = createGameData();
+        var data = createGameData(false);
         $.ajax({
             url: postUrl,
             type: 'post',
